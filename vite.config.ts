@@ -7,10 +7,10 @@ import path from 'path';
  * @see https://vitejs.dev/config/
  */
 export default defineConfig({
-  plugins: [react(), eslintPlugin()],
-  resolve: {
-    alias: {
-      '@': path.resolve('./src'),
-    },
-  },
+	plugins: [react(), eslintPlugin()],
+	resolve: {
+		alias: {
+			'@': path.resolve('./src'),
+		},
+	},
 });
