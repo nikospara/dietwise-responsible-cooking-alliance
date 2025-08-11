@@ -8,12 +8,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tailwindcss/postcss": "4.1.11",
     "react": "19.1.1",
     "react-dom": "19.1.1"
   },
   "devDependencies": {
     "@nabla/vite-plugin-eslint": "2.0.6",
+    "@tailwindcss/postcss": "4.1.11",
     "@types/eslint": "9.6.1",
     "@types/node": "22.x",
     "@types/react": "19.1.9",
