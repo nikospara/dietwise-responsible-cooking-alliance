@@ -1,0 +1,10 @@
+{
+	"name": "Responsible Cooking Alliance",
+	"description": "An application for cooking influencers to assess the compliance of their content with the national nutrition guidelines and promote of sustainability practices. A component of  DietWise (https://dietwise.eu/).",
+	"version": "0.1.0",
+	"manifest_version": 3,
+	"action": {
+		"default_popup": "index.html",
+		"default_icon": "DietWise_icon_LightGreen.svg"
+	}
+}
