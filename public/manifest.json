@@ -9,5 +9,11 @@
 			"16": "DietWise_icon_LightGreen-16.png",
 			"32": "DietWise_icon_LightGreen-32.png"
 		}
+	},
+	"icons": {
+		"16": "DietWise_icon_LightGreen-16.png",
+		"32": "DietWise_icon_LightGreen-32.png",
+		"64": "DietWise_icon_LightGreen-64.png",
+		"128": "DietWise_icon_LightGreen-128.png"
 	}
 }
