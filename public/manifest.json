@@ -5,6 +5,9 @@
 	"manifest_version": 3,
 	"action": {
 		"default_popup": "index.html",
-		"default_icon": "DietWise_icon_LightGreen.svg"
+		"default_icon": {
+			"16": "DietWise_icon_LightGreen-16.png",
+			"32": "DietWise_icon_LightGreen-32.png"
+		}
 	}
 }
