@@ -1,0 +1,10 @@
+{
+	"extensionName": {
+		"message": "Responsible Cooking Alliance",
+		"description": "Το όνομα αυτής της επέκτασης"
+	},
+	"extensionDescription": {
+		"message": "Μια εφαρμογή που απευθύνεται σε influencers μαγειρικής για να εκτιμούν κατά πόσο το περιεχόμενό τους είναι σύμφωνο με τις εθνικές διατροφικές οδηγίες και να προωθούν βιώσιμες πρακτικές. Τμήμα του έργου DietWise (https://dietwise.eu/).",
+		"description": "Περιγραφή αυτής της επέκτασης"
+	}
+}
