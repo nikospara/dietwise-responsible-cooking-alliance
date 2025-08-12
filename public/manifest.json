@@ -6,14 +6,16 @@
 	"action": {
 		"default_popup": "index.html",
 		"default_icon": {
-			"16": "DietWise_icon_LightGreen-16.png",
-			"32": "DietWise_icon_LightGreen-32.png"
+			"16": "icons/DietWise_icon_LightGreen-16.png",
+			"32": "icons/DietWise_icon_LightGreen-32.png"
 		}
 	},
 	"icons": {
-		"16": "DietWise_icon_LightGreen-16.png",
-		"32": "DietWise_icon_LightGreen-32.png",
-		"64": "DietWise_icon_LightGreen-64.png",
-		"128": "DietWise_icon_LightGreen-128.png"
+		"16": "icons/DietWise_icon_LightGreen-16.png",
+		"32": "icons/DietWise_icon_LightGreen-32.png",
+		"48": "icons/DietWise_icon_LightGreen-48.png",
+		"64": "icons/DietWise_icon_LightGreen-64.png",
+		"96": "icons/DietWise_icon_LightGreen-96.png",
+		"128": "icons/DietWise_icon_LightGreen-128.png"
 	}
 }
