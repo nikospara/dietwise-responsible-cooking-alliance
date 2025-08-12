@@ -7,3 +7,7 @@ body {
 .animate-speed{
 	animation-duration: 20s;
 }
+
+#root {
+	min-width: max-content !important;
+}
