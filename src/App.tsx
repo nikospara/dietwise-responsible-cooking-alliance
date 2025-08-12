@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import logo from './assets/images/logo.svg';
 
 const App = () => {
+	const { t } = useTranslation();
 	const [count, setCount] = useState(0);
 
 	return (
@@ -34,7 +36,7 @@ const App = () => {
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						Learn React
+						{t('general.learnReact')}
 					</a>
 					{' | '}
 					<a
@@ -43,7 +45,7 @@ const App = () => {
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						Vite Docs
+						{t('general.viteDocs')}
 					</a>
 				</p>
 			</header>

@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "react-dom": "19.1.1",
+    "react-i18next": "15.6.1"
   },
   "devDependencies": {
     "@nabla/vite-plugin-eslint": "2.0.6",
