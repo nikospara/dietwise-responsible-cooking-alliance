@@ -1,13 +1,20 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
-body {
-	margin: 0;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
 
-.animate-speed{
-	animation-duration: 20s;
-}
+@theme {
+	--animate-pingpulse: pingpulse 1s infinite;
 
-#root {
-	min-width: max-content !important;
+	@keyframes pingpulse {
+		30% {
+			transform: scale(1.4);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
 }

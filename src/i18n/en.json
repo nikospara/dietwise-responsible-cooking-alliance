@@ -1,6 +1,10 @@
 {
-	"general": {
-		"learnReact": "Learn React",
-		"viteDocs": "Vite Docs"
+	"main": {
+		"AssessRecipeComponent": {
+			"labelLong": "Click here to assess the recipe on this page",
+			"labelShort": "Assess recipe",
+			"assessing": "Assessing URL:",
+			"assessed": "Assessed URL:"
+		}
 	}
 }

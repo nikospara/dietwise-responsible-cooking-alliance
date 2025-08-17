@@ -1,6 +1,10 @@
 {
-	"general": {
-		"learnReact": "Μάθετε React",
-		"viteDocs": "Τεκμηρίωση του Vite"
+	"main": {
+		"AssessRecipeComponent": {
+			"labelLong": "Πατήστε εδώ για να εκτιμηθεί η συνταγή της σελίδας",
+			"labelShort": "Εκτίμηση συνταγής",
+			"assessing": "Γίνεται εκτίμηση, URL:",
+			"assessed": "Εκτιμήθηκε URL:"
+		}
 	}
 }
