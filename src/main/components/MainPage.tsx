@@ -8,6 +8,7 @@ import {
 import { assessRecipe } from 'main/assessRecipe';
 import AssessRecipeComponent from './AssessRecipeComponent';
 import RatingComponent from './RatingComponent';
+import SuggestionsComponent from './SuggestionsComponent';
 
 const MainPage: React.FC = () => {
 	const [recipeState, dispatch] = useReducer(reducer, {
@@ -25,14 +26,16 @@ const MainPage: React.FC = () => {
 	}, [dispatch]);
 
 	return (
-		<div className="flex flex-col">
+		<div className="flex h-full flex-col gap-[15px] p-[8px]">
 			<AssessRecipeComponent
 				assessing={recipeState.parsing}
 				url={recipeState.parsedPageUrl}
 				onButtonClicked={assessRecipeCallback}
 			/>
 			<RatingComponent rating={recipeState.outcome?.rating} max={5} />
-			<div>Suggestions - Advice</div>
+			<SuggestionsComponent
+				suggestions={recipeState.outcome?.suggestions}
+			/>
 		</div>
 	);
 };

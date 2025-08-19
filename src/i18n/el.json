@@ -8,6 +8,9 @@
 		},
 		"RatingComponent": {
 			"rating": "Βαθμολογία:"
+		},
+		"SuggestionsComponent": {
+			"title": "Προτάσεις - Συμβουλές"
 		}
 	}
 }

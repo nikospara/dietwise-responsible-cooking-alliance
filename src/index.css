@@ -18,3 +18,21 @@
 		}
 	}
 }
+
+@layer base {
+	html {
+		@apply h-full;
+	}
+
+	body {
+		@apply h-full;
+	}
+
+	h2 {
+		@apply text-lg font-bold mt-[15px] first:mt-0 mb-[10px];
+	}
+
+	p {
+		@apply mt-[5px];
+	}
+}

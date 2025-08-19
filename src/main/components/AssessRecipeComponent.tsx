@@ -33,7 +33,7 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
 					</span>
 				</button>
 			</div>
-			<div className="truncate">
+			<p className="truncate">
 				{props.url ? (
 					<span className="font-bold">
 						{props.assessing
@@ -43,7 +43,7 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
 				) : null}
 				&nbsp;
 				{props.url || ''}
-			</div>
+			</p>
 		</div>
 	);
 };

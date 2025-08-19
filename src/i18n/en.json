@@ -8,6 +8,9 @@
 		},
 		"RatingComponent": {
 			"rating": "Rating:"
+		},
+		"SuggestionsComponent": {
+			"title": "Suggestions - Advice"
 		}
 	}
 }
