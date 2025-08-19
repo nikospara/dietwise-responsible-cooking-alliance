@@ -36,6 +36,7 @@ export interface AssessRecipeAction extends Action {
 
 export interface RecipeAssessedAction extends Action {
 	type: 'RecipeAssessedAction';
+	outcome: RecipeAssessmentOutcome;
 }
 
 export interface RecipeAssessmentFailedAction extends Action {

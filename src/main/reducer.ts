@@ -13,6 +13,7 @@ export default function reducer(state: MainData, action: MainAction): MainData {
 			return {
 				...state,
 				parsing: false,
+				outcome: action.outcome,
 			};
 		}
 		case 'RecipeAssessmentFailedAction': {

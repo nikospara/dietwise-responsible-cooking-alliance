@@ -5,6 +5,9 @@
 			"labelShort": "Εκτίμηση συνταγής",
 			"assessing": "Γίνεται εκτίμηση, URL:",
 			"assessed": "Εκτιμήθηκε URL:"
+		},
+		"RatingComponent": {
+			"rating": "Βαθμολογία:"
 		}
 	}
 }

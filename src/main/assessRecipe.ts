@@ -6,7 +6,7 @@ export async function assessRecipe(): Promise<RecipeAssessmentOutcome> {
 			() =>
 				res({
 					status: 'success',
-					rating: 3,
+					rating: (Math.floor(Math.random() * (10 - 1 + 1)) + 1) / 2,
 					allowRatingToBeDisplayedWithTheRecipe: false,
 					suggestions: [
 						{

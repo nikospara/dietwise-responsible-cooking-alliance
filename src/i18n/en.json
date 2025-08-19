@@ -5,6 +5,9 @@
 			"labelShort": "Assess recipe",
 			"assessing": "Assessing URL:",
 			"assessed": "Assessed URL:"
+		},
+		"RatingComponent": {
+			"rating": "Rating:"
 		}
 	}
 }

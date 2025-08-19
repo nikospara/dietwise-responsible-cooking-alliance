@@ -13,10 +13,11 @@ export function createAssessRecipeAction(url: string): AssessRecipeAction {
 }
 
 export function createRecipeAssessedAction(
-	_outcome: RecipeAssessmentOutcome,
+	outcome: RecipeAssessmentOutcome,
 ): RecipeAssessedAction {
 	return {
 		type: 'RecipeAssessedAction',
+		outcome,
 	};
 }
 

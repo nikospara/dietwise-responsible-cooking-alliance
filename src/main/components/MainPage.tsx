@@ -7,6 +7,7 @@ import {
 } from 'main/actions';
 import { assessRecipe } from 'main/assessRecipe';
 import AssessRecipeComponent from './AssessRecipeComponent';
+import RatingComponent from './RatingComponent';
 
 const MainPage: React.FC = () => {
 	const [recipeState, dispatch] = useReducer(reducer, {
@@ -30,7 +31,7 @@ const MainPage: React.FC = () => {
 				url={recipeState.parsedPageUrl}
 				onButtonClicked={assessRecipeCallback}
 			/>
-			<div>Rating</div>
+			<RatingComponent rating={recipeState.outcome?.rating} max={5} />
 			<div>Suggestions - Advice</div>
 		</div>
 	);
