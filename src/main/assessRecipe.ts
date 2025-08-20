@@ -1,6 +1,10 @@
 import type { RecipeAssessmentOutcome } from './model';
+import { readPageContent } from './readPageContent';
 
 export async function assessRecipe(): Promise<RecipeAssessmentOutcome> {
+	const pageContent = await readPageContent();
+	console.log(pageContent); // TODO Send the content to the server
+
 	const result = await new Promise<RecipeAssessmentOutcome>((res) =>
 		setTimeout(
 			() =>
