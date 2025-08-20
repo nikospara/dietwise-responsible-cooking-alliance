@@ -26,11 +26,11 @@ const RatingComponent: React.FC<RatingComponentProps> = (
 
 	return (
 		<div>
-			<span className="font-bold">
+			<h2>
 				{t('main.RatingComponent.rating')}
-			</span>
-			&nbsp;
-			{typeof props.rating === 'number' && <span>{stars}</span>}
+				&nbsp;
+				{typeof props.rating === 'number' && <span>{stars}</span>}
+			</h2>
 		</div>
 	);
 };
