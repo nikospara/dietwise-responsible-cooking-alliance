@@ -29,9 +29,14 @@ export interface MainData {
 	outcome?: RecipeAssessmentOutcome;
 }
 
+export interface PrepareToAssessRecipeAction extends Action {
+	type: 'PrepareToAssessRecipeAction';
+}
+
 export interface AssessRecipeAction extends Action {
 	type: 'AssessRecipeAction';
-	url: string;
+	url?: string;
+	title?: string;
 }
 
 export interface RecipeAssessedAction extends Action {
@@ -44,6 +49,7 @@ export interface RecipeAssessmentFailedAction extends Action {
 }
 
 export type MainAction =
+	| PrepareToAssessRecipeAction
 	| AssessRecipeAction
 	| RecipeAssessedAction
 	| RecipeAssessmentFailedAction;

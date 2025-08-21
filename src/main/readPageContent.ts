@@ -1,6 +1,6 @@
-declare const browser: object;
+declare const browser: object; // TODO Replace when we have the types for the Firefox-compatible extension APIs
 
-export async function readPageContent(): Promise<string> {
+export async function readPageContent(tabId: number): Promise<string> {
 	if (typeof browser !== 'undefined') {
 		console.error('`browser` not supported yet');
 		throw new Error('`browser` not supported yet');
@@ -8,7 +8,7 @@ export async function readPageContent(): Promise<string> {
 		typeof chrome !== 'undefined' &&
 		typeof chrome.scripting !== 'undefined'
 	) {
-		return readPageContentChrome();
+		return readPageContentChrome(tabId);
 	} else {
 		// Here we are running in a browser, probably for development. Allow
 		// short-circuiting this functionality by providing a value for the
@@ -20,22 +20,10 @@ export async function readPageContent(): Promise<string> {
 	}
 }
 
-async function readPageContentChrome(): Promise<string> {
-	const activeTabs = await chrome.tabs.query({
-		active: true,
-		lastFocusedWindow: true,
-	});
-	console.log('Active Tabs:', activeTabs);
-	if (activeTabs.length === 0 || typeof activeTabs[0].id !== 'number') {
-		console.log('Cannot locate active tab id');
-		throw new Error('Cannot locate active tab id');
-	}
-	console.log('Active tab id:', activeTabs[0].id);
+async function readPageContentChrome(tabId: number): Promise<string> {
 	const results = await chrome.scripting.executeScript({
 		func: () => document.body.innerHTML,
-		target: {
-			tabId: activeTabs[0].id,
-		},
+		target: { tabId: tabId },
 	});
 	if (results.length === 0) {
 		console.log('Getting the tab content did not produce any result');

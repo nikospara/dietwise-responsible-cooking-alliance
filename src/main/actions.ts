@@ -1,14 +1,25 @@
 import type {
+	PrepareToAssessRecipeAction,
 	AssessRecipeAction,
 	RecipeAssessedAction,
 	RecipeAssessmentFailedAction,
 	RecipeAssessmentOutcome,
 } from './model';
 
-export function createAssessRecipeAction(url: string): AssessRecipeAction {
+export function createPrepareToAssessRecipeAction(): PrepareToAssessRecipeAction {
+	return {
+		type: 'PrepareToAssessRecipeAction',
+	};
+}
+
+export function createAssessRecipeAction(
+	url: string,
+	title: string | undefined,
+): AssessRecipeAction {
 	return {
 		type: 'AssessRecipeAction',
 		url,
+		title,
 	};
 }
 

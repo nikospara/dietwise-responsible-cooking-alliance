@@ -1,10 +1,13 @@
 import { useCallback, useReducer } from 'react';
 import reducer from 'main/reducer';
 import {
+	createPrepareToAssessRecipeAction,
 	createAssessRecipeAction,
 	createRecipeAssessedAction,
 	createRecipeAssessmentFailedAction,
 } from 'main/actions';
+import { readCurrentPageMetadata } from 'main/readCurrentPageMetadata';
+import { readPageContent } from 'main/readPageContent';
 import { assessRecipe } from 'main/assessRecipe';
 import AssessRecipeComponent from './AssessRecipeComponent';
 import RatingComponent from './RatingComponent';
@@ -16,9 +19,22 @@ const MainPage: React.FC = () => {
 	});
 
 	const assessRecipeCallback = useCallback(async () => {
-		dispatch(createAssessRecipeAction('dummy url but quite long so that I can see what happens to long lines and if the component displays ellipses as desired'));
+		dispatch(createPrepareToAssessRecipeAction());
 		try {
-			const assessment = await assessRecipe();
+			const currentPageMetadata = await readCurrentPageMetadata();
+			dispatch(
+				createAssessRecipeAction(
+					currentPageMetadata.url || '',
+					currentPageMetadata.title,
+				),
+			);
+			const pageContent = await readPageContent(
+				currentPageMetadata.tabId,
+			);
+			const assessment = await assessRecipe(
+				currentPageMetadata.url || '',
+				pageContent,
+			);
 			dispatch(createRecipeAssessedAction(assessment));
 		} catch (e) {
 			dispatch(createRecipeAssessmentFailedAction(e));
