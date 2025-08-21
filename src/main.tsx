@@ -4,14 +4,15 @@ import MainPage from 'main/components/MainPage';
 import './index.css';
 import { configureI18n } from './i18n';
 
-configureI18n('en') // TODO Configuration
-	.then(() => {
-		const rootElement = document.getElementById('root') as HTMLElement;
-		const root = createRoot(rootElement);
+const langCode = chrome && chrome.i18n ? chrome.i18n.getUILanguage() : 'en';
 
-		root.render(
-			<StrictMode>
-				<MainPage />
-			</StrictMode>,
-		);
-	});
+configureI18n(langCode).then(() => {
+	const rootElement = document.getElementById('root') as HTMLElement;
+	const root = createRoot(rootElement);
+
+	root.render(
+		<StrictMode>
+			<MainPage />
+		</StrictMode>,
+	);
+});
