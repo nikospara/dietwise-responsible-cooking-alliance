@@ -4,8 +4,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "build-with-sourcemaps": "tsc && vite build --sourcemap true"
+    "build-chrome": "tsc && VITE_TARGET_BROWSER=Chrome vite build",
+    "build-chrome-with-sourcemaps": "tsc && VITE_TARGET_BROWSER=Chrome vite build --sourcemap true",
+    "build-chrome-watch": "tsc && VITE_TARGET_BROWSER=Chrome VITE_WATCH=y vite build --sourcemap true",
+    "build-firefox": "tsc && VITE_TARGET_BROWSER=Firefox vite build",
+    "build-firefox-with-sourcemaps": "tsc && VITE_TARGET_BROWSER=Firefox vite build --sourcemap true",
+    "build-firefox-watch": "tsc && VITE_TARGET_BROWSER=Firefox VITE_WATCH=y vite build --sourcemap true"
   },
   "dependencies": {
     "react": "19.1.1",
@@ -45,6 +49,7 @@
     "tailwindcss": "4.1.11",
     "typescript": "5.9.2",
     "vite": "7.1.1",
+    "vite-plugin-static-copy": "3.1.2",
     "vite-tsconfig-paths": "5.1.4"
   }
 }

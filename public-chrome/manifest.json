@@ -1,0 +1,36 @@
+{
+	"name": "__MSG_extensionName__",
+	"description": "__MSG_extensionDescription__",
+	"default_locale": "en",
+	"version": "0.1.0",
+	"manifest_version": 3,
+	"action": {
+		"default_title": "Click to open",
+		"default_icon": {
+			"16": "icons/DietWise_icon_LightGreen-16.png",
+			"32": "icons/DietWise_icon_LightGreen-32.png"
+		}
+	},
+	"background": {
+		"service_worker": "background.js"
+	},
+	"permissions": [
+		"sidePanel",
+		"scripting",
+		"activeTab"
+	],
+	"host_permissions": [
+		"<all_urls>"
+	],
+	"side_panel": {
+		"default_path": "index.html"
+	},
+	"icons": {
+		"16": "icons/DietWise_icon_LightGreen-16.png",
+		"32": "icons/DietWise_icon_LightGreen-32.png",
+		"48": "icons/DietWise_icon_LightGreen-48.png",
+		"64": "icons/DietWise_icon_LightGreen-64.png",
+		"96": "icons/DietWise_icon_LightGreen-96.png",
+		"128": "icons/DietWise_icon_LightGreen-128.png"
+	}
+}
