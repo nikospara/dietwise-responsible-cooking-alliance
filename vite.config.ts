@@ -14,4 +14,9 @@ export default defineConfig({
 			'@': path.resolve('./src'),
 		},
 	},
+	build: {
+		// Set to {} to enable a watched build workflow, null to disable (default).
+		// If only it could be defined in the command line.
+		watch: null,
+	},
 });

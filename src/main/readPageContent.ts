@@ -1,9 +1,6 @@
-declare const browser: object; // TODO Replace when we have the types for the Firefox-compatible extension APIs
-
 export async function readPageContent(tabId: number): Promise<string> {
 	if (typeof browser !== 'undefined') {
-		console.error('`browser` not supported yet');
-		throw new Error('`browser` not supported yet');
+		return readPageContentFirefox(tabId);
 	} else if (
 		typeof chrome !== 'undefined' &&
 		typeof chrome.scripting !== 'undefined'
@@ -23,6 +20,19 @@ export async function readPageContent(tabId: number): Promise<string> {
 async function readPageContentChrome(tabId: number): Promise<string> {
 	const results = await chrome.scripting.executeScript({
 		func: () => document.body.innerHTML,
+		target: { tabId: tabId },
+	});
+	if (results.length === 0) {
+		console.log('Getting the tab content did not produce any result');
+		throw new Error('Getting the tab content did not produce any result');
+	}
+	return results[0].result as string;
+}
+
+async function readPageContentFirefox(tabId: number): Promise<string> {
+	const results = await browser.scripting.executeScript({
+		// XXX The type of func in @types/firefox-webext-browser is probably a bug
+		func: (() => document.body.innerHTML) as unknown as () => void,
 		target: { tabId: tabId },
 	});
 	if (results.length === 0) {
