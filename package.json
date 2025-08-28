@@ -9,7 +9,8 @@
     "build-chrome-watch": "tsc && VITE_TARGET_BROWSER=Chrome VITE_WATCH=y vite build --sourcemap true",
     "build-firefox": "tsc && VITE_TARGET_BROWSER=Firefox vite build",
     "build-firefox-with-sourcemaps": "tsc && VITE_TARGET_BROWSER=Firefox vite build --sourcemap true",
-    "build-firefox-watch": "tsc && VITE_TARGET_BROWSER=Firefox VITE_WATCH=y vite build --sourcemap true"
+    "build-firefox-watch": "tsc && VITE_TARGET_BROWSER=Firefox VITE_WATCH=y vite build --sourcemap true",
+    "build-all": "tsc && VITE_TARGET_BROWSER=Chrome vite build && VITE_TARGET_BROWSER=Firefox vite build"
   },
   "dependencies": {
     "react": "19.1.1",
