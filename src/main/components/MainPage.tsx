@@ -11,6 +11,7 @@ import { readCurrentPageMetadata } from 'main/readCurrentPageMetadata';
 import { readPageContent } from 'main/readPageContent';
 import { assessRecipe } from 'main/assessRecipe';
 import AssessRecipeComponent from './AssessRecipeComponent';
+import MainPageErrorsComponent from './MainPageErrorsComponent';
 import MainPageHelpComponent from './MainPageHelpComponent';
 import RatingComponent from './RatingComponent';
 import SuggestionsComponent from './SuggestionsComponent';
@@ -39,7 +40,13 @@ const MainPage: React.FC = () => {
 			);
 			dispatch(createRecipeAssessedAction(assessment));
 		} catch (e) {
-			dispatch(createRecipeAssessmentFailedAction(e));
+			if (e instanceof Error) {
+				dispatch(createRecipeAssessmentFailedAction(e));
+			} else {
+				dispatch(
+					createRecipeAssessmentFailedAction(new Error(e as string)),
+				);
+			}
 		}
 	}, [dispatch]);
 
@@ -58,15 +65,21 @@ const MainPage: React.FC = () => {
 				onResetButtonClicked={resetCallback}
 			/>
 			{recipeState.outcome ? (
-				<>
-					<RatingComponent
-						rating={recipeState.outcome?.rating}
-						max={5}
+				recipeState.outcome.status === 'SUCCESS' ? (
+					<>
+						<RatingComponent
+							rating={recipeState.outcome?.rating}
+							max={5}
+						/>
+						<SuggestionsComponent
+							suggestions={recipeState.outcome?.suggestions}
+						/>
+					</>
+				) : (
+					<MainPageErrorsComponent
+						errors={recipeState.outcome?.errors || []}
 					/>
-					<SuggestionsComponent
-						suggestions={recipeState.outcome?.suggestions}
-					/>
-				</>
+				)
 			) : (
 				<MainPageHelpComponent />
 			)}

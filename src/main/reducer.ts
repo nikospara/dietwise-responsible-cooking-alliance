@@ -29,6 +29,10 @@ export default function reducer(state: MainData, action: MainAction): MainData {
 			return {
 				...state,
 				parsing: false,
+				outcome: {
+					status: 'FAILURE',
+					errors: [action.error.message],
+				},
 			};
 		}
 		case 'ResetMainPageAction': {

@@ -46,6 +46,7 @@ export interface RecipeAssessedAction extends Action {
 
 export interface RecipeAssessmentFailedAction extends Action {
 	type: 'RecipeAssessmentFailedAction';
+	error: Error;
 }
 
 export interface ResetMainPageAction extends Action {

@@ -1,4 +1,5 @@
 import type { RecipeAssessmentOutcome } from './model';
+import i18next from 'i18next';
 
 export async function assessRecipe(
 	url: string,
@@ -15,6 +16,7 @@ export async function assessRecipe(
 			body: JSON.stringify({
 				url,
 				pageContent: pageContent || '',
+				langCode: i18next.language,
 			}),
 		},
 	);

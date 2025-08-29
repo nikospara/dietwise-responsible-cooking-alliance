@@ -34,10 +34,11 @@ export function createRecipeAssessedAction(
 }
 
 export function createRecipeAssessmentFailedAction(
-	_e: unknown,
+	error: Error,
 ): RecipeAssessmentFailedAction {
 	return {
 		type: 'RecipeAssessmentFailedAction',
+		error,
 	};
 }
 
