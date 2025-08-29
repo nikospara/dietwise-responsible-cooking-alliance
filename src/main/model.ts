@@ -5,7 +5,7 @@ export interface Suggestion {
 }
 
 export interface RecipeAssessmentOutcome {
-	status: 'success' | 'failure';
+	status: 'SUCCESS' | 'FAILURE';
 	errors?: string[];
 	rating?: number;
 	allowRatingToBeDisplayedWithTheRecipe?: boolean;
