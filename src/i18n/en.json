@@ -11,6 +11,10 @@
 		},
 		"SuggestionsComponent": {
 			"title": "Suggestions - Advice"
+		},
+		"MainPageHelpComponent": {
+			"title": "Responsible Cooking Alliance",
+			"paragraph1": "Press the button above to assess the recipe in the current page."
 		}
 	}
 }

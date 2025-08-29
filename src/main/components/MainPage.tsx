@@ -5,11 +5,13 @@ import {
 	createAssessRecipeAction,
 	createRecipeAssessedAction,
 	createRecipeAssessmentFailedAction,
+	createResetMainPageAction,
 } from 'main/actions';
 import { readCurrentPageMetadata } from 'main/readCurrentPageMetadata';
 import { readPageContent } from 'main/readPageContent';
 import { assessRecipe } from 'main/assessRecipe';
 import AssessRecipeComponent from './AssessRecipeComponent';
+import MainPageHelpComponent from './MainPageHelpComponent';
 import RatingComponent from './RatingComponent';
 import SuggestionsComponent from './SuggestionsComponent';
 
@@ -41,17 +43,33 @@ const MainPage: React.FC = () => {
 		}
 	}, [dispatch]);
 
+	const resetCallback = useCallback(
+		() => dispatch(createResetMainPageAction()),
+		[dispatch],
+	);
+
 	return (
 		<div className="flex h-full flex-col gap-[15px] p-[8px]">
 			<AssessRecipeComponent
 				assessing={recipeState.parsing}
+				hasOutcome={!!recipeState.outcome}
 				url={recipeState.parsedPageUrl}
-				onButtonClicked={assessRecipeCallback}
+				onAssessButtonClicked={assessRecipeCallback}
+				onResetButtonClicked={resetCallback}
 			/>
-			<RatingComponent rating={recipeState.outcome?.rating} max={5} />
-			<SuggestionsComponent
-				suggestions={recipeState.outcome?.suggestions}
-			/>
+			{recipeState.outcome ? (
+				<>
+					<RatingComponent
+						rating={recipeState.outcome?.rating}
+						max={5}
+					/>
+					<SuggestionsComponent
+						suggestions={recipeState.outcome?.suggestions}
+					/>
+				</>
+			) : (
+				<MainPageHelpComponent />
+			)}
 		</div>
 	);
 };

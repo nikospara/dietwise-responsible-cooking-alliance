@@ -4,6 +4,7 @@ import type {
 	RecipeAssessedAction,
 	RecipeAssessmentFailedAction,
 	RecipeAssessmentOutcome,
+	ResetMainPageAction,
 } from './model';
 
 export function createPrepareToAssessRecipeAction(): PrepareToAssessRecipeAction {
@@ -37,5 +38,11 @@ export function createRecipeAssessmentFailedAction(
 ): RecipeAssessmentFailedAction {
 	return {
 		type: 'RecipeAssessmentFailedAction',
+	};
+}
+
+export function createResetMainPageAction(): ResetMainPageAction {
+	return {
+		type: 'ResetMainPageAction',
 	};
 }

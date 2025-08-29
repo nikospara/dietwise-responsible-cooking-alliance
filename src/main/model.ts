@@ -48,8 +48,13 @@ export interface RecipeAssessmentFailedAction extends Action {
 	type: 'RecipeAssessmentFailedAction';
 }
 
+export interface ResetMainPageAction extends Action {
+	type: 'ResetMainPageAction';
+}
+
 export type MainAction =
 	| PrepareToAssessRecipeAction
 	| AssessRecipeAction
 	| RecipeAssessedAction
-	| RecipeAssessmentFailedAction;
+	| RecipeAssessmentFailedAction
+	| ResetMainPageAction;

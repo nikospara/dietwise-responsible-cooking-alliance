@@ -31,6 +31,16 @@ export default function reducer(state: MainData, action: MainAction): MainData {
 				parsing: false,
 			};
 		}
+		case 'ResetMainPageAction': {
+			if (state.parsing) {
+				throw new Error('Inconsistent state for ResetMainPageAction');
+			}
+			return {
+				...state,
+				parsedPageUrl: undefined,
+				outcome: undefined,
+			};
+		}
 		// see https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking
 		default: {
 			const exhaustiveCheck: never = action;

@@ -1,10 +1,13 @@
 import { useTranslation } from 'react-i18next';
+import { GrUndo } from 'react-icons/gr';
 import { TbWorldUpload } from 'react-icons/tb';
 
 export interface AssessRecipeComponentProps {
 	assessing: boolean;
+	hasOutcome: boolean;
 	url: string | null | undefined;
-	onButtonClicked: () => void;
+	onAssessButtonClicked: () => void;
+	onResetButtonClicked: () => void;
 }
 
 const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
@@ -14,11 +17,11 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
 
 	return (
 		<div>
-			<div className="text-center">
+			<div className="flex justify-center gap-2">
 				<button
 					className="btn btn-xl btn-accent"
 					disabled={props.assessing}
-					onClick={props.onButtonClicked}
+					onClick={props.onAssessButtonClicked}
 				>
 					<span
 						className={props.assessing ? 'animate-pingpulse' : ''}
@@ -32,6 +35,16 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
 						{t('main.AssessRecipeComponent.labelShort')}
 					</span>
 				</button>
+				{props.hasOutcome && !props.assessing ? (
+					<button
+						className="btn btn-xl btn-outline"
+						onClick={props.onResetButtonClicked}
+					>
+						<span>
+							<GrUndo />
+						</span>
+					</button>
+				) : null}
 			</div>
 			<p className="truncate">
 				{props.url ? (

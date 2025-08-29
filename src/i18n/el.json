@@ -11,6 +11,10 @@
 		},
 		"SuggestionsComponent": {
 			"title": "Προτάσεις - Συμβουλές"
+		},
+		"MainPageHelpComponent": {
+			"title": "Responsible Cooking Alliance",
+			"paragraph1": "Πατήστε το κουμπί παραπάνω για να εκτιμήσετε τη συνταγή της ανοιγμένης σελίδας."
 		}
 	}
 }
