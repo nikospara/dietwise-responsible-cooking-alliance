@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import { configDefaults } from 'vitest/config';
 
 /**
  * @see https://vitejs.dev/config/
@@ -34,5 +35,14 @@ export default defineConfig(({ mode }) => {
 			watch: env.VITE_WATCH ? {} : null,
 			outDir: `dist-${browser}`,
 		},
+		test: {
+			environment: 'jsdom', // Required for DOM-based tests
+			globals: true,        // So we can use describe/it/expect directly
+			exclude: [...configDefaults.exclude],
+			coverage: {
+				provider: 'v8',
+				reporter: ['text', 'html'],
+			}
+		}
 	};
 });
