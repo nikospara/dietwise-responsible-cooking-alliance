@@ -9,6 +9,7 @@ import {
 } from 'main/actions';
 import { readCurrentPageMetadata } from 'main/readCurrentPageMetadata';
 import { readPageContent } from 'main/readPageContent';
+import { cleanHtmlMinimal } from 'main/cleanHtmlForLLM';
 import { assessRecipe } from 'main/assessRecipe';
 import AssessRecipeComponent from './AssessRecipeComponent';
 import MainPageErrorsComponent from './MainPageErrorsComponent';
@@ -34,9 +35,11 @@ const MainPage: React.FC = () => {
 			const pageContent = await readPageContent(
 				currentPageMetadata.tabId,
 			);
+			const pageCleaningResult = cleanHtmlMinimal(pageContent);
+			const cleanPageContent = pageCleaningResult.html;
 			const assessment = await assessRecipe(
 				currentPageMetadata.url || '',
-				pageContent,
+				cleanPageContent,
 			);
 			dispatch(createRecipeAssessedAction(assessment));
 		} catch (e) {

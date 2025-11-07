@@ -6,6 +6,7 @@ export async function assessRecipe(
 	pageContent: string,
 ): Promise<RecipeAssessmentOutcome> {
 	const response = await fetch(
+		// TODO Parameterize this!!!
 		'http://localhost:8180/api/v1/recipe/assess/html',
 		{
 			method: 'POST',
@@ -20,7 +21,6 @@ export async function assessRecipe(
 			}),
 		},
 	);
-	// TODO fetch will throw for network errors, maybe we should catch that
 	if (response.ok) {
 		const result = await response.json();
 		return result as RecipeAssessmentOutcome;

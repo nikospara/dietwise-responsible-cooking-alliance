@@ -37,12 +37,12 @@ export default defineConfig(({ mode }) => {
 		},
 		test: {
 			environment: 'jsdom', // Required for DOM-based tests
-			globals: true,        // So we can use describe/it/expect directly
+			globals: true, // So we can use describe/it/expect directly
 			exclude: [...configDefaults.exclude],
 			coverage: {
 				provider: 'v8',
 				reporter: ['text', 'html'],
-			}
-		}
+			},
+		},
 	};
 });

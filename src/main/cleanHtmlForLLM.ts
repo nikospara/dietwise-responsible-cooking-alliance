@@ -69,10 +69,16 @@ export const TABLE_TAGS = [
 	'col',
 ] as const;
 
+export interface PageCleaningResult {
+	html: string;
+	textLength: number;
+	stats: Record<string, number>;
+}
+
 export function cleanHtmlForLLM(
 	html: string,
 	options?: Partial<CleanOptions>,
-): { html: string; textLength: number; stats: Record<string, number> } {
+): PageCleaningResult {
 	const opts: CleanOptions = {
 		allowedTags: new Set(DEFAULT_ALLOWED_TAGS),
 		dropMedia: true,
@@ -364,11 +370,10 @@ export const RECIPE_MINIMAL_TAGS = new Set<string>([
 ]);
 
 // Example convenience wrapper
-export function cleanHtmlMinimal(html: string): string {
-	const { html: out } = cleanHtmlForLLM(html, {
+export function cleanHtmlMinimal(html: string): PageCleaningResult {
+	return cleanHtmlForLLM(html, {
 		allowedTags: new Set(RECIPE_MINIMAL_TAGS),
 		keepTables: false,
 		dropMedia: true,
 	});
-	return out;
 }
