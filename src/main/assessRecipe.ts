@@ -1,32 +1,31 @@
-import type { RecipeAssessmentOutcome } from './model';
-import i18next from 'i18next';
+import type { RecipeAssessmentMessage } from './model';
+import { streamJson } from 'common/streamJson';
 
-export async function assessRecipe(
+export interface CancellationFunction {
+	(): void;
+}
+
+export function assessRecipe(
 	url: string,
 	pageContent: string,
-): Promise<RecipeAssessmentOutcome> {
-	const response = await fetch(
+	langCode: string,
+	onMessage?: (message: RecipeAssessmentMessage) => void,
+	onError?: (error: unknown) => void,
+	onComplete?: () => void,
+): CancellationFunction {
+	const handler = streamJson(
 		// TODO Parameterize this!!!
 		'http://localhost:8180/api/v1/recipe/assess/html',
 		{
-			method: 'POST',
-			mode: 'cors',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				url,
-				pageContent: pageContent || '',
-				langCode: i18next.language,
-			}),
+			url,
+			pageContent: pageContent || '',
+			langCode,
+		},
+		{
+			onMessage,
+			onError,
+			onComplete,
 		},
 	);
-	if (response.ok) {
-		const result = await response.json();
-		return result as RecipeAssessmentOutcome;
-	} else {
-		throw new Error(
-			`The assessment service call resulted in HTTP: ${response.status}`,
-		);
-	}
+	return () => handler.cancel();
 }

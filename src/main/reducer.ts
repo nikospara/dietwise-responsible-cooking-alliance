@@ -1,16 +1,23 @@
-import type { MainAction, MainData } from './model';
+import type { MainAction } from './actions';
+import type { MainData } from './model';
 
-export default function reducer(state: MainData, action: MainAction): MainData {
+export function createInitialState(): MainData {
+	return {
+		status: 'INITIAL',
+	};
+}
+
+export function reducer(state: MainData, action: MainAction): MainData {
 	switch (action.type) {
 		case 'PrepareToAssessRecipeAction': {
 			return {
 				...state,
-				parsing: true,
+				status: 'PENDING',
 				parsedPageUrl: undefined,
 			};
 		}
 		case 'AssessRecipeAction': {
-			if (!state.parsing) {
+			if (state.status !== 'PENDING') {
 				throw new Error('Inconsistent state for AssessRecipeAction');
 			}
 			return {
@@ -18,31 +25,53 @@ export default function reducer(state: MainData, action: MainAction): MainData {
 				parsedPageUrl: action.url,
 			};
 		}
-		case 'RecipeAssessedAction': {
-			return {
-				...state,
-				parsing: false,
-				outcome: action.outcome,
-			};
-		}
 		case 'RecipeAssessmentFailedAction': {
 			return {
 				...state,
-				parsing: false,
-				outcome: {
-					status: 'FAILURE',
-					errors: [action.error.message],
-				},
+				status: 'FAILURE',
+				errors: [action.error.message],
 			};
 		}
 		case 'ResetMainPageAction': {
-			if (state.parsing) {
+			if (state.status === 'PENDING') {
 				throw new Error('Inconsistent state for ResetMainPageAction');
+			}
+			return createInitialState();
+		}
+		case 'RecipeExtractionMessageReceivedAction': {
+			if (state.status !== 'PENDING') {
+				throw new Error(
+					'Inconsistent state for RecipeExtractionMessageReceivedAction',
+				);
 			}
 			return {
 				...state,
-				parsedPageUrl: undefined,
-				outcome: undefined,
+				recipes: action.message.recipes,
+			};
+		}
+		case 'SuggestionsMessageReceivedAction': {
+			if (state.status !== 'PENDING') {
+				throw new Error(
+					'Inconsistent state for SuggestionsMessageReceivedAction',
+				);
+			}
+			return {
+				...state,
+				status: 'SUCCESS',
+				rating: action.message.rating,
+				suggestions: action.message.suggestions,
+			};
+		}
+		case 'RecipeAssessmentErrorMessageReceivedAction': {
+			if (state.status !== 'PENDING') {
+				throw new Error(
+					'Inconsistent state for RecipeAssessmentErrorMessageReceivedAction',
+				);
+			}
+			return {
+				...state,
+				status: 'FAILURE',
+				errors: action.message.errors,
 			};
 		}
 		// see https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking
