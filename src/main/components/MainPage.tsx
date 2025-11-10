@@ -14,11 +14,22 @@ import { cleanHtmlMinimal } from 'main/cleanHtmlForLLM';
 import { assessRecipe } from 'main/assessRecipe';
 import type { CancellationFunction } from 'main/assessRecipe';
 import AssessRecipeComponent from './AssessRecipeComponent';
+import RecipesComponent from './RecipesComponent';
 import MainPageErrorsComponent from './MainPageErrorsComponent';
 import MainPageHelpComponent from './MainPageHelpComponent';
 import RatingComponent from './RatingComponent';
 import SuggestionsComponent from './SuggestionsComponent';
 import i18next from 'i18next';
+import type { MainData, Recipe } from 'main/model';
+
+function hasRecipes(
+	recipeState: MainData,
+): recipeState is MainData & { recipes: Recipe[] } {
+	return (
+		typeof recipeState.recipes?.length === 'number' &&
+		recipeState.recipes?.length > 0
+	);
+}
 
 const MainPage: React.FC = () => {
 	const [recipeState, dispatch] = useReducer(
@@ -82,6 +93,9 @@ const MainPage: React.FC = () => {
 				onAssessButtonClicked={assessRecipeCallback}
 				onResetButtonClicked={resetCallback}
 			/>
+			{hasRecipes(recipeState) ? (
+				<RecipesComponent recipes={recipeState.recipes} />
+			) : null}
 			{recipeState.status === 'SUCCESS' ? (
 				<>
 					<RatingComponent rating={recipeState.rating} max={5} />
