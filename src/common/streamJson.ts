@@ -70,9 +70,10 @@ export function streamJson<T = unknown>(
 			options.onComplete?.();
 		} catch (err) {
 			if (err instanceof DOMException && err.name === 'AbortError') {
-				return;
+				options.onComplete?.();
+			} else {
+				options.onError?.(err);
 			}
-			options.onError?.(err);
 		}
 	})();
 

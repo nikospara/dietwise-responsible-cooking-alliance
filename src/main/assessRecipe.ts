@@ -1,4 +1,4 @@
-import type { RecipeAssessmentMessage } from './model';
+import type { RecipeAssessmentMessage, RecipeAssessmentParam } from './model';
 import { streamJson } from 'common/streamJson';
 
 export interface CancellationFunction {
@@ -20,7 +20,7 @@ export function assessRecipe(
 			url,
 			pageContent: pageContent || '',
 			langCode,
-		},
+		} as RecipeAssessmentParam,
 		{
 			onMessage,
 			onError,

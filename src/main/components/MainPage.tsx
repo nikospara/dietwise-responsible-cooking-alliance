@@ -3,6 +3,7 @@ import { createInitialState, reducer } from 'main/reducer';
 import {
 	createPrepareToAssessRecipeAction,
 	createAssessRecipeAction,
+	createRecipeAssessmentCompletedAction,
 	createRecipeAssessmentFailedAction,
 	createResetMainPageAction,
 	createMessageReceivedAction,
@@ -30,7 +31,8 @@ const MainPage: React.FC = () => {
 
 	useEffect(() => {
 		return () => {
-			cancelRef.current?.();
+			// TODO How/when are we going to cancel the call?
+			// cancelRef.current?.();
 		};
 	});
 
@@ -55,6 +57,7 @@ const MainPage: React.FC = () => {
 				},
 				() => {
 					cancelRef.current = null;
+					dispatch(createRecipeAssessmentCompletedAction());
 				},
 			);
 		} catch (error) {
@@ -72,7 +75,7 @@ const MainPage: React.FC = () => {
 			<AssessRecipeComponent
 				assessing={recipeState.status === 'PENDING'}
 				hasOutcome={
-					recipeState.status === 'PENDING' ||
+					recipeState.status === 'SUCCESS' ||
 					recipeState.status === 'FAILURE'
 				}
 				url={recipeState.parsedPageUrl}

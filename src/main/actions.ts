@@ -21,6 +21,10 @@ export interface RecipeAssessmentFailedAction extends Action {
 	error: Error;
 }
 
+export interface RecipeAssessmentCompletedAction extends Action {
+	type: 'RecipeAssessmentCompletedAction';
+}
+
 export interface ResetMainPageAction extends Action {
 	type: 'ResetMainPageAction';
 }
@@ -49,6 +53,7 @@ export type MainAction =
 	| PrepareToAssessRecipeAction
 	| AssessRecipeAction
 	| RecipeAssessmentFailedAction
+	| RecipeAssessmentCompletedAction
 	| ResetMainPageAction
 	| RecipeExtractionMessageReceivedAction
 	| SuggestionsMessageReceivedAction
@@ -83,6 +88,12 @@ export function createRecipeAssessmentFailedAction(
 	return {
 		type: 'RecipeAssessmentFailedAction',
 		error,
+	};
+}
+
+export function createRecipeAssessmentCompletedAction(): RecipeAssessmentCompletedAction {
+	return {
+		type: 'RecipeAssessmentCompletedAction',
 	};
 }
 

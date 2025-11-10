@@ -99,7 +99,7 @@ describe('streamJson', () => {
 
 		// After cancel: no completion, no error
 		expect(onMessage).toHaveBeenCalledTimes(1);
-		expect(onComplete).not.toHaveBeenCalled();
+		expect(onComplete).toHaveBeenCalled();
 		expect(onError).not.toHaveBeenCalled();
 	});
 

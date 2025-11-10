@@ -32,6 +32,17 @@ export function reducer(state: MainData, action: MainAction): MainData {
 				errors: [action.error.message],
 			};
 		}
+		case 'RecipeAssessmentCompletedAction': {
+			if (state.status === 'PENDING') {
+				return {
+					...state,
+					status: 'FAILURE',
+					errors: ['The processing was interrupted'],
+				};
+			} else {
+				return state;
+			}
+		}
 		case 'ResetMainPageAction': {
 			if (state.status === 'PENDING') {
 				throw new Error('Inconsistent state for ResetMainPageAction');
