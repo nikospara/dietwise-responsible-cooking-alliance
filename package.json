@@ -19,7 +19,8 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-i18next": "16.2.3",
-    "react-icons": "5.5.0"
+    "react-icons": "5.5.0",
+    "react-markdown": "10.1.0"
   },
   "devDependencies": {
     "@eslint/compat": "1.4.1",

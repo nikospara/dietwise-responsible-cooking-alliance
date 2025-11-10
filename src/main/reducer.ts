@@ -11,7 +11,6 @@ export function reducer(state: MainData, action: MainAction): MainData {
 	switch (action.type) {
 		case 'PrepareToAssessRecipeAction': {
 			return {
-				...state,
 				status: 'PENDING',
 				parsedPageUrl: undefined,
 			};
