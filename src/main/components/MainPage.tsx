@@ -54,7 +54,8 @@ const MainPage: React.FC = () => {
 			dispatch(createAssessRecipeAction(url || '', title));
 			const pageContent = await readPageContent(tabId);
 			const pageCleaningResult = cleanHtmlMinimal(pageContent);
-			const cleanPageContent = pageCleaningResult.html;
+			let cleanPageContent = pageCleaningResult.html;
+			cleanPageContent = cleanHtmlMinimal(cleanPageContent).html; // Hack!
 			cancelRef.current = assessRecipe(
 				url || '',
 				cleanPageContent,

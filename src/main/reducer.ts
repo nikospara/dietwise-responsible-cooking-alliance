@@ -56,7 +56,17 @@ export function reducer(state: MainData, action: MainAction): MainData {
 			}
 			return {
 				...state,
-				recipes: action.message.recipes,
+				recipes: action.message.recipes.map((r) => {
+					let text = r.text;
+					if (typeof text === 'string') {
+						text = text.replaceAll('\\n', '\n'); // Hack!
+						text = text.trimStart(); // Hack!
+					}
+					return {
+						...r,
+						text,
+					};
+				}),
 			};
 		}
 		case 'SuggestionsMessageReceivedAction': {

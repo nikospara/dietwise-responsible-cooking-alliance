@@ -263,6 +263,16 @@ export function cleanHtmlForLLM(
 		}
 	}
 
+	// 4a) Remove comments
+	const commentsWalker = doc.createTreeWalker(body, NodeFilter.SHOW_COMMENT);
+	const commentNodes: Comment[] = [];
+	while (commentsWalker.nextNode()) {
+		commentNodes.push(commentsWalker.currentNode as Comment);
+	}
+	for (const c of commentNodes) {
+		c.parentNode?.removeChild(c);
+	}
+
 	// 5) Whitespace normalization
 	// Convert <br> to newline tokens to help later collapse, then restore
 	body.querySelectorAll('br').forEach((br) =>
@@ -287,6 +297,7 @@ export function cleanHtmlForLLM(
 		'tr',
 		'th',
 		'td',
+		'div',
 	];
 	for (const tag of blockTags) {
 		body.querySelectorAll(tag).forEach((el) => {

@@ -37,10 +37,19 @@ describe('cleanHtmlForLLM', () => {
 		expect(html).toBe('<p>Hello</p>');
 	});
 
+	it('strips comments', () => {
+		const input =
+			'<html><body><p><!-- I am a comment -->Hello</p></body></html>';
+		const { html, textLength } = cleanHtmlForLLM(input);
+		expect(textLength).toBeGreaterThan(0);
+		expect(html).toBe('<p>Hello</p>');
+	});
+
 	it('strips all attributes except <a href>', () => {
 		const input = `
 			<div id="wrap" class="c">
 				<p style="color:red">Hello <a href="https://example.com/a.html" onclick="x()" target="_blank">world</a></p>
+				<p><span class="mm-recipes-nutrition-facts-label__nutrient-name mm-recipes-nutrition-facts-label__nutrient-name--has-postfix">Total Fat</span></p>
 			</div>`;
 		const { html } = cleanHtmlForLLM(input);
 
