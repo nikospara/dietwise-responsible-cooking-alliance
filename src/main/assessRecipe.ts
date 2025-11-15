@@ -15,7 +15,7 @@ export function assessRecipe(
 ): CancellationFunction {
 	const handler = streamJson(
 		// TODO Parameterize this!!!
-		'http://localhost:8180/api/v1/recipe/assess/html',
+		'http://localhost:8180/api/v1/recipe/assess/markdown',
 		{
 			url,
 			pageContent: pageContent || '',

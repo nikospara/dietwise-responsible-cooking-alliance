@@ -21,6 +21,7 @@ import RatingComponent from './RatingComponent';
 import SuggestionsComponent from './SuggestionsComponent';
 import i18next from 'i18next';
 import type { MainData, Recipe } from 'main/model';
+import TurndownService from 'turndown';
 
 function hasRecipes(
 	recipeState: MainData,
@@ -55,7 +56,12 @@ const MainPage: React.FC = () => {
 			const pageContent = await readPageContent(tabId);
 			const pageCleaningResult = cleanHtmlMinimal(pageContent);
 			let cleanPageContent = pageCleaningResult.html;
+			console.log('Size after 1st pass:', cleanPageContent.length);
 			cleanPageContent = cleanHtmlMinimal(cleanPageContent).html; // Hack!
+			console.log('Size after 2nd pass:', cleanPageContent.length);
+			cleanPageContent = new TurndownService().turndown(cleanPageContent);
+			console.log('Size after 3rd pass (Markdown):', cleanPageContent.length);
+			console.log(cleanPageContent);
 			cancelRef.current = assessRecipe(
 				url || '',
 				cleanPageContent,
