@@ -4,7 +4,8 @@
 			"labelLong": "Click here to assess the recipe on this page",
 			"labelShort": "Assess recipe",
 			"assessing": "Assessing URL:",
-			"assessed": "Assessed URL:"
+			"assessed": "Assessed URL:",
+			"notTheAssessedPage": "The displayed information is not about this page!"
 		},
 		"RatingComponent": {
 			"rating": "Rating:"
