@@ -1,4 +1,7 @@
 {
+	"login": {
+		"loginLabel": "Σύνδεση"
+	},
 	"main": {
 		"AssessRecipeComponent": {
 			"labelLong": "Πατήστε εδώ για να εκτιμηθεί η συνταγή της σελίδας",

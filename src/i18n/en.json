@@ -1,4 +1,7 @@
 {
+	"login": {
+		"loginLabel": "Login"
+	},
 	"main": {
 		"AssessRecipeComponent": {
 			"labelLong": "Click here to assess the recipe on this page",
