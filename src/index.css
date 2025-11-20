@@ -28,6 +28,10 @@
 		@apply h-full;
 	}
 
+	h1 {
+		@apply text-xl font-bold mt-[15px] first:mt-0 mb-[10px] last:mb-0;
+	}
+
 	h2 {
 		@apply text-lg font-bold mt-[15px] first:mt-0 mb-[10px] last:mb-0;
 	}

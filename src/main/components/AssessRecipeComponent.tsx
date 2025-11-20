@@ -11,6 +11,7 @@ export interface AssessRecipeComponentProps {
 	url: string | null | undefined;
 	onAssessButtonClicked: () => void;
 	onResetButtonClicked: () => void;
+	toConfigurationPage: () => void;
 }
 
 const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
@@ -129,7 +130,10 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
 						</span>
 					</button>
 				</div>
-				<button className="btn btn-outline">
+				<button
+					className="btn btn-outline"
+					onClick={props.toConfigurationPage}
+				>
 					<span>
 						<LiaCogSolid
 							size="1.5em"

@@ -32,7 +32,11 @@ function hasRecipes(
 	);
 }
 
-const MainPage: React.FC = () => {
+export interface MainPageProps {
+	toConfigurationPage: () => void;
+}
+
+const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 	const [recipeState, dispatch] = useReducer(
 		reducer,
 		null,
@@ -99,6 +103,7 @@ const MainPage: React.FC = () => {
 				url={recipeState.parsedPageUrl}
 				onAssessButtonClicked={assessRecipeCallback}
 				onResetButtonClicked={resetCallback}
+				toConfigurationPage={props.toConfigurationPage}
 			/>
 			{hasRecipes(recipeState) ? (
 				<RecipesComponent recipes={recipeState.recipes} />

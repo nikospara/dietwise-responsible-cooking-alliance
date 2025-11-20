@@ -2,12 +2,16 @@
 	"login": {
 		"loginLabel": "Login"
 	},
+	"config": {
+		"title": "Configuration",
+		"back": "Back"
+	},
 	"main": {
 		"AssessRecipeComponent": {
 			"labelLong": "Click here to assess the recipe on this page",
 			"labelShort": "Assess recipe",
-			"labelReset": "Επαναφορά",
-			"labelConfiguration": "Ρυθμίσεις",
+			"labelReset": "Reset",
+			"labelConfiguration": "Configuration",
 			"assessing": "Assessing URL:",
 			"assessed": "Assessed URL:",
 			"notTheAssessedPage": "The displayed information is not about this page!"

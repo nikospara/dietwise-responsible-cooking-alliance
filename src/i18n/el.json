@@ -2,12 +2,16 @@
 	"login": {
 		"loginLabel": "Σύνδεση"
 	},
+	"config": {
+		"title": "Ρυθμίσεις",
+		"back": "Πίσω"
+	},
 	"main": {
 		"AssessRecipeComponent": {
 			"labelLong": "Πατήστε εδώ για να εκτιμηθεί η συνταγή της σελίδας",
 			"labelShort": "Εκτίμηση συνταγής",
-			"labelReset": "Reset",
-			"labelConfiguration": "Configuration",
+			"labelReset": "Επαναφορά",
+			"labelConfiguration": "Ρυθμίσεις",
 			"assessing": "Γίνεται εκτίμηση, URL:",
 			"assessed": "Εκτιμήθηκε URL:",
 			"notTheAssessedPage": "Οι πληροφορίες δεν αφορούν αυτή τη σελίδα!"
