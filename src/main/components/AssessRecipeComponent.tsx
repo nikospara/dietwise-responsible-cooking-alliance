@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GrUndo } from 'react-icons/gr';
 import { TbAlertTriangleFilled, TbWorldUpload } from 'react-icons/tb';
+import { LiaCogSolid } from 'react-icons/lia';
+import classNames from 'classnames';
 
 export interface AssessRecipeComponentProps {
 	assessing: boolean;
@@ -84,7 +86,7 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
 
 	return (
 		<div>
-			<div className="flex justify-center gap-2">
+			<div className="flex items-center justify-center gap-2">
 				<button
 					className="btn btn-xl btn-accent"
 					disabled={props.assessing}
@@ -102,16 +104,41 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
 						{t('main.AssessRecipeComponent.labelShort')}
 					</span>
 				</button>
-				{props.hasOutcome && !props.assessing ? (
+				<div
+					className={classNames(
+						!props.hasOutcome || props.assessing
+							? 'max-w-0'
+							: 'max-w-[200px]',
+						'transition-[max-width]',
+						'duration-300',
+						'overflow-hidden',
+					)}
+				>
 					<button
 						className="btn btn-xl btn-outline"
 						onClick={props.onResetButtonClicked}
+						disabled={!props.hasOutcome || props.assessing}
 					>
 						<span>
-							<GrUndo />
+							<GrUndo
+								size="1.25em"
+								title={t(
+									'main.AssessRecipeComponent.labelReset',
+								)}
+							/>
 						</span>
 					</button>
-				) : null}
+				</div>
+				<button className="btn btn-outline">
+					<span>
+						<LiaCogSolid
+							size="1.5em"
+							title={t(
+								'main.AssessRecipeComponent.labelConfiguration',
+							)}
+						/>
+					</span>
+				</button>
 			</div>
 			<p className="truncate">
 				{props.url ? (
@@ -137,7 +164,7 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
 					</>
 				) : null}
 				&nbsp;
-				{props.url || ''}
+				<span>{props.url || ''}</span>
 			</p>
 		</div>
 	);

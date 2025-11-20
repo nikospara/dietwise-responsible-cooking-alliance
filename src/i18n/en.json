@@ -6,6 +6,8 @@
 		"AssessRecipeComponent": {
 			"labelLong": "Click here to assess the recipe on this page",
 			"labelShort": "Assess recipe",
+			"labelReset": "Επαναφορά",
+			"labelConfiguration": "Ρυθμίσεις",
 			"assessing": "Assessing URL:",
 			"assessed": "Assessed URL:",
 			"notTheAssessedPage": "The displayed information is not about this page!"
@@ -18,7 +20,8 @@
 		},
 		"MainPageHelpComponent": {
 			"title": "Responsible Cooking Alliance",
-			"paragraph1": "Press the button above to assess the recipe in the current page."
+			"paragraph1": "Press the button above to assess the recipe in the current page.",
+			"paragraph2": "<This is a placeholder for some informative text to show when the application has nothing else to display>"
 		}
 	}
 }
