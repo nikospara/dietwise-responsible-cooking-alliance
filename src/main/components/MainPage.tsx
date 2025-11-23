@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useReducer, useRef } from 'react';
-import { createInitialState, reducer } from 'main/reducer';
+import { useCallback, useEffect, useRef } from 'react';
+import { useAtom } from 'jotai';
+import { mainStateAtom } from 'main/atoms';
 import {
 	createPrepareToAssessRecipeAction,
 	createAssessRecipeAction,
@@ -37,11 +38,7 @@ export interface MainPageProps {
 }
 
 const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
-	const [recipeState, dispatch] = useReducer(
-		reducer,
-		null,
-		createInitialState,
-	);
+	const [mainState, dispatch] = useAtom(mainStateAtom);
 
 	const cancelRef = useRef<CancellationFunction>(null);
 
@@ -64,7 +61,10 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 			cleanPageContent = cleanHtmlMinimal(cleanPageContent).html; // Hack!
 			console.log('Size after 2nd pass:', cleanPageContent.length);
 			cleanPageContent = new TurndownService().turndown(cleanPageContent);
-			console.log('Size after 3rd pass (Markdown):', cleanPageContent.length);
+			console.log(
+				'Size after 3rd pass (Markdown):',
+				cleanPageContent.length,
+			);
 			console.log(cleanPageContent);
 			cancelRef.current = assessRecipe(
 				url || '',
@@ -95,33 +95,29 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 	return (
 		<div className="flex h-full flex-col gap-[15px] p-[8px]">
 			<AssessRecipeComponent
-				assessing={recipeState.status === 'PENDING'}
+				assessing={mainState.status === 'PENDING'}
 				hasOutcome={
-					recipeState.status === 'SUCCESS' ||
-					recipeState.status === 'FAILURE'
+					mainState.status === 'SUCCESS' ||
+					mainState.status === 'FAILURE'
 				}
-				url={recipeState.parsedPageUrl}
+				url={mainState.parsedPageUrl}
 				onAssessButtonClicked={assessRecipeCallback}
 				onResetButtonClicked={resetCallback}
 				toConfigurationPage={props.toConfigurationPage}
 			/>
-			{hasRecipes(recipeState) ? (
-				<RecipesComponent recipes={recipeState.recipes} />
+			{hasRecipes(mainState) ? (
+				<RecipesComponent recipes={mainState.recipes} />
 			) : null}
-			{recipeState.status === 'SUCCESS' ? (
+			{mainState.status === 'SUCCESS' ? (
 				<>
-					<RatingComponent rating={recipeState.rating} max={5} />
-					<SuggestionsComponent
-						suggestions={recipeState.suggestions}
-					/>
+					<RatingComponent rating={mainState.rating} max={5} />
+					<SuggestionsComponent suggestions={mainState.suggestions} />
 				</>
 			) : null}
-			{recipeState.status === 'FAILURE' ? (
-				<MainPageErrorsComponent errors={recipeState.errors || []} />
+			{mainState.status === 'FAILURE' ? (
+				<MainPageErrorsComponent errors={mainState.errors || []} />
 			) : null}
-			{recipeState.status === 'INITIAL' ? (
-				<MainPageHelpComponent />
-			) : null}
+			{mainState.status === 'INITIAL' ? <MainPageHelpComponent /> : null}
 		</div>
 	);
 };
