@@ -12,14 +12,12 @@ const langCode =
 			? chrome.i18n.getUILanguage()
 			: 'en';
 
-const authenticationInfoPromise: Promise<AuthenticationInfo> = new Promise(
-	(resolve) => {
-		// TODO Real initial authentication
-		resolve({
-			isAuthenticated: false,
-		});
-	},
-);
+const authenticationInfoPromise: Promise<AuthenticationInfo> = new Promise((resolve) => {
+	// TODO Real initial authentication
+	resolve({
+		isAuthenticated: false,
+	});
+});
 
 Promise.all([configureI18n(langCode), authenticationInfoPromise]).then(
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -29,9 +27,7 @@ Promise.all([configureI18n(langCode), authenticationInfoPromise]).then(
 
 		root.render(
 			<StrictMode>
-				<AppLayout
-					initialAuthenticationInfo={initialAuthenticationInfo}
-				/>
+				<AppLayout initialAuthenticationInfo={initialAuthenticationInfo} />
 			</StrictMode>,
 		);
 	},

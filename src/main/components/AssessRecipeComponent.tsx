@@ -14,33 +14,19 @@ export interface AssessRecipeComponentProps {
 	toConfigurationPage: () => void;
 }
 
-const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
-	props: AssessRecipeComponentProps,
-) => {
-	const [assessedTabUrl, setAssessedTabUrl] = useState<
-		string | null | undefined
-	>(null);
+const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (props: AssessRecipeComponentProps) => {
+	const [assessedTabUrl, setAssessedTabUrl] = useState<string | null | undefined>(null);
 	const activeTabId = useRef<number | null | undefined>(-1);
 
 	useEffect(() => {
-		if (
-			typeof browser !== 'undefined' &&
-			typeof browser.tabs !== 'undefined'
-		) {
-			const activatedListener = (
-				activeInfo: browser.tabs._OnActivatedActiveInfo,
-			) => {
+		if (typeof browser !== 'undefined' && typeof browser.tabs !== 'undefined') {
+			const activatedListener = (activeInfo: browser.tabs._OnActivatedActiveInfo) => {
 				activeTabId.current = activeInfo.tabId;
-				browser.tabs
-					.get(activeInfo.tabId)
-					.then((tab) => setAssessedTabUrl(tab.url));
+				browser.tabs.get(activeInfo.tabId).then((tab) => setAssessedTabUrl(tab.url));
 			};
 			browser.tabs.onActivated.addListener(activatedListener);
 
-			const updatedListener = (
-				tabId: number,
-				changeInfo: browser.tabs._OnUpdatedChangeInfo,
-			) => {
+			const updatedListener = (tabId: number, changeInfo: browser.tabs._OnUpdatedChangeInfo) => {
 				if (tabId === activeTabId.current && changeInfo.url) {
 					setAssessedTabUrl(changeInfo.url);
 				}
@@ -51,13 +37,8 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
 				browser.tabs.onActivated.removeListener(activatedListener);
 				browser.tabs.onUpdated.removeListener(updatedListener);
 			};
-		} else if (
-			typeof chrome !== 'undefined' &&
-			typeof chrome.tabs !== 'undefined'
-		) {
-			const activatedListener = (
-				activeInfo: chrome.tabs.OnActivatedInfo,
-			) => {
+		} else if (typeof chrome !== 'undefined' && typeof chrome.tabs !== 'undefined') {
+			const activatedListener = (activeInfo: chrome.tabs.OnActivatedInfo) => {
 				activeTabId.current = activeInfo.tabId;
 				chrome.tabs.get(activeInfo.tabId, (tab) => {
 					console.log('ASSESSED URL', tab.url);
@@ -66,10 +47,7 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
 			};
 			chrome.tabs.onActivated.addListener(activatedListener);
 
-			const updatedListener = (
-				tabId: number,
-				changeInfo: chrome.tabs.OnUpdatedInfo,
-			) => {
+			const updatedListener = (tabId: number, changeInfo: chrome.tabs.OnUpdatedInfo) => {
 				if (tabId === activeTabId.current && changeInfo.url) {
 					setAssessedTabUrl(changeInfo.url);
 				}
@@ -93,23 +71,15 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
 					disabled={props.assessing}
 					onClick={props.onAssessButtonClicked}
 				>
-					<span
-						className={props.assessing ? 'animate-pingpulse' : ''}
-					>
+					<span className={props.assessing ? 'animate-pingpulse' : ''}>
 						<TbWorldUpload />
 					</span>
-					<span className="hidden md:inline">
-						{t('main.AssessRecipeComponent.labelLong')}
-					</span>
-					<span className="inline md:hidden">
-						{t('main.AssessRecipeComponent.labelShort')}
-					</span>
+					<span className="hidden md:inline">{t('main.AssessRecipeComponent.labelLong')}</span>
+					<span className="inline md:hidden">{t('main.AssessRecipeComponent.labelShort')}</span>
 				</button>
 				<div
 					className={classNames(
-						!props.hasOutcome || props.assessing
-							? 'max-w-0'
-							: 'max-w-[200px]',
+						!props.hasOutcome || props.assessing ? 'max-w-0' : 'max-w-[200px]',
 						'transition-[max-width]',
 						'duration-300',
 						'overflow-hidden',
@@ -121,26 +91,13 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
 						disabled={!props.hasOutcome || props.assessing}
 					>
 						<span>
-							<GrUndo
-								size="1.25em"
-								title={t(
-									'main.AssessRecipeComponent.labelReset',
-								)}
-							/>
+							<GrUndo size="1.25em" title={t('main.AssessRecipeComponent.labelReset')} />
 						</span>
 					</button>
 				</div>
-				<button
-					className="btn btn-outline"
-					onClick={props.toConfigurationPage}
-				>
+				<button className="btn btn-outline" onClick={props.toConfigurationPage}>
 					<span>
-						<LiaCogSolid
-							size="1.5em"
-							title={t(
-								'main.AssessRecipeComponent.labelConfiguration',
-							)}
-						/>
+						<LiaCogSolid size="1.5em" title={t('main.AssessRecipeComponent.labelConfiguration')} />
 					</span>
 				</button>
 			</div>
@@ -152,17 +109,13 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (
 							: t('main.AssessRecipeComponent.assessed')}
 					</span>
 				) : null}
-				{!!props.url &&
-				assessedTabUrl &&
-				props.url !== assessedTabUrl ? (
+				{!!props.url && assessedTabUrl && props.url !== assessedTabUrl ? (
 					<>
 						&nbsp;
 						<span>
 							<TbAlertTriangleFilled
 								className="text-(--color-error) inline-block"
-								title={t(
-									'main.AssessRecipeComponent.notTheAssessedPage',
-								)}
+								title={t('main.AssessRecipeComponent.notTheAssessedPage')}
 							/>
 						</span>
 					</>

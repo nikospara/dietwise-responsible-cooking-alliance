@@ -10,21 +10,15 @@ export interface AppLayoutProps {
 }
 
 const AppLayout: React.FC<AppLayoutProps> = (props) => {
-	const [userInfoState, setUserInfoState] = useState(
-		props.initialAuthenticationInfo,
-	);
+	const [userInfoState, setUserInfoState] = useState(props.initialAuthenticationInfo);
 	const [showingConfiguration, setShowingConfiguration] = useState(false);
 
 	return (
 		<AuthContext value={userInfoState}>
 			{showingConfiguration ? (
-				<ConfigurationPage
-					back={() => setShowingConfiguration(false)}
-				/>
+				<ConfigurationPage back={() => setShowingConfiguration(false)} />
 			) : userInfoState.isAuthenticated ? (
-				<MainPage
-					toConfigurationPage={() => setShowingConfiguration(true)}
-				/>
+				<MainPage toConfigurationPage={() => setShowingConfiguration(true)} />
 			) : (
 				<LoginPage
 					onAuthenticated={(ui) =>

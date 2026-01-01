@@ -15,10 +15,7 @@ function normalizeForAssert(html: string): string {
 }
 
 function hasTag(html: string, tag: string): boolean {
-	const doc = new DOMParser().parseFromString(
-		`<wrapper>${html}</wrapper>`,
-		'text/html',
-	);
+	const doc = new DOMParser().parseFromString(`<wrapper>${html}</wrapper>`, 'text/html');
 	return doc.querySelector(tag) !== null;
 }
 
@@ -38,8 +35,7 @@ describe('cleanHtmlForLLM', () => {
 	});
 
 	it('strips comments', () => {
-		const input =
-			'<html><body><p><!-- I am a comment -->Hello</p></body></html>';
+		const input = '<html><body><p><!-- I am a comment -->Hello</p></body></html>';
 		const { html, textLength } = cleanHtmlForLLM(input);
 		expect(textLength).toBeGreaterThan(0);
 		expect(html).toBe('<p>Hello</p>');
@@ -63,8 +59,7 @@ describe('cleanHtmlForLLM', () => {
 	});
 
 	it('unsafe links are unwrapped; text remains', () => {
-		const input =
-			'<p>Click <a href="javascript:alert(1)">here</a> now.</p>';
+		const input = '<p>Click <a href="javascript:alert(1)">here</a> now.</p>';
 		const { html } = cleanHtmlForLLM(input);
 		expect(hasTag(html, 'a')).toBe(false);
 		expect(normalizeForAssert(html)).toBe('Click here now.');
@@ -129,9 +124,7 @@ describe('cleanHtmlForLLM', () => {
 		expect(hasTag(html, 'ul')).toBe(true);
 		expect(hasTag(html, 'ol')).toBe(true);
 		expect(html.match(/<li>/g)?.length).toBe(4);
-		expect(normalizeForAssert(html)).toContain(
-			'Ingredients 1 cup flour 2 eggs Instructions Mix Bake',
-		);
+		expect(normalizeForAssert(html)).toContain('Ingredients 1 cup flour 2 eggs Instructions Mix Bake');
 	});
 
 	it('tables: dropped by default, preserved when keepTables=true', () => {
@@ -172,9 +165,7 @@ describe('cleanHtmlForLLM', () => {
 			dropMedia: false,
 		});
 		expect(
-			new DOMParser()
-				.parseFromString(`<w>${noImgBecauseNoSrc}</w>`, 'text/html')
-				.querySelector('img'),
+			new DOMParser().parseFromString(`<w>${noImgBecauseNoSrc}</w>`, 'text/html').querySelector('img'),
 		).toBeNull();
 	});
 
@@ -200,8 +191,7 @@ describe('cleanHtmlForLLM', () => {
 	});
 
 	it('handles deeply nested wrappers and preserves core content', () => {
-		const input =
-			'<div><div><section><article><p>Keep me</p></article></section></div></div>';
+		const input = '<div><div><section><article><p>Keep me</p></article></section></div></div>';
 		const { html } = cleanHtmlForLLM(input);
 		expect(hasTag(html, 'p')).toBe(true);
 		expect(/<div|<section|<article/i.test(html)).toBe(false);

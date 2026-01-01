@@ -24,8 +24,8 @@ export interface CleanOptions {
 	strictUrls: boolean;
 	/** If true, preserve a minimal table set (table, thead, tbody, tr, th, td). */
 	keepTables: boolean;
-	/** Maximum depth to process to avoid pathological DOMs. */
-	maxDepth: number;
+	/** Maximum nimber of nodes to process to avoid pathological DOMs. */
+	maxNodes: number;
 }
 
 export const DEFAULT_ALLOWED_TAGS: ReadonlySet<string> = new Set([
@@ -56,6 +56,7 @@ export const DEFAULT_ALLOWED_TAGS: ReadonlySet<string> = new Set([
 	'a',
 ]);
 
+// eslint-disable-next-line prettier/prettier
 export const TABLE_TAGS = [
 	'table',
 	'thead',
@@ -75,16 +76,13 @@ export interface PageCleaningResult {
 	stats: Record<string, number>;
 }
 
-export function cleanHtmlForLLM(
-	html: string,
-	options?: Partial<CleanOptions>,
-): PageCleaningResult {
+export function cleanHtmlForLLM(html: string, options?: Partial<CleanOptions>): PageCleaningResult {
 	const opts: CleanOptions = {
 		allowedTags: new Set(DEFAULT_ALLOWED_TAGS),
 		dropMedia: true,
 		strictUrls: true,
 		keepTables: false,
-		maxDepth: 2000,
+		maxNodes: 200000,
 		...options,
 	};
 	if (opts.keepTables) TABLE_TAGS.forEach((t) => opts.allowedTags.add(t));
@@ -162,7 +160,7 @@ export function cleanHtmlForLLM(
 	// Tree walk breadth-first with a depth guard to strip attributes
 	const queue: Node[] = [body];
 	let processed = 0;
-	while (queue.length && processed++ < opts.maxDepth) {
+	while (queue.length && processed++ < opts.maxNodes) {
 		const node = queue.shift()!;
 		if (node.nodeType === Node.ELEMENT_NODE) {
 			const el = node as Element;
@@ -245,8 +243,7 @@ export function cleanHtmlForLLM(
 		if (tag === 'img') {
 			return opts.allowedTags.has('img') && !!el.getAttribute('src');
 		}
-		const txt =
-			el.textContent?.replace(/[\u200B\u200C\u200D]/g, '').trim() || '';
+		const txt = el.textContent?.replace(/[\u200B\u200C\u200D]/g, '').trim() || '';
 		return txt.length > 0;
 	};
 
@@ -275,9 +272,7 @@ export function cleanHtmlForLLM(
 
 	// 5) Whitespace normalization
 	// Convert <br> to newline tokens to help later collapse, then restore
-	body.querySelectorAll('br').forEach((br) =>
-		br.replaceWith(doc.createTextNode('\n')),
-	);
+	body.querySelectorAll('br').forEach((br) => br.replaceWith(doc.createTextNode('\n')));
 
 	// Insert newlines around block-level tags so collapsing whitespace keeps structure
 	const blockTags = [

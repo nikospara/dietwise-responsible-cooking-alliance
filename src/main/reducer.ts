@@ -50,9 +50,7 @@ export function reducer(state: MainData, action: MainAction): MainData {
 		}
 		case 'RecipeExtractionMessageReceivedAction': {
 			if (state.status !== 'PENDING') {
-				throw new Error(
-					'Inconsistent state for RecipeExtractionMessageReceivedAction',
-				);
+				throw new Error('Inconsistent state for RecipeExtractionMessageReceivedAction');
 			}
 			return {
 				...state,
@@ -71,9 +69,7 @@ export function reducer(state: MainData, action: MainAction): MainData {
 		}
 		case 'SuggestionsMessageReceivedAction': {
 			if (state.status !== 'PENDING') {
-				throw new Error(
-					'Inconsistent state for SuggestionsMessageReceivedAction',
-				);
+				throw new Error('Inconsistent state for SuggestionsMessageReceivedAction');
 			}
 			return {
 				...state,
@@ -84,9 +80,7 @@ export function reducer(state: MainData, action: MainAction): MainData {
 		}
 		case 'RecipeAssessmentErrorMessageReceivedAction': {
 			if (state.status !== 'PENDING') {
-				throw new Error(
-					'Inconsistent state for RecipeAssessmentErrorMessageReceivedAction',
-				);
+				throw new Error('Inconsistent state for RecipeAssessmentErrorMessageReceivedAction');
 			}
 			return {
 				...state,

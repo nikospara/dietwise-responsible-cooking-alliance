@@ -1,19 +1,13 @@
 export async function readPageContent(tabId: number): Promise<string> {
 	if (typeof browser !== 'undefined') {
 		return readPageContentFirefox(tabId);
-	} else if (
-		typeof chrome !== 'undefined' &&
-		typeof chrome.scripting !== 'undefined'
-	) {
+	} else if (typeof chrome !== 'undefined' && typeof chrome.scripting !== 'undefined') {
 		return readPageContentChrome(tabId);
 	} else {
 		// Here we are running in a browser, probably for development. Allow
 		// short-circuiting this functionality by providing a value for the
 		// global READ_PAGE_CONTENT_RESULT.
-		return Promise.resolve(
-			((<unknown>window) as { READ_PAGE_CONTENT_RESULT: string })
-				.READ_PAGE_CONTENT_RESULT,
-		);
+		return Promise.resolve(((<unknown>window) as { READ_PAGE_CONTENT_RESULT: string }).READ_PAGE_CONTENT_RESULT);
 	}
 }
 
