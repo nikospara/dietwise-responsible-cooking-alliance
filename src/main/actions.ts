@@ -1,19 +1,17 @@
 import type {
+	MoreThanOneRecipesAssessmentMessage,
 	RecipeAssessmentErrorMessage,
 	RecipeAssessmentMessage,
 	RecipeExtractionRecipeAssessmentMessage,
+	ScoringRecipeAssessmentMessage,
 	SuggestionsRecipeAssessmentMessage,
+	SuggestionStatus,
 } from './model';
 import type { Action } from '@/model';
 
 export interface PrepareToAssessRecipeAction extends Action {
 	type: 'PrepareToAssessRecipeAction';
-}
-
-export interface AssessRecipeAction extends Action {
-	type: 'AssessRecipeAction';
-	url?: string;
-	title?: string;
+	url: string;
 }
 
 export interface RecipeAssessmentFailedAction extends Action {
@@ -34,9 +32,19 @@ export interface RecipeExtractionMessageReceivedAction extends Action {
 	message: RecipeExtractionRecipeAssessmentMessage;
 }
 
+export interface MoreThanOneRecipesAssessmentMessageReceivedAction extends Action {
+	type: 'MoreThanOneRecipesAssessmentMessageReceivedAction';
+	numberOfRecipes: number;
+}
+
 export interface SuggestionsMessageReceivedAction extends Action {
 	type: 'SuggestionsMessageReceivedAction';
 	message: SuggestionsRecipeAssessmentMessage;
+}
+
+export interface ScoringMessageReceivedAction extends Action {
+	type: 'ScoringMessageReceivedAction';
+	message: ScoringRecipeAssessmentMessage;
 }
 
 export interface RecipeAssessmentErrorMessageReceivedAction extends Action {
@@ -44,32 +52,35 @@ export interface RecipeAssessmentErrorMessageReceivedAction extends Action {
 	message: RecipeAssessmentErrorMessage;
 }
 
+export interface SuggestionStatusAction extends Action {
+	type: 'SuggestionStatusAction';
+	key: string;
+	status: SuggestionStatus;
+}
+
 export type MessageReceivedAction =
 	| RecipeExtractionMessageReceivedAction
+	| MoreThanOneRecipesAssessmentMessageReceivedAction
 	| SuggestionsMessageReceivedAction
+	| ScoringMessageReceivedAction
 	| RecipeAssessmentErrorMessageReceivedAction;
 
 export type MainAction =
 	| PrepareToAssessRecipeAction
-	| AssessRecipeAction
 	| RecipeAssessmentFailedAction
 	| RecipeAssessmentCompletedAction
 	| ResetMainPageAction
 	| RecipeExtractionMessageReceivedAction
+	| MoreThanOneRecipesAssessmentMessageReceivedAction
 	| SuggestionsMessageReceivedAction
-	| RecipeAssessmentErrorMessageReceivedAction;
+	| ScoringMessageReceivedAction
+	| RecipeAssessmentErrorMessageReceivedAction
+	| SuggestionStatusAction;
 
-export function createPrepareToAssessRecipeAction(): PrepareToAssessRecipeAction {
+export function createPrepareToAssessRecipeAction(url: string): PrepareToAssessRecipeAction {
 	return {
 		type: 'PrepareToAssessRecipeAction',
-	};
-}
-
-export function createAssessRecipeAction(url: string, title: string | undefined): AssessRecipeAction {
-	return {
-		type: 'AssessRecipeAction',
 		url,
-		title,
 	};
 }
 
@@ -105,9 +116,19 @@ export function createMessageReceivedAction(message: RecipeAssessmentMessage): M
 				type: 'RecipeExtractionMessageReceivedAction',
 				message,
 			};
+		case 'MORE_THAN_ONE_RECIPE':
+			return {
+				type: 'MoreThanOneRecipesAssessmentMessageReceivedAction',
+				numberOfRecipes: (message as MoreThanOneRecipesAssessmentMessage).numberOfRecipes,
+			};
 		case 'SUGGESTIONS':
 			return {
 				type: 'SuggestionsMessageReceivedAction',
+				message,
+			};
+		case 'SCORING':
+			return {
+				type: 'ScoringMessageReceivedAction',
 				message,
 			};
 		case 'ERROR':
@@ -116,4 +137,12 @@ export function createMessageReceivedAction(message: RecipeAssessmentMessage): M
 				message,
 			};
 	}
+}
+
+export function createSuggestionStatusAction(key: string, status: SuggestionStatus): SuggestionStatusAction {
+	return {
+		type: 'SuggestionStatusAction',
+		key,
+		status,
+	};
 }

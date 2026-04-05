@@ -1,8 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import type { Suggestion } from '@/main/model';
+import type { SuggestionState } from '@/main/model';
 
 export interface SuggestionsComponentProps {
-	suggestions: Suggestion[] | undefined;
+	suggestionKeys: string[] | undefined;
+	suggestions: { [key: string]: SuggestionState } | undefined;
+	errors?: string[];
+	emptySuggestionsFromServer?: boolean;
 }
 
 const SuggestionsComponent: React.FC<SuggestionsComponentProps> = (props: SuggestionsComponentProps) => {
@@ -12,9 +15,14 @@ const SuggestionsComponent: React.FC<SuggestionsComponentProps> = (props: Sugges
 		<div className="shrink grow basis-auto overflow-y-auto">
 			<h2>{t('main.SuggestionsComponent.title')}</h2>
 			<div>
-				{props.suggestions
-					? props.suggestions.map((suggestion, index) => <p key={index}>{suggestion.text}</p>)
-					: null}
+				{props.suggestionKeys?.map((suggestionKey) => {
+					const suggestion = props.suggestions?.[suggestionKey]?.suggestion;
+					return suggestion ? <p key={suggestionKey}>{suggestion.text}</p> : null;
+				})}
+				{props.errors?.map((error, index) => (
+					<p key={`error-${index}`}>{error}</p>
+				))}
+				{props.emptySuggestionsFromServer ? <p>{t('recipe.emptySuggestionsFromServer')}</p> : null}
 			</div>
 		</div>
 	);

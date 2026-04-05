@@ -12,56 +12,45 @@ describe('streamJson', () => {
 	 * Helper: mock streaming fetch that sends lines sequentially and supports abort
 	 */
 	function mockFetchStream(lines: string[], delayMs = 0) {
-		vi.spyOn(global, 'fetch').mockImplementation(
-			(_, init?: RequestInit) => {
-				const signal = init?.signal;
-				const encoder = new TextEncoder();
+		vi.spyOn(global, 'fetch').mockImplementation((_, init?: RequestInit) => {
+			const signal = init?.signal;
+			const encoder = new TextEncoder();
 
-				const stream = new ReadableStream<Uint8Array>({
-					async start(controller) {
-						let aborted = false;
+			const stream = new ReadableStream<Uint8Array>({
+				async start(controller) {
+					let aborted = false;
 
-						const onAbort = () => {
-							aborted = true;
-							controller.error(
-								new DOMException('Aborted', 'AbortError'),
-							);
-						};
+					const onAbort = () => {
+						aborted = true;
+						controller.error(new DOMException('Aborted', 'AbortError'));
+					};
 
-						signal?.addEventListener('abort', onAbort);
+					signal?.addEventListener('abort', onAbort);
 
-						for (const line of lines) {
-							if (aborted) return;
-							controller.enqueue(encoder.encode(line + '\n'));
-							if (delayMs > 0)
-								await new Promise((r) =>
-									setTimeout(r, delayMs),
-								);
-						}
+					for (const line of lines) {
+						if (aborted) return;
+						controller.enqueue(encoder.encode(line + '\n'));
+						if (delayMs > 0) await new Promise((r) => setTimeout(r, delayMs));
+					}
 
-						if (!aborted) controller.close();
-					},
-				});
+					if (!aborted) controller.close();
+				},
+			});
 
-				return Promise.resolve(
-					new Response(stream, {
-						status: 200,
-						headers: { 'Content-Type': 'application/json' },
-					}),
-				);
-			},
-		);
+			return Promise.resolve(
+				new Response(stream, {
+					status: 200,
+					headers: { 'Content-Type': 'application/json' },
+				}),
+			);
+		});
 	}
 
 	it('calls onMessage for each line and onComplete at the end', async () => {
 		const onMessage = vi.fn();
 		const onComplete = vi.fn();
 
-		mockFetchStream([
-			'{"key":"a","value":"1"}',
-			'{"key":"b","value":"2"}',
-			'{"key":"c","value":"3"}',
-		]);
+		mockFetchStream(['{"key":"a","value":"1"}', '{"key":"b","value":"2"}', '{"key":"c","value":"3"}']);
 
 		streamJson('/api/stream', undefined, { onMessage, onComplete });
 
@@ -106,9 +95,7 @@ describe('streamJson', () => {
 	it('calls onError on HTTP error', async () => {
 		const onError = vi.fn();
 
-		vi.spyOn(global, 'fetch').mockResolvedValue(
-			new Response(null, { status: 500 }),
-		);
+		vi.spyOn(global, 'fetch').mockResolvedValue(new Response(null, { status: 500 }));
 
 		streamJson('/api/error', undefined, { onError });
 

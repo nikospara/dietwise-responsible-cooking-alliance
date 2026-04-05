@@ -10,8 +10,8 @@ const RecipesComponent: React.FC<RecipesComponentProps> = (props: RecipesCompone
 		<div className="shrink grow-0 basis-auto overflow-y-auto">
 			{props.recipes.map((r, index) => {
 				return (
-					<div key={index}>
-						<Markdown>{r.text.trim()}</Markdown>
+					<div key={r.name ?? index}>
+						<Markdown>{r.text?.trim() || ''}</Markdown>
 					</div>
 				);
 			})}
