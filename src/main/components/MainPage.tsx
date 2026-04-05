@@ -60,7 +60,7 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 			cancelRef.current = assessRecipe(
 				url || '',
 				cleanPageContent,
-				i18next.language,
+				i18next.language, // TODO This needs improvement
 				(message) => {
 					dispatch(createMessageReceivedAction(message));
 				},

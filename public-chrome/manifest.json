@@ -12,12 +12,23 @@
 		}
 	},
 	"background": {
-		"service_worker": "background.js"
+		"service_worker": "background.js",
+		"type": "module"
 	},
+	"content_scripts": [
+		{
+			"matches": [
+				"http://localhost:8180/*"
+			],
+			"js": ["callback-content.js"],
+			"run_at": "document_start"
+		}
+	],
 	"permissions": [
-		"sidePanel",
-		"scripting",
 		"activeTab",
+		"scripting",
+		"sidePanel",
+		"storage",
 		"tabs"
 	],
 	"host_permissions": [

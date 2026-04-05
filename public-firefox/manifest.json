@@ -15,8 +15,9 @@
 		"scripts": ["background.js"]
 	},
 	"permissions": [
-		"scripting",
 		"activeTab",
+		"scripting",
+		"storage",
 		"tabs"
 	],
 	"host_permissions": [

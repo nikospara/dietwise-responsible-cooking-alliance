@@ -58,12 +58,11 @@ export interface MainData {
 	status: 'INITIAL' | 'SUCCESS' | 'FAILURE' | 'PENDING';
 	errors?: string[];
 	rating?: number;
-	allowRatingToBeDisplayedWithTheRecipe?: boolean;
 	recipes?: Recipe[];
 	suggestions?: Suggestion[];
 	/**
-	 * The URL of the page whose data has been parsed to populate the rest of this structure, if
-	 * `parsing === false`, or the page being parsed, if `parsing === true`.
+	 * The URL of the recipe page. When the user changes tabs, the content of the extension UI should
+	 * indicate that the information applies to a different URL.
 	 */
 	parsedPageUrl?: string;
 }

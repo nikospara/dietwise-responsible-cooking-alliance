@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
 	const viteStaticCopyCfg = viteStaticCopy({
 		targets: [
 			{
-				src: `public-${browser}/manifest.json`,
+				src: `public-${browser}/*`,
 				dest: '',
 				overwrite: true,
 			},
@@ -34,6 +34,21 @@ export default defineConfig(({ mode }) => {
 			// Set to {} to enable a watched build workflow, null to disable (default).
 			watch: env.VITE_WATCH ? {} : null,
 			outDir: `dist-${browser}`,
+			rollupOptions: {
+				input: {
+					index: path.resolve(__dirname, 'index.html'),
+					background: path.resolve(__dirname, 'src/background.ts'),
+				},
+				output: {
+					entryFileNames: (chunkInfo) => {
+						if (chunkInfo.name === 'background') {
+							return 'background.js';
+						} else {
+							return 'assets/[name]-[hash].js';
+						}
+					},
+				},
+			},
 		},
 		test: {
 			environment: 'jsdom', // Required for DOM-based tests

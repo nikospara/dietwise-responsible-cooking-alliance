@@ -6,9 +6,7 @@ export interface RatingComponentProps {
 	max: number;
 }
 
-const RatingComponent: React.FC<RatingComponentProps> = (
-	props: RatingComponentProps,
-) => {
+const RatingComponent: React.FC<RatingComponentProps> = (props: RatingComponentProps) => {
 	const { t } = useTranslation();
 
 	const stars = new Array(props.max);

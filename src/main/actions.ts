@@ -65,10 +65,7 @@ export function createPrepareToAssessRecipeAction(): PrepareToAssessRecipeAction
 	};
 }
 
-export function createAssessRecipeAction(
-	url: string,
-	title: string | undefined,
-): AssessRecipeAction {
+export function createAssessRecipeAction(url: string, title: string | undefined): AssessRecipeAction {
 	return {
 		type: 'AssessRecipeAction',
 		url,
@@ -76,9 +73,7 @@ export function createAssessRecipeAction(
 	};
 }
 
-export function createRecipeAssessmentFailedAction(
-	e: unknown,
-): RecipeAssessmentFailedAction {
+export function createRecipeAssessmentFailedAction(e: unknown): RecipeAssessmentFailedAction {
 	let error: Error;
 	if (e instanceof Error) {
 		error = e;
@@ -103,9 +98,7 @@ export function createResetMainPageAction(): ResetMainPageAction {
 	};
 }
 
-export function createMessageReceivedAction(
-	message: RecipeAssessmentMessage,
-): MessageReceivedAction {
+export function createMessageReceivedAction(message: RecipeAssessmentMessage): MessageReceivedAction {
 	switch (message.type) {
 		case 'RECIPES':
 			return {

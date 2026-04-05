@@ -72,7 +72,14 @@ module.exports = defineConfig([
 		},
 
 		rules: {
-			'@typescript-eslint/no-unused-vars': 'warn',
+			'@typescript-eslint/no-unused-vars': [
+				'error',
+				{
+					argsIgnorePattern: '^_',
+					varsIgnorePattern: '^_',
+					caughtErrorsIgnorePattern: '^_',
+				},
+			],
 			'react/jsx-curly-brace-presence': 'warn',
 			'react/jsx-no-leaked-render': 'warn',
 			quotes: ['warn', 'single'],

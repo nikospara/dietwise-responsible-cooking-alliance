@@ -5,9 +5,7 @@ export interface SuggestionsComponentProps {
 	suggestions: Suggestion[] | undefined;
 }
 
-const SuggestionsComponent: React.FC<SuggestionsComponentProps> = (
-	props: SuggestionsComponentProps,
-) => {
+const SuggestionsComponent: React.FC<SuggestionsComponentProps> = (props: SuggestionsComponentProps) => {
 	const { t } = useTranslation();
 
 	return (
@@ -15,9 +13,7 @@ const SuggestionsComponent: React.FC<SuggestionsComponentProps> = (
 			<h2>{t('main.SuggestionsComponent.title')}</h2>
 			<div>
 				{props.suggestions
-					? props.suggestions.map((suggestion, index) => (
-							<p key={index}>{suggestion.text}</p>
-						))
+					? props.suggestions.map((suggestion, index) => <p key={index}>{suggestion.text}</p>)
 					: null}
 			</div>
 		</div>
