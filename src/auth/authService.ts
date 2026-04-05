@@ -1,7 +1,7 @@
 // auth/authService.ts
 import { createPKCE } from './pkce';
-import { get, set, remove } from 'configuration/storage';
-import type { Tokens } from 'configuration/model';
+import { get, set, remove } from '@/configuration/storage';
+import type { Tokens } from '@/configuration/model';
 
 const KEYCLOAK_BASE = 'http://localhost:8280/realms/dietwise';
 const CLIENT_ID = 'rca';

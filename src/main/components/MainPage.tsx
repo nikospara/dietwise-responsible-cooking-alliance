@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useAtom } from 'jotai';
-import { mainStateAtom } from 'main/atoms';
+import { mainStateAtom } from '@/main/atoms';
 import {
 	createPrepareToAssessRecipeAction,
 	createAssessRecipeAction,
@@ -8,12 +8,12 @@ import {
 	createRecipeAssessmentFailedAction,
 	createResetMainPageAction,
 	createMessageReceivedAction,
-} from 'main/actions';
-import { readCurrentPageMetadata } from 'main/readCurrentPageMetadata';
-import { readPageContent } from 'main/readPageContent';
-import { cleanHtmlMinimal } from 'main/cleanHtmlForLLM';
-import { assessRecipe } from 'main/assessRecipe';
-import type { CancellationFunction } from 'main/assessRecipe';
+} from '@/main/actions';
+import { readCurrentPageMetadata } from '@/main/readCurrentPageMetadata';
+import { readPageContent } from '@/main/readPageContent';
+import { cleanHtmlMinimal } from '@/main/cleanHtmlForLLM';
+import { assessRecipe } from '@/main/assessRecipe';
+import type { CancellationFunction } from '@/main/assessRecipe';
 import AssessRecipeComponent from './AssessRecipeComponent';
 import RecipesComponent from './RecipesComponent';
 import MainPageErrorsComponent from './MainPageErrorsComponent';
@@ -21,7 +21,7 @@ import MainPageHelpComponent from './MainPageHelpComponent';
 import RatingComponent from './RatingComponent';
 import SuggestionsComponent from './SuggestionsComponent';
 import i18next from 'i18next';
-import type { MainData, Recipe } from 'main/model';
+import type { MainData, Recipe } from '@/main/model';
 import TurndownService from 'turndown';
 
 function hasRecipes(recipeState: MainData): recipeState is MainData & { recipes: Recipe[] } {

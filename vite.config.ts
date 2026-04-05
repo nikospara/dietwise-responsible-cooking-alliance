@@ -1,8 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import eslintPlugin from '@nabla/vite-plugin-eslint';
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 import path from 'path';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { configDefaults } from 'vitest/config';
 
@@ -24,8 +23,9 @@ export default defineConfig(({ mode }) => {
 	});
 
 	return {
-		plugins: [tsconfigPaths(), react(), eslintPlugin(), viteStaticCopyCfg],
+		plugins: [react(), eslintPlugin(), viteStaticCopyCfg],
 		resolve: {
+			tsconfigPaths: true,
 			alias: {
 				'@': path.resolve('./src'),
 			},

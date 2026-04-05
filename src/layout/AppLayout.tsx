@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useAtom, useSetAtom } from 'jotai';
-import MainPage from 'main/components/MainPage';
-import LoginPage from 'auth/components/LoginPage';
-import ConfigurationPage from 'configuration/components/ConfigurationPage';
-import { tokensAtom, loadTokensAtom } from 'auth/atoms';
+import MainPage from '@/main/components/MainPage';
+import LoginPage from '@/auth/components/LoginPage';
+import ConfigurationPage from '@/configuration/components/ConfigurationPage';
+import { tokensAtom, loadTokensAtom } from '@/auth/atoms';
 import { showingConfigurationAtom } from './atoms';
 
 const AppLayout: React.FC = () => {

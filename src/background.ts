@@ -1,4 +1,4 @@
-import { authService } from 'auth/authService';
+import { authService } from '@/auth/authService';
 
 if (typeof browser !== 'undefined') {
 	browser.action.onClicked.addListener(() => {

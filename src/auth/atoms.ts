@@ -1,7 +1,7 @@
 import { atom } from 'jotai';
-import { authService } from 'auth/authService';
-import { get } from 'configuration/storage';
-import type { Tokens } from 'configuration/model';
+import { authService } from '@/auth/authService';
+import { get } from '@/configuration/storage';
+import type { Tokens } from '@/configuration/model';
 
 export const tokensAtom = atom<Tokens | null>(null);
 

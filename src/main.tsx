@@ -1,12 +1,12 @@
 import { StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
-import AppLayout from 'layout/AppLayout';
+import AppLayout from '@/layout/AppLayout';
 import './index.css';
-import { loadSettings } from 'configuration/storage';
+import { loadSettings } from '@/configuration/storage';
 import { configureI18n } from './i18n';
 import { Provider as JotaiProvider, createStore } from 'jotai';
-import { settingsAtom } from 'configuration/atoms';
-import { authService } from 'auth/authService';
+import { settingsAtom } from '@/configuration/atoms';
+import { authService } from '@/auth/authService';
 
 async function bootstrap() {
 	// configure the application before launching the UI

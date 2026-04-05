@@ -1,5 +1,5 @@
 import type { RecipeAssessmentMessage, RecipeAssessmentParam } from './model';
-import { streamJson } from 'common/streamJson';
+import { streamJson } from '@/common/streamJson';
 
 export interface CancellationFunction {
 	(): void;

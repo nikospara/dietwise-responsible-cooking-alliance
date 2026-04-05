@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 import { changeLanguage } from 'i18next';
-import { saveSettings } from 'configuration/storage';
+import { saveSettings } from '@/configuration/storage';
 import type { Settings } from './model';
 
 export const settingsAtom = atom({} as Settings, async (_get, set, value: Settings) => {

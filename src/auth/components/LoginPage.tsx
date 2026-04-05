@@ -1,6 +1,6 @@
 import { useSetAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
-import { loginAtom } from 'auth/atoms';
+import { loginAtom } from '@/auth/atoms';
 
 const LoginPage: React.FC = () => {
 	const login = useSetAtom(loginAtom);

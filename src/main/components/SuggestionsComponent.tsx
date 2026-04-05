@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import type { Suggestion } from 'main/model';
+import type { Suggestion } from '@/main/model';
 
 export interface SuggestionsComponentProps {
 	suggestions: Suggestion[] | undefined;

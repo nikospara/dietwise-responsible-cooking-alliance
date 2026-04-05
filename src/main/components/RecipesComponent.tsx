@@ -1,4 +1,4 @@
-import type { Recipe } from 'main/model';
+import type { Recipe } from '@/main/model';
 import Markdown from 'react-markdown';
 
 export interface RecipesComponentProps {

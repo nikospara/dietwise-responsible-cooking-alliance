@@ -1,29 +1,25 @@
 {
 	"compilerOptions": {
-		"baseUrl": "src",
-		"target": "ESNext",
-		"lib": ["ESNext", "DOM", "DOM.Iterable"],
-		"module": "ESNext",
-		"skipLibCheck": true,
 		"paths": {
-			"@/*": ["src/*"]
+			"@/*": ["./src/*"]
 		},
-
-		/* Bundler mode */
-
+		"target": "ESNext",
+		"useDefineForClassFields": true,
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"allowJs": false,
+		"skipLibCheck": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "ESNext",
 		"moduleResolution": "Bundler",
 		"allowImportingTsExtensions": true,
-		"allowJs": false,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
 		"jsx": "react-jsx",
+		"types": ["vitest/globals", "vite/client", "chrome", "firefox-webext-browser", "node"],
 		"esModuleInterop": true,
-
-		/* Linting */
-
-		"strict": true,
-		"forceConsistentCasingInFileNames": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true
