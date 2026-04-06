@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { ensureValidTokenAtom } from '@/auth/atoms';
+import { apiServerHostAtom } from '@/configuration/atoms';
 import { mainStateAtom } from '@/main/atoms';
 import {
 	createPrepareToAssessRecipeAction,
@@ -37,6 +39,8 @@ export interface MainPageProps {
 
 const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 	const [mainState, dispatch] = useAtom(mainStateAtom);
+	const apiServerHost = useAtomValue(apiServerHostAtom);
+	const ensureValidToken = useSetAtom(ensureValidTokenAtom);
 
 	const cancelRef = useRef<CancellationFunction>(null);
 
@@ -60,10 +64,13 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 			cleanPageContent = new TurndownService().turndown(cleanPageContent);
 			console.log('Size after 3rd pass (Markdown):', cleanPageContent.length);
 			console.log(cleanPageContent);
+			const accessToken = await ensureValidToken();
 			cancelRef.current = assessRecipe(
+				apiServerHost,
 				url || '',
 				cleanPageContent,
 				i18next.language, // TODO This needs improvement
+				accessToken,
 				(message) => {
 					dispatch(createMessageReceivedAction(message));
 				},
@@ -79,7 +86,7 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 		} catch (error) {
 			dispatch(createRecipeAssessmentFailedAction(error));
 		}
-	}, [dispatch]);
+	}, [apiServerHost, dispatch, ensureValidToken]);
 
 	const resetCallback = useCallback(() => dispatch(createResetMainPageAction()), [dispatch]);
 

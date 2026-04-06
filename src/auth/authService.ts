@@ -1,9 +1,8 @@
 // auth/authService.ts
 import { createPKCE } from './pkce';
 import { get, set, remove } from '@/configuration/storage';
-import type { Tokens } from '@/configuration/model';
+import { DEFAULT_SETTINGS, type Tokens } from '@/configuration/model';
 
-const KEYCLOAK_BASE = 'http://localhost:8280/realms/dietwise';
 const CLIENT_ID = 'rca';
 const REDIRECT_URI =
 	typeof browser !== 'undefined'
@@ -15,8 +14,13 @@ const REDIRECT_URI =
 				: window.location.href;
 
 class AuthService {
+	private async getServerHost(): Promise<string> {
+		return (await get<string>('authServerHost')) || DEFAULT_SETTINGS.authServerHost;
+	}
+
 	async login() {
 		const { verifier, challenge } = await createPKCE();
+		const serverHost = await this.getServerHost();
 
 		await set('pkce_verifier', verifier);
 
@@ -24,26 +28,27 @@ class AuthService {
 			client_id: CLIENT_ID,
 			response_type: 'code',
 			redirect_uri: REDIRECT_URI,
-			scope: 'openid profile email',
+			scope: 'openid profile email offline_access',
 			code_challenge: challenge,
 			code_challenge_method: 'S256',
 		});
 
 		if (typeof browser !== 'undefined') {
 			browser.tabs.create({
-				url: `${KEYCLOAK_BASE}/protocol/openid-connect/auth?${params}`,
+				url: `${serverHost}/protocol/openid-connect/auth?${params}`,
 			});
 		} else if (typeof chrome !== 'undefined' && typeof chrome.tabs !== 'undefined') {
 			chrome.tabs.create({
-				url: `${KEYCLOAK_BASE}/protocol/openid-connect/auth?${params}`,
+				url: `${serverHost}/protocol/openid-connect/auth?${params}`,
 			});
 		} else {
-			window.location.replace(`${KEYCLOAK_BASE}/protocol/openid-connect/auth?${params}`);
+			window.location.replace(`${serverHost}/protocol/openid-connect/auth?${params}`);
 		}
 	}
 
 	async handleCallback(code: string) {
 		const verifier = await get<string>('pkce_verifier');
+		const serverHost = await this.getServerHost();
 		if (!verifier) throw new Error('Missing PKCE verifier');
 
 		const body = new URLSearchParams({
@@ -54,7 +59,7 @@ class AuthService {
 			code_verifier: verifier,
 		});
 
-		const res = await fetch(`${KEYCLOAK_BASE}/protocol/openid-connect/token`, {
+		const res = await fetch(`${serverHost}/protocol/openid-connect/token`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 			body,
@@ -75,13 +80,14 @@ class AuthService {
 	}
 
 	async refresh(refreshToken: string) {
+		const serverHost = await this.getServerHost();
 		const body = new URLSearchParams({
 			grant_type: 'refresh_token',
 			client_id: CLIENT_ID,
 			refresh_token: refreshToken,
 		});
 
-		const res = await fetch(`${KEYCLOAK_BASE}/protocol/openid-connect/token`, {
+		const res = await fetch(`${serverHost}/protocol/openid-connect/token`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 			body,

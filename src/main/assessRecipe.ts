@@ -6,16 +6,17 @@ export interface CancellationFunction {
 }
 
 export function assessRecipe(
+	apiServerHost: string,
 	url: string,
 	pageContent: string,
 	langCode: string,
+	accessToken?: string | null,
 	onMessage?: (message: RecipeAssessmentMessage) => void,
 	onError?: (error: unknown) => void,
 	onComplete?: () => void,
 ): CancellationFunction {
 	const handler = streamJson(
-		// TODO Parameterize this!!!
-		'http://localhost:8180/api/v1/recipe/assess/markdown',
+		apiServerHost + '/recipe/assess/markdown',
 		{
 			url,
 			pageContent: pageContent || '',
@@ -25,6 +26,7 @@ export function assessRecipe(
 			onMessage,
 			onError,
 			onComplete,
+			headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined,
 		},
 	);
 	return () => handler.cancel();

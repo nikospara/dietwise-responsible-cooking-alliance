@@ -22,3 +22,10 @@ export const apiServerHostAtom = atom(
 		await set(settingsAtom, { ...get(settingsAtom), apiServerHost });
 	},
 );
+
+export const authServerHostAtom = atom(
+	(get) => get(settingsAtom).authServerHost,
+	async (get, set, authServerHost: string) => {
+		await set(settingsAtom, { ...get(settingsAtom), authServerHost });
+	},
+);
