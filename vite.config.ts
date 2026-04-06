@@ -1,9 +1,24 @@
 import { defineConfig, loadEnv } from 'vite';
 import eslintPlugin from '@nabla/vite-plugin-eslint';
 import react from '@vitejs/plugin-react';
+import fs from 'node:fs';
 import path from 'path';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { configDefaults } from 'vitest/config';
+
+function browserStaticFilesPlugin(browser: string) {
+	return {
+		name: 'browser-static-files',
+		closeBundle() {
+			const browserPublicDir = path.resolve(__dirname, `public-${browser}`);
+			const outDir = path.resolve(__dirname, `dist-${browser}`);
+			for (const filename of ['manifest.json', 'callback.html', 'callback-content.js']) {
+				const source = path.join(browserPublicDir, filename);
+				if (!fs.existsSync(source)) continue;
+				fs.copyFileSync(source, path.join(outDir, filename));
+			}
+		},
+	};
+}
 
 /**
  * @see https://vitejs.dev/config/
@@ -12,18 +27,8 @@ export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
 	const browser = (env.VITE_TARGET_BROWSER || 'Chrome').toLowerCase();
 
-	const viteStaticCopyCfg = viteStaticCopy({
-		targets: [
-			{
-				src: `public-${browser}/*`,
-				dest: '',
-				overwrite: true,
-			},
-		],
-	});
-
 	return {
-		plugins: [react(), eslintPlugin(), viteStaticCopyCfg],
+		plugins: [react(), eslintPlugin(), browserStaticFilesPlugin(browser)],
 		resolve: {
 			tsconfigPaths: true,
 			alias: {
