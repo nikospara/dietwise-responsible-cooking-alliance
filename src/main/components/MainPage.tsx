@@ -9,6 +9,7 @@ import {
 	createRecipeAssessmentFailedAction,
 	createResetMainPageAction,
 	createMessageReceivedAction,
+	createSuggestionStatusAction,
 } from '@/main/actions';
 import { readCurrentPageMetadata } from '@/main/readCurrentPageMetadata';
 import { readPageContent } from '@/main/readPageContent';
@@ -21,8 +22,10 @@ import MainPageErrorsComponent from './MainPageErrorsComponent';
 import MainPageHelpComponent from './MainPageHelpComponent';
 import RatingComponent from './RatingComponent';
 import SuggestionsComponent from './SuggestionsComponent';
+import { waitForSuggestionStatisticsWithTimeout } from './suggestionsStatisticsUtils';
+import { useSuggestionInFlight } from './useSuggestionInFlight';
 import i18next from 'i18next';
-import type { MainData, Recipe } from '@/main/model';
+import type { MainData, Recipe, SuggestionStatus } from '@/main/model';
 import TurndownService from 'turndown';
 
 function hasRecipes(recipeState: MainData): recipeState is MainData & { recipes: Recipe[] } {
@@ -41,6 +44,7 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 	const [mainState, dispatch] = useAtom(mainStateAtom);
 	const apiServerHost = useAtomValue(apiServerHostAtom);
 	const ensureValidToken = useSetAtom(ensureValidTokenAtom);
+	const { isSuggestionInFlight, setSuggestionInFlight } = useSuggestionInFlight();
 
 	const cancelRef = useRef<CancellationFunction>(null);
 
@@ -88,7 +92,96 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 		}
 	}, [apiServerHost, dispatch, ensureValidToken]);
 
-	const resetCallback = useCallback(() => dispatch(createResetMainPageAction()), [dispatch]);
+	const resetCallback = useCallback(() => {
+		dispatch(createResetMainPageAction());
+	}, [dispatch]);
+
+	const onMarkUndecided = useCallback(
+		async (suggestionKey: string, suggestionId: string) => {
+			if (isSuggestionInFlight(suggestionKey)) {
+				return;
+			}
+			dispatch(createSuggestionStatusAction(suggestionKey, 'UNDECIDED'));
+			setSuggestionInFlight(suggestionKey, true);
+			try {
+				const accessToken = await ensureValidToken();
+				await waitForSuggestionStatisticsWithTimeout(
+					apiServerHost,
+					accessToken,
+					suggestionId,
+					'ACCEPTED',
+					'UNDECIDED',
+				);
+			} catch (error) {
+				console.error('Unable to notify suggestion statistics', error);
+			} finally {
+				setSuggestionInFlight(suggestionKey, false);
+			}
+		},
+		[apiServerHost, dispatch, ensureValidToken, isSuggestionInFlight, setSuggestionInFlight],
+	);
+
+	const onSuggestionAction = useCallback(
+		async (suggestionKey: string, action: SuggestionStatus) => {
+			const suggestionState = mainState.suggestions?.[suggestionKey];
+			if (!suggestionState || isSuggestionInFlight(suggestionKey)) {
+				return;
+			}
+
+			const currentStatus = suggestionState.status;
+			const nextStatus = currentStatus === action ? 'UNDECIDED' : action;
+			const previousAcceptedSuggestionKey =
+				nextStatus === 'ACCEPTED' && suggestionState.suggestion.target.type === 'INGREDIENT'
+					? mainState.ingredientState?.[suggestionState.suggestion.target.ingredient]
+					: undefined;
+			const previousAcceptedSuggestion =
+				previousAcceptedSuggestionKey && previousAcceptedSuggestionKey !== suggestionKey
+					? mainState.suggestions?.[previousAcceptedSuggestionKey]
+					: undefined;
+			const lockedSuggestionKeys = previousAcceptedSuggestionKey
+				? [suggestionKey, previousAcceptedSuggestionKey]
+				: [suggestionKey];
+
+			dispatch(createSuggestionStatusAction(suggestionKey, nextStatus));
+			for (const lockedSuggestionKey of lockedSuggestionKeys) {
+				setSuggestionInFlight(lockedSuggestionKey, true);
+			}
+			try {
+				const accessToken = await ensureValidToken();
+				if (previousAcceptedSuggestion) {
+					await waitForSuggestionStatisticsWithTimeout(
+						apiServerHost,
+						accessToken,
+						previousAcceptedSuggestion.suggestion.id,
+						'ACCEPTED',
+						'UNDECIDED',
+					);
+				}
+				await waitForSuggestionStatisticsWithTimeout(
+					apiServerHost,
+					accessToken,
+					suggestionState.suggestion.id,
+					currentStatus,
+					nextStatus,
+				);
+			} catch (error) {
+				console.error('Unable to notify suggestion statistics', error);
+			} finally {
+				for (const lockedSuggestionKey of lockedSuggestionKeys) {
+					setSuggestionInFlight(lockedSuggestionKey, false);
+				}
+			}
+		},
+		[
+			apiServerHost,
+			dispatch,
+			ensureValidToken,
+			isSuggestionInFlight,
+			mainState.ingredientState,
+			mainState.suggestions,
+			setSuggestionInFlight,
+		],
+	);
 
 	return (
 		<div className="flex h-full flex-col gap-[15px] p-[8px]">
@@ -100,7 +193,17 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 				onResetButtonClicked={resetCallback}
 				toConfigurationPage={props.toConfigurationPage}
 			/>
-			{hasRecipes(mainState) ? <RecipesComponent recipes={mainState.recipes} /> : null}
+			{hasRecipes(mainState) ? (
+				<RecipesComponent
+					recipes={mainState.recipes}
+					detectionTypes={mainState.detectionTypes}
+					rating={mainState.rating}
+					suggestions={mainState.suggestions}
+					ingredientState={mainState.ingredientState}
+					isSuggestionInFlight={isSuggestionInFlight}
+					onMarkUndecided={onMarkUndecided}
+				/>
+			) : null}
 			{mainState.status === 'SUCCESS' && typeof mainState.rating === 'number' ? (
 				<>
 					<RatingComponent rating={5 * mainState.rating} max={5} />
@@ -113,6 +216,8 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 						suggestions={mainState.suggestions}
 						errors={mainState.errors}
 						emptySuggestionsFromServer={mainState.emptySuggestionsFromServer}
+						isSuggestionInFlight={isSuggestionInFlight}
+						onAction={onSuggestionAction}
 					/>
 				</>
 			) : null}

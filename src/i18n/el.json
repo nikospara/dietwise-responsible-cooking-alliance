@@ -6,6 +6,22 @@
 		"title": "Ρυθμίσεις",
 		"back": "Πίσω"
 	},
+	"recipe": {
+		"titleOfIngredients": "Υλικά",
+		"emptySuggestionsFromServer": "Δεν υπάρχουν προτάσεις για αυτή τη συνταγή.",
+		"anonymousRecipeTemplateTitle": "Συνταγή #{{index, number}}",
+		"userStats": "Χρήστης:",
+		"totalStats": "Σύνολα:"
+	},
+	"ingredient": {
+		"equivalence": "Ισοδυναμία:",
+		"techniqueNotes": "Σημειώσεις:"
+	},
+	"error": {
+		"401": "Δεν είστε πιστοποιημένοι ή ο διακομιστής δεν αποδέχθηκε την πιστοποίησή σας. Ίσως βοηθήσει να αποσυνδεθείτε και να συνδεθείτε ξανά.",
+		"networkOrSystem": "Προέκυψε σφάλμα δικτύου ή συστήματος. Προσπαθήστε ξανά αργότερα.",
+		"unknown": "Άγνωστο σφάλμα!"
+	},
 	"main": {
 		"AssessRecipeComponent": {
 			"labelLong": "Πατήστε εδώ για να εκτιμηθεί η συνταγή της σελίδας",
