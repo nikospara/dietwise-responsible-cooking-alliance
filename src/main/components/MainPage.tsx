@@ -20,7 +20,7 @@ import AssessRecipeComponent from './AssessRecipeComponent';
 import RecipesComponent from './RecipesComponent';
 import MainPageErrorsComponent from './MainPageErrorsComponent';
 import MainPageHelpComponent from './MainPageHelpComponent';
-import RatingComponent from './RatingComponent';
+import SplitPane from './SplitPane';
 import SuggestionsComponent from './SuggestionsComponent';
 import { waitForSuggestionStatisticsWithTimeout } from './suggestionsStatisticsUtils';
 import { useSuggestionInFlight } from './useSuggestionInFlight';
@@ -183,6 +183,30 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 		],
 	);
 
+	const topPaneContent = hasRecipes(mainState) ? (
+		<RecipesComponent
+			recipes={mainState.recipes}
+			detectionTypes={mainState.detectionTypes}
+			rating={mainState.rating}
+			suggestions={mainState.suggestions}
+			ingredientState={mainState.ingredientState}
+			isSuggestionInFlight={isSuggestionInFlight}
+			onMarkUndecided={onMarkUndecided}
+		/>
+	) : null;
+
+	const bottomPaneContent =
+		mainState.status === 'SUCCESS' && hasSuggestions(mainState) ? (
+			<SuggestionsComponent
+				suggestionKeys={mainState.suggestionKeys}
+				suggestions={mainState.suggestions}
+				errors={mainState.errors}
+				emptySuggestionsFromServer={mainState.emptySuggestionsFromServer}
+				isSuggestionInFlight={isSuggestionInFlight}
+				onAction={onSuggestionAction}
+			/>
+		) : null;
+
 	return (
 		<div className="flex h-full flex-col gap-[15px] p-[8px]">
 			<AssessRecipeComponent
@@ -193,34 +217,7 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 				onResetButtonClicked={resetCallback}
 				toConfigurationPage={props.toConfigurationPage}
 			/>
-			{hasRecipes(mainState) ? (
-				<RecipesComponent
-					recipes={mainState.recipes}
-					detectionTypes={mainState.detectionTypes}
-					rating={mainState.rating}
-					suggestions={mainState.suggestions}
-					ingredientState={mainState.ingredientState}
-					isSuggestionInFlight={isSuggestionInFlight}
-					onMarkUndecided={onMarkUndecided}
-				/>
-			) : null}
-			{mainState.status === 'SUCCESS' && typeof mainState.rating === 'number' ? (
-				<>
-					<RatingComponent rating={5 * mainState.rating} max={5} />
-				</>
-			) : null}
-			{mainState.status === 'SUCCESS' && hasSuggestions(mainState) ? (
-				<>
-					<SuggestionsComponent
-						suggestionKeys={mainState.suggestionKeys}
-						suggestions={mainState.suggestions}
-						errors={mainState.errors}
-						emptySuggestionsFromServer={mainState.emptySuggestionsFromServer}
-						isSuggestionInFlight={isSuggestionInFlight}
-						onAction={onSuggestionAction}
-					/>
-				</>
-			) : null}
+			<SplitPane top={topPaneContent} bottom={bottomPaneContent} className="min-h-0 flex-1" />
 			{(mainState.status === 'FAILURE' || mainState.status === 'SELECT_RECIPE') && !hasRecipes(mainState) ? (
 				<MainPageErrorsComponent errors={mainState.errors || []} />
 			) : null}
