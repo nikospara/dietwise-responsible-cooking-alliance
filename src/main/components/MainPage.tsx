@@ -8,6 +8,7 @@ import {
 	createRecipeAssessmentCompletedAction,
 	createRecipeAssessmentFailedAction,
 	createResetMainPageAction,
+	createSetRecipeLanguageAction,
 	createMessageReceivedAction,
 	createSuggestionStatusAction,
 } from '@/main/actions';
@@ -24,7 +25,6 @@ import SplitPane from './SplitPane';
 import SuggestionsComponent from './SuggestionsComponent';
 import { waitForSuggestionStatisticsWithTimeout } from './suggestionsStatisticsUtils';
 import { useSuggestionInFlight } from './useSuggestionInFlight';
-import i18next from 'i18next';
 import type { MainData, Recipe, SuggestionStatus } from '@/main/model';
 import TurndownService from 'turndown';
 
@@ -73,7 +73,8 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 				apiServerHost,
 				url || '',
 				cleanPageContent,
-				i18next.language, // TODO This needs improvement
+				null,
+				mainState.lang,
 				accessToken,
 				(message) => {
 					dispatch(createMessageReceivedAction(message));
@@ -90,7 +91,7 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 		} catch (error) {
 			dispatch(createRecipeAssessmentFailedAction(error));
 		}
-	}, [apiServerHost, dispatch, ensureValidToken]);
+	}, [apiServerHost, dispatch, ensureValidToken, mainState.lang]);
 
 	const resetCallback = useCallback(() => {
 		dispatch(createResetMainPageAction());
@@ -213,6 +214,8 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 				assessing={mainState.status === 'PENDING'}
 				hasOutcome={mainState.status !== 'INITIAL' && mainState.status !== 'PENDING'}
 				url={mainState.url}
+				language={mainState.lang}
+				onLanguageChanged={(language) => dispatch(createSetRecipeLanguageAction(language))}
 				onAssessButtonClicked={assessRecipeCallback}
 				onResetButtonClicked={resetCallback}
 				toConfigurationPage={props.toConfigurationPage}

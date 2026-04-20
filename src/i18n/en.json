@@ -6,7 +6,14 @@
 		"title": "Configuration",
 		"back": "Back"
 	},
+	"languages": {
+		"en": "English",
+		"el": "Ελληνικά",
+		"lt": "Lietuvių",
+		"nl": "Nederlands"
+	},
 	"recipe": {
+		"language": "Recipe language",
 		"titleOfIngredients": "Ingredients",
 		"emptySuggestionsFromServer": "There are no suggestions for this recipe.",
 		"anonymousRecipeTemplateTitle": "Recipe #{{index, number}}",

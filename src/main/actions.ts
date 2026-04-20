@@ -27,6 +27,11 @@ export interface ResetMainPageAction extends Action {
 	type: 'ResetMainPageAction';
 }
 
+export interface SetRecipeLanguageAction extends Action {
+	type: 'SetRecipeLanguageAction';
+	language: string;
+}
+
 export interface RecipeExtractionMessageReceivedAction extends Action {
 	type: 'RecipeExtractionMessageReceivedAction';
 	message: RecipeExtractionRecipeAssessmentMessage;
@@ -70,6 +75,7 @@ export type MainAction =
 	| RecipeAssessmentFailedAction
 	| RecipeAssessmentCompletedAction
 	| ResetMainPageAction
+	| SetRecipeLanguageAction
 	| RecipeExtractionMessageReceivedAction
 	| MoreThanOneRecipesAssessmentMessageReceivedAction
 	| SuggestionsMessageReceivedAction
@@ -106,6 +112,13 @@ export function createRecipeAssessmentCompletedAction(): RecipeAssessmentComplet
 export function createResetMainPageAction(): ResetMainPageAction {
 	return {
 		type: 'ResetMainPageAction',
+	};
+}
+
+export function createSetRecipeLanguageAction(language: string): SetRecipeLanguageAction {
+	return {
+		type: 'SetRecipeLanguageAction',
+		language,
 	};
 }
 

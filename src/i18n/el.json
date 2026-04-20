@@ -6,7 +6,14 @@
 		"title": "Ρυθμίσεις",
 		"back": "Πίσω"
 	},
+	"languages": {
+		"en": "Αγγλικά",
+		"el": "Ελληνικά",
+		"lt": "Λιθουανικά",
+		"nl": "Ολλανδικά"
+	},
 	"recipe": {
+		"language": "Γλώσσα συνταγής",
 		"titleOfIngredients": "Υλικά",
 		"emptySuggestionsFromServer": "Δεν υπάρχουν προτάσεις για αυτή τη συνταγή.",
 		"anonymousRecipeTemplateTitle": "Συνταγή #{{index, number}}",

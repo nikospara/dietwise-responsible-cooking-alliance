@@ -8,6 +8,7 @@ export function createInitialState(): MainData {
 	return {
 		status: 'INITIAL',
 		emptySuggestionsFromServer: false,
+		lang: 'en',
 	};
 }
 
@@ -18,6 +19,7 @@ export function reducer(state: MainData, action: MainAction): MainData {
 				status: 'PENDING',
 				emptySuggestionsFromServer: false,
 				url: action.url,
+				lang: state.lang,
 			};
 		}
 		case 'RecipeAssessmentFailedAction': {
@@ -46,7 +48,16 @@ export function reducer(state: MainData, action: MainAction): MainData {
 			if (state.status === 'PENDING') {
 				throw new Error('Inconsistent state for ResetMainPageAction: ' + state.status);
 			}
-			return createInitialState();
+			return {
+				...createInitialState(),
+				lang: state.lang,
+			};
+		}
+		case 'SetRecipeLanguageAction': {
+			return {
+				...state,
+				lang: action.language,
+			};
 		}
 		case 'RecipeExtractionMessageReceivedAction': {
 			if (state.status !== 'PENDING') {

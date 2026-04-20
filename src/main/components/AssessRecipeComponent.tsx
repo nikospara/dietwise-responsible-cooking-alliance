@@ -9,6 +9,8 @@ export interface AssessRecipeComponentProps {
 	assessing: boolean;
 	hasOutcome: boolean;
 	url: string | null | undefined;
+	language: string;
+	onLanguageChanged: (language: string) => void;
 	onAssessButtonClicked: () => void;
 	onResetButtonClicked: () => void;
 	toConfigurationPage: () => void;
@@ -95,6 +97,27 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (props: Asse
 						</span>
 					</button>
 				</div>
+				<label className="form-control w-auto min-w-[8.5rem]">
+					<span className="sr-only">{t('recipe.language')}</span>
+					<select
+						className="select select-bordered"
+						value={props.language}
+						onChange={(e) => props.onLanguageChanged(e.target.value)}
+						disabled={props.assessing}
+						aria-label={t('recipe.language')}
+					>
+						<option value="en">{t('languages.en')}</option>
+						<option value="el" disabled={true}>
+							{t('languages.el')}
+						</option>
+						<option value="lt" disabled={true}>
+							{t('languages.lt')}
+						</option>
+						<option value="nl" disabled={true}>
+							{t('languages.nl')}
+						</option>
+					</select>
+				</label>
 				<button className="btn btn-outline" onClick={props.toConfigurationPage}>
 					<span>
 						<LiaCogSolid size="1.5em" title={t('main.AssessRecipeComponent.labelConfiguration')} />

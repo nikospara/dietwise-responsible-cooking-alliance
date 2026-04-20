@@ -69,6 +69,7 @@ describe('acceptedSuggestion', () => {
 		const state: MainData = {
 			status: 'SUCCESS',
 			emptySuggestionsFromServer: false,
+			lang: 'en',
 			suggestions: {
 				s1: target,
 			},
@@ -88,6 +89,7 @@ describe('acceptedSuggestion', () => {
 		const state: MainData = {
 			status: 'SUCCESS',
 			emptySuggestionsFromServer: false,
+			lang: 'en',
 			suggestions: {
 				's-prev': previous,
 				's-next': target,
@@ -109,6 +111,7 @@ describe('acceptedSuggestion', () => {
 		const state: MainData = {
 			status: 'SUCCESS',
 			emptySuggestionsFromServer: false,
+			lang: 'en',
 			suggestions: {
 				's-next': target,
 			},
@@ -127,6 +130,7 @@ describe('acceptedSuggestion', () => {
 		const state: MainData = {
 			status: 'SUCCESS',
 			emptySuggestionsFromServer: false,
+			lang: 'en',
 			suggestions: {
 				's-recipe': target,
 			},
@@ -146,6 +150,7 @@ describe('rejectedSuggestion', () => {
 		const state: MainData = {
 			status: 'SUCCESS',
 			emptySuggestionsFromServer: false,
+			lang: 'en',
 			suggestions: {
 				s1: target,
 				s2: selected,
@@ -167,6 +172,7 @@ describe('rejectedSuggestion', () => {
 		const state: MainData = {
 			status: 'SUCCESS',
 			emptySuggestionsFromServer: false,
+			lang: 'en',
 			suggestions: {
 				s1: target,
 			},
@@ -186,6 +192,7 @@ describe('rejectedSuggestion', () => {
 		const state: MainData = {
 			status: 'SUCCESS',
 			emptySuggestionsFromServer: false,
+			lang: 'en',
 			suggestions: {
 				's-recipe': target,
 			},
@@ -205,6 +212,7 @@ describe('undecided', () => {
 		const state: MainData = {
 			status: 'SUCCESS',
 			emptySuggestionsFromServer: false,
+			lang: 'en',
 			suggestions: {
 				s1: target,
 				s2: selected,
@@ -226,6 +234,7 @@ describe('undecided', () => {
 		const state: MainData = {
 			status: 'SUCCESS',
 			emptySuggestionsFromServer: false,
+			lang: 'en',
 			suggestions: {
 				s1: target,
 			},
@@ -245,6 +254,7 @@ describe('undecided', () => {
 		const state: MainData = {
 			status: 'SUCCESS',
 			emptySuggestionsFromServer: false,
+			lang: 'en',
 			suggestions: {
 				's-recipe': target,
 			},

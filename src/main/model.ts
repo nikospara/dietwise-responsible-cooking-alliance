@@ -3,8 +3,10 @@ export interface RecipeAssessmentParam {
 	url: string;
 	/** The page content, converted to Markdown. */
 	pageContent: string;
+	/** Any relevant JSON-LD. */
+	jsonLdContent?: string;
 	/** The language of the page. */
-	langCode: string;
+	lang: string;
 }
 
 export interface StatisticsParam {
@@ -144,6 +146,8 @@ export interface MainData {
 	suggestions?: { [key: string]: SuggestionState };
 	ingredientState?: IngredientStateType;
 	url?: string;
+	/** The language of the recipe page. */
+	lang: string;
 	pageText?: string;
 	scoringData?: ScoringData;
 }

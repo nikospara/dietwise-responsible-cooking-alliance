@@ -27,6 +27,7 @@ describe('assessRecipe', () => {
 			'http://example.com/api/v1',
 			'https://recipe.example/item',
 			'# Recipe',
+			null,
 			'en',
 			'token-123',
 			onMessage,
@@ -39,7 +40,8 @@ describe('assessRecipe', () => {
 			{
 				url: 'https://recipe.example/item',
 				pageContent: '# Recipe',
-				langCode: 'en',
+				jsonLdContent: null,
+				lang: 'en',
 			},
 			{
 				onMessage,
@@ -53,7 +55,7 @@ describe('assessRecipe', () => {
 	});
 
 	it('omits Authorization when no token is available', () => {
-		assessRecipe('http://example.com/api/v1', 'https://recipe.example/item', '# Recipe', 'en', null);
+		assessRecipe('http://example.com/api/v1', 'https://recipe.example/item', '# Recipe', null, 'en', null);
 
 		expect(streamJson).toHaveBeenCalledWith(
 			'http://example.com/api/v1/recipe/assess/markdown',

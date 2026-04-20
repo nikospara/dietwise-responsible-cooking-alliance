@@ -9,7 +9,8 @@ export function assessRecipe(
 	apiServerHost: string,
 	url: string,
 	pageContent: string,
-	langCode: string,
+	jsonLdContent: string | undefined | null,
+	lang: string,
 	accessToken?: string | null,
 	onMessage?: (message: RecipeAssessmentMessage) => void,
 	onError?: (error: unknown) => void,
@@ -20,7 +21,8 @@ export function assessRecipe(
 		{
 			url,
 			pageContent: pageContent || '',
-			langCode,
+			jsonLdContent,
+			lang,
 		} as RecipeAssessmentParam,
 		{
 			onMessage,
