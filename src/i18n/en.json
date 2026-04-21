@@ -31,6 +31,7 @@
 	},
 	"main": {
 		"AssessRecipeComponent": {
+			"language": "Language:",
 			"labelLong": "Click here to assess the recipe on this page",
 			"labelShort": "Assess recipe",
 			"labelReset": "Reset",
@@ -43,7 +44,9 @@
 			"rating": "Rating:"
 		},
 		"SuggestionsComponent": {
-			"title": "Suggestions - Advice"
+			"title": "Suggestions - Advice",
+			"accept": "Accept",
+			"reject": "Reject"
 		},
 		"MainPageHelpComponent": {
 			"title": "Responsible Cooking Alliance",

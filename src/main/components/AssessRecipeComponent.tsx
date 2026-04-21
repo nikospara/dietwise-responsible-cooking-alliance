@@ -146,6 +146,13 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (props: Asse
 				&nbsp;
 				<span>{props.url || ''}</span>
 			</p>
+			{props.assessing || props.hasOutcome ? (
+				<p className="truncate">
+					<span className="font-bold">{t('main.AssessRecipeComponent.language')}</span>
+					&nbsp;
+					<span>{t('languages.' + props.language)}</span>
+				</p>
+			) : null}
 		</div>
 	);
 };

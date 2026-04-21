@@ -20,6 +20,15 @@
 }
 
 @layer base {
+	:root {
+		--dietwise-light-green: #00d3bb;
+		--dietwise-very-light-green: #00f2d7;
+		--dietwise-dark-green: #638672;
+		--dietwise-light-orange: #fcc594;
+		--dietwise-very-light-orange: #f5ece4;
+		--dietwise-gold: #ffdc73;
+	}
+
 	html {
 		@apply h-full;
 	}

@@ -23,7 +23,7 @@
 
 .split-pane__divider {
 	align-items: center;
-	background-color: oklch(var(--bc) / 0.08);
+	background-color: var(--dietwise-dark-green);
 	cursor: row-resize;
 	display: flex;
 	flex: 0 0 14px;
@@ -32,7 +32,7 @@
 }
 
 .split-pane__divider::before {
-	background: oklch(var(--bc) / 0.35);
+	background: var(--dietwise-light-orange);
 	border-radius: 999px;
 	content: '';
 	height: 4px;

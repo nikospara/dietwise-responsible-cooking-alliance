@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import eslintPlugin from '@nabla/vite-plugin-eslint';
 import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
 import fs from 'node:fs';
 import path from 'path';
 import { configDefaults } from 'vitest/config';
@@ -28,7 +29,7 @@ export default defineConfig(({ mode }) => {
 	const browser = (env.VITE_TARGET_BROWSER || 'Chrome').toLowerCase();
 
 	return {
-		plugins: [react(), eslintPlugin(), browserStaticFilesPlugin(browser)],
+		plugins: [react(), svgr(), eslintPlugin(), browserStaticFilesPlugin(browser)],
 		resolve: {
 			tsconfigPaths: true,
 			alias: {
