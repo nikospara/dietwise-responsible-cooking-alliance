@@ -4,13 +4,14 @@
 	},
 	"config": {
 		"title": "Ρυθμίσεις",
-		"back": "Πίσω"
+		"back": "Πίσω",
+		"language": "Γλώσσα"
 	},
 	"languages": {
-		"en": "Αγγλικά",
+		"en": "English",
 		"el": "Ελληνικά",
-		"lt": "Λιθουανικά",
-		"nl": "Ολλανδικά"
+		"lt": "Lietuvių",
+		"nl": "Nederlands"
 	},
 	"recipe": {
 		"language": "Γλώσσα συνταγής",

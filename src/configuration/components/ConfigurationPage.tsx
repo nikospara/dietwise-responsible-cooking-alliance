@@ -1,5 +1,8 @@
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAtom } from 'jotai';
 import { LiaArrowLeftSolid } from 'react-icons/lia';
+import { languageAtom } from '@/configuration/atoms';
 
 export interface ConfigurationPageProps {
 	back: () => void;
@@ -7,6 +10,18 @@ export interface ConfigurationPageProps {
 
 const ConfigurationPage: React.FC<ConfigurationPageProps> = (props) => {
 	const { t } = useTranslation();
+	const [language, setLanguage] = useAtom(languageAtom);
+	const [settingLanguage, setSettingLanguage] = useState(false);
+
+	const onChangeLanguageCallback = useCallback(
+		async (e: React.ChangeEvent<HTMLSelectElement>) => {
+			const newLanguage = e.target.value;
+			setSettingLanguage(true);
+			await setLanguage(newLanguage);
+			setSettingLanguage(false);
+		},
+		[setLanguage],
+	);
 
 	return (
 		<div className="flex h-full flex-col gap-[15px] p-[8px]">
@@ -18,6 +33,23 @@ const ConfigurationPage: React.FC<ConfigurationPageProps> = (props) => {
 				</button>{' '}
 				<span>{t('config.title')}</span>
 			</h1>
+			<div className="rounded-box border-base-300 bg-base-100 border">
+				<div className="flex items-center justify-between gap-4 p-4">
+					<label className="font-medium" htmlFor="ui-language-select">
+						{t('config.language')}
+					</label>
+					<select
+						id="ui-language-select"
+						className="select select-bordered"
+						value={language}
+						onChange={onChangeLanguageCallback}
+						disabled={settingLanguage}
+					>
+						<option value="en">English</option>
+						<option value="el">Ελληνικά</option>
+					</select>
+				</div>
+			</div>
 		</div>
 	);
 };

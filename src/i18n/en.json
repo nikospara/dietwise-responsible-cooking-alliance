@@ -4,7 +4,8 @@
 	},
 	"config": {
 		"title": "Configuration",
-		"back": "Back"
+		"back": "Back",
+		"language": "Language"
 	},
 	"languages": {
 		"en": "English",

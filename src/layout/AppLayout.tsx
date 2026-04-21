@@ -27,7 +27,7 @@ const AppLayout: React.FC = () => {
 			chrome.storage.local.onChanged.addListener(listener);
 			return () => chrome.storage.local.onChanged.removeListener(listener);
 		}
-	}, [loadTokens]);
+	}, [loadTokens, setTokens]);
 
 	const [showingConfiguration, setShowingConfiguration] = useAtom(showingConfigurationAtom);
 
