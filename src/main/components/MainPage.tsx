@@ -17,6 +17,7 @@ import { readPageContent } from '@/main/readPageContent';
 import { cleanHtmlMinimal } from '@/main/cleanHtmlForLLM';
 import { assessRecipe } from '@/main/assessRecipe';
 import type { CancellationFunction } from '@/main/assessRecipe';
+import { extractJsonLdRecipesFromString } from '@/main/extractJsonLdRecipes';
 import AssessRecipeComponent from './AssessRecipeComponent';
 import RecipesComponent from './RecipesComponent';
 import MainPageErrorsComponent from './MainPageErrorsComponent';
@@ -61,6 +62,8 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 			void title;
 			dispatch(createPrepareToAssessRecipeAction(url || ''));
 			const pageContent = await readPageContent(tabId);
+			const jsonLdRecipes = extractJsonLdRecipesFromString(pageContent);
+			const jsonLdContent = jsonLdRecipes.length > 0 ? JSON.stringify(jsonLdRecipes) : undefined;
 			console.log('Size, before cleaning:', pageContent.length);
 			const pageCleaningResult = cleanHtmlMinimal(pageContent);
 			let cleanPageContent = pageCleaningResult.html;
@@ -73,7 +76,7 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 				apiServerHost,
 				url || '',
 				cleanPageContent,
-				null,
+				jsonLdContent,
 				mainState.lang,
 				accessToken,
 				(message) => {

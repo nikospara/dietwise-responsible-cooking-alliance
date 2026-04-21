@@ -13,7 +13,7 @@ export async function readPageContent(tabId: number): Promise<string> {
 
 async function readPageContentChrome(tabId: number): Promise<string> {
 	const results = await chrome.scripting.executeScript({
-		func: () => document.body.innerHTML,
+		func: () => document.documentElement.outerHTML,
 		target: { tabId: tabId },
 	});
 	if (results.length === 0) {
@@ -26,7 +26,7 @@ async function readPageContentChrome(tabId: number): Promise<string> {
 async function readPageContentFirefox(tabId: number): Promise<string> {
 	const results = await browser.scripting.executeScript({
 		// XXX The type of func in @types/firefox-webext-browser is probably a bug
-		func: (() => document.body.innerHTML) as unknown as () => void,
+		func: (() => document.documentElement.outerHTML) as unknown as () => void,
 		target: { tabId: tabId },
 	});
 	if (results.length === 0) {
