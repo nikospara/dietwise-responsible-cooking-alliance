@@ -51,8 +51,17 @@
 		},
 		"MainPageHelpComponent": {
 			"title": "Responsible Cooking Alliance",
+			"welcome1": "Welcome to the Responsible Cooking Alliance plugin, a tool that assists you to create healthier and more sustainable recipes.",
+			"welcome2": "Navigate to a web page containing a recipe in text (not sound, image or video!) and follow the instructions below.",
+			"titleInstructions": "Instructions",
 			"paragraph1": "Press the button above to assess the recipe in the current page.",
-			"paragraph2": "<This is a placeholder for some informative text to show when the application has nothing else to display>"
+			"paragraph2": "The assessment takes place in two steps: (1) extract the recipe from the page and (2) suggest alternative, healthier and/or more sustainable ingredients. The application displays the list of ingredients in the top half of the page and the suggestions in the bottom half.",
+			"paragraph3": "When browsing suggestions, you have three options:",
+			"explainUndecidedButton": "Leave the suggestion undecided",
+			"explainApproveButton": "Accept the suggestion - press",
+			"explainRejectButton": "Reject the suggestion - press",
+			"paragraph4": "Press an activated button (\"Accept\" or \"Reject\") again to switch a suggestion to undecided.",
+			"paragraph5": "Another way to switch a suggestion to undecided is to click the \"minus\" button of a replaced ingredient in the recipe in the top half of the page."
 		}
 	}
 }
