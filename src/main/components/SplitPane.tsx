@@ -46,6 +46,7 @@ const SplitPane: React.FC<SplitPaneProps> = ({
 	const [topRatio, setTopRatio] = useState<number | null>(null);
 	const [isDragging, setIsDragging] = useState(false);
 	const [isAnimating, setIsAnimating] = useState(false);
+	const [isSplitInitialized, setIsSplitInitialized] = useState(false);
 	const animationTimeoutRef = useRef<number | null>(null);
 
 	const setTopRatioEvent = useEffectEvent((value: number | null) => {
@@ -66,56 +67,69 @@ const SplitPane: React.FC<SplitPaneProps> = ({
 	const showTop = useMemo(() => hasRenderableContent(top), [top]);
 	const showBottom = useMemo(() => hasRenderableContent(bottom), [bottom]);
 
+	const syncLayoutState = useEffectEvent((height: number) => {
+		if (height <= 0) return;
+		setContainerHeight(height);
+
+		if (!showBottom) {
+			clearAnimationTimeout();
+			setTopRatio(null);
+			setIsAnimating(false);
+			setIsSplitInitialized(false);
+			return;
+		}
+
+		if (!isSplitInitialized) {
+			setIsSplitInitialized(true);
+			const boundedDefault = clampRatio(defaultSplit, height, minTopHeight, minBottomHeight);
+			clearAnimationTimeout();
+			setIsAnimating(true);
+			requestAnimationFrame(() => {
+				setTopRatioEvent(boundedDefault);
+			});
+			animationTimeoutRef.current = window.setTimeout(() => {
+				setIsAnimatingEvent(false);
+				animationTimeoutRef.current = null;
+			}, ANIMATION_DURATION_MS + 50);
+			return;
+		}
+
+		setTopRatio((currentTopRatio) => {
+			if (currentTopRatio === null) return currentTopRatio;
+			const clamped = clampRatio(currentTopRatio, height, minTopHeight, minBottomHeight);
+			return clamped === currentTopRatio ? currentTopRatio : clamped;
+		});
+	});
+
 	useEffect(() => {
 		const element = containerRef.current;
 		if (!element) return;
+
 		const updateHeight = () => {
 			const elementHeight = element.clientHeight;
 			if (elementHeight > 0) {
-				setContainerHeight(elementHeight);
+				syncLayoutState(elementHeight);
 				return;
 			}
 			const parentHeight = element.parentElement?.clientHeight ?? 0;
-			if (parentHeight > 0) setContainerHeight(parentHeight);
+			if (parentHeight > 0) syncLayoutState(parentHeight);
 		};
+
 		updateHeight();
+
 		const observer = new ResizeObserver((entries) => {
 			for (const entry of entries) {
-				setContainerHeight(entry.contentRect.height);
+				syncLayoutState(entry.contentRect.height);
 			}
 		});
+
 		observer.observe(element);
-		return () => observer.disconnect();
-	}, [showTop, showBottom]);
 
-	useEffect(() => {
-		if (!showBottom) {
-			setTopRatioEvent(null);
-			setIsAnimatingEvent(false);
-			return;
-		}
-		if (containerHeight <= 0 || topRatio !== null) return;
-		const boundedDefault = clampRatio(defaultSplit, containerHeight, minTopHeight, minBottomHeight);
-		setIsAnimatingEvent(true);
-		clearAnimationTimeout();
-		const frame = requestAnimationFrame(() => {
-			setTopRatioEvent(boundedDefault);
-		});
-		animationTimeoutRef.current = window.setTimeout(() => {
-			setIsAnimatingEvent(false);
-			animationTimeoutRef.current = null;
-		}, ANIMATION_DURATION_MS + 50);
 		return () => {
-			cancelAnimationFrame(frame);
 			clearAnimationTimeout();
+			observer.disconnect();
 		};
-	}, [showBottom, containerHeight, topRatio, defaultSplit, minTopHeight, minBottomHeight]);
-
-	useEffect(() => {
-		if (topRatio === null || containerHeight <= 0) return;
-		const clamped = clampRatio(topRatio, containerHeight, minTopHeight, minBottomHeight);
-		if (clamped !== topRatio) setTopRatioEvent(clamped);
-	}, [containerHeight, topRatio, minTopHeight, minBottomHeight]);
+	}, [showTop, showBottom]);
 
 	const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
 		if (!isDragging || !containerRef.current) return;
@@ -157,9 +171,10 @@ const SplitPane: React.FC<SplitPaneProps> = ({
 		);
 	}
 
-	const effectiveRatio = topRatio === null ? 1 : topRatio;
-	const topMinHeight = topRatio === null ? 0 : minTopHeight;
-	const bottomMinHeight = topRatio === null ? 0 : minBottomHeight;
+	const effectiveTopRatio = isSplitInitialized ? topRatio : null;
+	const effectiveRatio = effectiveTopRatio === null ? 1 : effectiveTopRatio;
+	const topMinHeight = effectiveTopRatio === null ? 0 : minTopHeight;
+	const bottomMinHeight = effectiveTopRatio === null ? 0 : minBottomHeight;
 	const topStyle: CSSProperties = {
 		flexBasis: `${effectiveRatio * 100}%`,
 		minHeight: topMinHeight,
