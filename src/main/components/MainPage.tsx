@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { ensureValidTokenAtom } from '@/auth/atoms';
-import { apiServerHostAtom } from '@/configuration/atoms';
+import { apiServerHostAtom, countryAtom } from '@/configuration/atoms';
 import { mainStateAtom } from '@/main/atoms';
 import {
 	createPrepareToAssessRecipeAction,
@@ -44,6 +44,7 @@ export interface MainPageProps {
 const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 	const [mainState, dispatch] = useAtom(mainStateAtom);
 	const apiServerHost = useAtomValue(apiServerHostAtom);
+	const country = useAtomValue(countryAtom);
 	const ensureValidToken = useSetAtom(ensureValidTokenAtom);
 	const { isSuggestionInFlight, setSuggestionInFlight } = useSuggestionInFlight();
 
@@ -78,6 +79,7 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 				cleanPageContent,
 				jsonLdContent,
 				mainState.lang,
+				country,
 				accessToken,
 				(message) => {
 					dispatch(createMessageReceivedAction(message));
@@ -94,7 +96,7 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 		} catch (error) {
 			dispatch(createRecipeAssessmentFailedAction(error));
 		}
-	}, [apiServerHost, dispatch, ensureValidToken, mainState.lang]);
+	}, [apiServerHost, country, dispatch, ensureValidToken, mainState.lang]);
 
 	const resetCallback = useCallback(() => {
 		dispatch(createResetMainPageAction());

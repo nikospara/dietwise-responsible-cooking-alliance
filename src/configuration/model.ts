@@ -6,6 +6,7 @@ export type Tokens = {
 
 export interface Settings {
 	language: string;
+	country: string | null;
 	authServerHost: string;
 	apiServerHost: string;
 	tokens?: Tokens;
@@ -14,6 +15,7 @@ export interface Settings {
 
 export const DEFAULT_SETTINGS: Settings = Object.freeze({
 	language: 'en',
+	country: null,
 	authServerHost: 'http://localhost:8280/realms/dietwise',
 	apiServerHost: 'http://localhost:8180/api/v1',
 });

@@ -5,7 +5,14 @@
 	"config": {
 		"title": "Ρυθμίσεις",
 		"back": "Πίσω",
-		"language": "Γλώσσα"
+		"language": "Γλώσσα",
+		"country": "Χώρα",
+		"noCountry": "Χωρίς χώρα"
+	},
+	"countries": {
+		"BE": "Βέλγιο",
+		"GR": "Ελλάδα",
+		"LT": "Λιθουανία"
 	},
 	"languages": {
 		"en": "English",

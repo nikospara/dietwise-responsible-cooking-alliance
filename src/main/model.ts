@@ -4,9 +4,10 @@ export interface RecipeAssessmentParam {
 	/** The page content, converted to Markdown. */
 	pageContent: string;
 	/** Any relevant JSON-LD. */
-	jsonLdContent?: string;
+	jsonLdContent?: string | null;
 	/** The language of the page. */
 	lang: string;
+	countryOverride?: string;
 }
 
 export interface StatisticsParam {

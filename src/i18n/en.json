@@ -5,7 +5,14 @@
 	"config": {
 		"title": "Configuration",
 		"back": "Back",
-		"language": "Language"
+		"language": "Language",
+		"country": "Country",
+		"noCountry": "No country"
+	},
+	"countries": {
+		"BE": "Belgium",
+		"GR": "Greece",
+		"LT": "Lithuania"
 	},
 	"languages": {
 		"en": "English",

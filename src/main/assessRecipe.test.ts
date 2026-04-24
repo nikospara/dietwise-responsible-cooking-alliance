@@ -29,6 +29,7 @@ describe('assessRecipe', () => {
 			'# Recipe',
 			null,
 			'en',
+			'GR',
 			'token-123',
 			onMessage,
 			onError,
@@ -42,6 +43,7 @@ describe('assessRecipe', () => {
 				pageContent: '# Recipe',
 				jsonLdContent: null,
 				lang: 'en',
+				countryOverride: 'GR',
 			},
 			{
 				onMessage,
@@ -55,7 +57,7 @@ describe('assessRecipe', () => {
 	});
 
 	it('omits Authorization when no token is available', () => {
-		assessRecipe('http://example.com/api/v1', 'https://recipe.example/item', '# Recipe', null, 'en', null);
+		assessRecipe('http://example.com/api/v1', 'https://recipe.example/item', '# Recipe', null, 'en', null, null);
 
 		expect(streamJson).toHaveBeenCalledWith(
 			'http://example.com/api/v1/recipe/assess/markdown',
@@ -64,5 +66,12 @@ describe('assessRecipe', () => {
 				headers: undefined,
 			}),
 		);
+	});
+
+	it('omits countryOverride when no country is configured', () => {
+		assessRecipe('http://example.com/api/v1', 'https://recipe.example/item', '# Recipe', null, 'en', null, null);
+
+		const payload = vi.mocked(streamJson).mock.calls[0][1];
+		expect(payload).not.toHaveProperty('countryOverride');
 	});
 });

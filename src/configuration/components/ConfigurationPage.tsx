@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAtom } from 'jotai';
 import { LiaArrowLeftSolid } from 'react-icons/lia';
-import { languageAtom } from '@/configuration/atoms';
+import { countryAtom, languageAtom } from '@/configuration/atoms';
 
 export interface ConfigurationPageProps {
 	back: () => void;
@@ -11,7 +11,9 @@ export interface ConfigurationPageProps {
 const ConfigurationPage: React.FC<ConfigurationPageProps> = (props) => {
 	const { t } = useTranslation();
 	const [language, setLanguage] = useAtom(languageAtom);
+	const [country, setCountry] = useAtom(countryAtom);
 	const [settingLanguage, setSettingLanguage] = useState(false);
+	const [settingCountry, setSettingCountry] = useState(false);
 
 	const onChangeLanguageCallback = useCallback(
 		async (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -21,6 +23,16 @@ const ConfigurationPage: React.FC<ConfigurationPageProps> = (props) => {
 			setSettingLanguage(false);
 		},
 		[setLanguage],
+	);
+
+	const onChangeCountryCallback = useCallback(
+		async (e: React.ChangeEvent<HTMLSelectElement>) => {
+			const newCountry = e.target.value;
+			setSettingCountry(true);
+			await setCountry(newCountry === '' ? null : newCountry);
+			setSettingCountry(false);
+		},
+		[setCountry],
 	);
 
 	return (
@@ -47,6 +59,23 @@ const ConfigurationPage: React.FC<ConfigurationPageProps> = (props) => {
 					>
 						<option value="en">English</option>
 						<option value="el">Ελληνικά</option>
+					</select>
+				</div>
+				<div className="border-base-300 flex items-center justify-between gap-4 border-t p-4">
+					<label className="font-medium" htmlFor="country-select">
+						{t('config.country')}
+					</label>
+					<select
+						id="country-select"
+						className="select select-bordered"
+						value={country ?? ''}
+						onChange={onChangeCountryCallback}
+						disabled={settingCountry}
+					>
+						<option value="">{t('config.noCountry')}</option>
+						<option value="BE">{t('countries.BE')}</option>
+						<option value="GR">{t('countries.GR')}</option>
+						<option value="LT">{t('countries.LT')}</option>
 					</select>
 				</div>
 			</div>
