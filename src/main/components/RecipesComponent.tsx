@@ -58,7 +58,7 @@ const RecipesComponent: React.FC<RecipesComponentProps> = (props: RecipesCompone
 												acceptedSuggestion={acceptedSuggestion}
 												acceptedSuggestionDisabled={Boolean(
 													acceptedSuggestionId &&
-														props.isSuggestionInFlight(acceptedSuggestionId),
+													props.isSuggestionInFlight(acceptedSuggestionId),
 												)}
 												onMarkUndecided={props.onMarkUndecided}
 											/>
