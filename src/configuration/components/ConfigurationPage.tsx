@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAtom } from 'jotai';
-import { LiaArrowLeftSolid } from 'react-icons/lia';
+import { useAtom, useSetAtom } from 'jotai';
+import { LiaArrowLeftSolid, LiaSignOutAltSolid } from 'react-icons/lia';
 import { countryAtom, languageAtom } from '@/configuration/atoms';
+import { logoutAtom } from '@/auth/atoms';
 
 export interface ConfigurationPageProps {
 	back: () => void;
@@ -12,8 +13,10 @@ const ConfigurationPage: React.FC<ConfigurationPageProps> = (props) => {
 	const { t } = useTranslation();
 	const [language, setLanguage] = useAtom(languageAtom);
 	const [country, setCountry] = useAtom(countryAtom);
+	const logout = useSetAtom(logoutAtom);
 	const [settingLanguage, setSettingLanguage] = useState(false);
 	const [settingCountry, setSettingCountry] = useState(false);
+	const [loggingOut, setLoggingOut] = useState(false);
 
 	const onChangeLanguageCallback = useCallback(
 		async (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -34,6 +37,12 @@ const ConfigurationPage: React.FC<ConfigurationPageProps> = (props) => {
 		},
 		[setCountry],
 	);
+
+	const onLogoutCallback = useCallback(async () => {
+		setLoggingOut(true);
+		await logout();
+		props.back();
+	}, [logout, props]);
 
 	return (
 		<div className="flex h-full flex-col gap-[15px] p-[8px]">
@@ -77,6 +86,12 @@ const ConfigurationPage: React.FC<ConfigurationPageProps> = (props) => {
 						<option value="GR">{t('countries.GR')}</option>
 						<option value="LT">{t('countries.LT')}</option>
 					</select>
+				</div>
+				<div className="border-base-300 flex items-center justify-end border-t p-4">
+					<button className="btn btn-outline btn-error" onClick={onLogoutCallback} disabled={loggingOut}>
+						<LiaSignOutAltSolid size="1.5em" />
+						{t('config.logout')}
+					</button>
 				</div>
 			</div>
 		</div>
