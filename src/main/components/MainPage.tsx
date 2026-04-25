@@ -21,7 +21,7 @@ import { extractJsonLdRecipesFromString } from '@/main/extractJsonLdRecipes';
 import AssessRecipeComponent from './AssessRecipeComponent';
 import RecipesComponent from './RecipesComponent';
 import MainPageErrorsComponent from './MainPageErrorsComponent';
-import MainPageHelpComponent from './MainPageHelpComponent';
+import HelpComponent from '../../help/components/HelpComponent';
 import SplitPane from './SplitPane';
 import SuggestionsComponent from './SuggestionsComponent';
 import { waitForSuggestionStatisticsWithTimeout } from './suggestionsStatisticsUtils';
@@ -229,7 +229,7 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 			{(mainState.status === 'FAILURE' || mainState.status === 'SELECT_RECIPE') && !hasRecipes(mainState) ? (
 				<MainPageErrorsComponent errors={mainState.errors || []} />
 			) : null}
-			{mainState.status === 'INITIAL' ? <MainPageHelpComponent /> : null}
+			{mainState.status === 'INITIAL' ? <HelpComponent target="MAIN" /> : null}
 		</div>
 	);
 };

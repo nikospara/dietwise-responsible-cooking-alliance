@@ -56,20 +56,21 @@
 			"title": "Προτάσεις - Συμβουλές",
 			"accept": "Αποδοχή",
 			"reject": "Απόρριψη"
-		},
-		"MainPageHelpComponent": {
-			"title": "Responsible Cooking Alliance",
-			"welcome1": "",
-			"welcome2": "",
-			"titleInstructions": "Οδηγίες",
-			"paragraph1": "Πατήστε το κουμπί παραπάνω για να εκτιμήσετε τη συνταγή της ανοιγμένης σελίδας.",
-			"paragraph2": "",
-			"paragraph3": "",
-			"explainUndecidedButton": "",
-			"explainApproveButton": "",
-			"explainRejectButton": "",
-			"paragraph4": "",
-			"paragraph5": ""
 		}
+	},
+	"HelpComponent": {
+		"title": "Responsible Cooking Alliance",
+		"welcome1": "",
+		"welcome2": "",
+		"titleInstructions": "Οδηγίες",
+		"paragraph1": "Πατήστε το κουμπί παραπάνω για να εκτιμήσετε τη συνταγή της ανοιγμένης σελίδας.",
+		"paragraph2": "",
+		"paragraph3": "",
+		"explainUndecidedButton": "",
+		"explainApproveButton": "",
+		"explainRejectButton": "",
+		"paragraph4": "",
+		"paragraph5": "",
+		"loginParagraph1": ""
 	}
 }

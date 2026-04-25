@@ -1,6 +1,7 @@
 import { useSetAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import { loginAtom } from '@/auth/atoms';
+import HelpComponent from '@/help/components/HelpComponent';
 
 const LoginPage: React.FC = () => {
 	const login = useSetAtom(loginAtom);
@@ -11,6 +12,7 @@ const LoginPage: React.FC = () => {
 			<button className="btn btn-accent" onClick={login}>
 				{t('login.loginLabel')}
 			</button>
+			<HelpComponent target="LOGIN" />
 		</div>
 	);
 };
