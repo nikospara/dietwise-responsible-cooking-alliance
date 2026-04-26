@@ -1,7 +1,7 @@
 import { atom } from 'jotai';
 import { changeLanguage } from 'i18next';
 import { saveSettings } from '@/configuration/storage';
-import type { Settings } from './model';
+import { API_SERVER_HOST, AUTH_SERVER_HOST, type Settings } from './model';
 
 export const settingsAtom = atom({} as Settings, async (_get, set, value: Settings) => {
 	await saveSettings(value);
@@ -23,16 +23,6 @@ export const countryAtom = atom(
 	},
 );
 
-export const apiServerHostAtom = atom(
-	(get) => get(settingsAtom).apiServerHost,
-	async (get, set, apiServerHost: string) => {
-		await set(settingsAtom, { ...get(settingsAtom), apiServerHost });
-	},
-);
+export const apiServerHostAtom = atom(API_SERVER_HOST);
 
-export const authServerHostAtom = atom(
-	(get) => get(settingsAtom).authServerHost,
-	async (get, set, authServerHost: string) => {
-		await set(settingsAtom, { ...get(settingsAtom), authServerHost });
-	},
-);
+export const authServerHostAtom = atom(AUTH_SERVER_HOST);

@@ -1,7 +1,7 @@
 // auth/authService.ts
 import { createPKCE } from './pkce';
 import { get, set, remove } from '@/configuration/storage';
-import { DEFAULT_SETTINGS, type Tokens } from '@/configuration/model';
+import { AUTH_SERVER_HOST, type Tokens } from '@/configuration/model';
 
 const CLIENT_ID = 'rca';
 const REDIRECT_URI =
@@ -15,7 +15,7 @@ const REDIRECT_URI =
 
 class AuthService {
 	private async getServerHost(): Promise<string> {
-		return (await get<string>('authServerHost')) || DEFAULT_SETTINGS.authServerHost;
+		return AUTH_SERVER_HOST;
 	}
 
 	async login() {

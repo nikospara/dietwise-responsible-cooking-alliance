@@ -21,6 +21,17 @@ Take a look at the build scripts:
 - `test`: Run the tests in watch mode (Vitest).
 - `coverage`: Execute a coverage test run.
 
+The following environment variables parameterize the build:
+
+- `VITE_AUTH_SERVER_HOST`: The location of the OAuth2 server
+- `VITE_API_SERVER_HOST`: The location of the API server
+
+Example usage:
+
+```bash
+VITE_API_SERVER_HOST=https://dietwise.eu VITE_AUTH_SERVER_HOST=https://idm.dietwise.eu npm run build-all
+```
+
 ### How to run the plugin in Chrome
 
 - Go to `chrome://extensions/`

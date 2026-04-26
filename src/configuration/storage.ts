@@ -3,21 +3,34 @@ import { DEFAULT_SETTINGS } from './model';
 
 const SETTINGS_KEY = 'rca.settings';
 
+function normalizeSettings(settings: Record<string, unknown> | null | undefined): Settings {
+	const country = settings?.country;
+
+	return {
+		language: typeof settings?.language === 'string' ? settings.language : DEFAULT_SETTINGS.language,
+		country: typeof country === 'string' || country === null ? country : DEFAULT_SETTINGS.country,
+	};
+}
+
+function readLocalStorageValues(): Record<string, unknown> {
+	const settingsJson = window.localStorage.getItem(SETTINGS_KEY);
+	return settingsJson ? (JSON.parse(settingsJson) as Record<string, unknown>) : {};
+}
+
 export async function loadSettings(): Promise<Settings> {
 	let result = DEFAULT_SETTINGS;
 	try {
 		if (typeof browser !== 'undefined') {
-			result = (await browser.storage.local.get(DEFAULT_SETTINGS)) as Settings;
+			result = normalizeSettings(
+				(await browser.storage.local.get({ ...DEFAULT_SETTINGS })) as Record<string, unknown>,
+			);
 		} else if (typeof chrome !== 'undefined' && typeof chrome.storage !== 'undefined') {
-			result = (await chrome.storage.local.get(DEFAULT_SETTINGS)) as Settings;
+			result = normalizeSettings(
+				(await chrome.storage.local.get({ ...DEFAULT_SETTINGS })) as Record<string, unknown>,
+			);
 		} else {
 			// Here we are running in a browser, probably for development.
-			const settingsJson = window.localStorage.getItem(SETTINGS_KEY);
-			const settingsFromLocalStorage = settingsJson ? (JSON.parse(settingsJson) as Settings) : null;
-			result = {
-				...DEFAULT_SETTINGS,
-				...settingsFromLocalStorage,
-			};
+			result = normalizeSettings(readLocalStorageValues());
 		}
 	} catch (_e) {
 		// fallback to default, already assigned
@@ -26,32 +39,31 @@ export async function loadSettings(): Promise<Settings> {
 }
 
 export async function saveSettings(settings: Settings): Promise<void> {
+	const storedSettings = normalizeSettings({ ...settings });
 	if (typeof browser !== 'undefined') {
-		await browser.storage.local.set(settings);
+		await browser.storage.local.set(storedSettings);
 	} else if (typeof chrome !== 'undefined' && typeof chrome.storage !== 'undefined') {
-		await chrome.storage.local.set(settings);
+		await chrome.storage.local.set(storedSettings);
 	} else {
 		// Here we are running in a browser, probably for development.
-		window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+		window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(storedSettings));
 	}
 }
 
 export async function get<T>(key: string): Promise<T | null> {
 	if (typeof browser !== 'undefined') {
 		const result = await browser.storage.local.get(key);
-		return ({ ...DEFAULT_SETTINGS, ...result }[key] as T) ?? null;
+		return (({ ...DEFAULT_SETTINGS, ...result } as Record<string, unknown>)[key] as T | undefined) ?? null;
 	} else if (typeof chrome !== 'undefined' && typeof chrome.storage !== 'undefined') {
 		const result = await chrome.storage.local.get(key);
-		return ({ ...DEFAULT_SETTINGS, ...result }[key] as T) ?? null;
+		return (({ ...DEFAULT_SETTINGS, ...result } as Record<string, unknown>)[key] as T | undefined) ?? null;
 	} else {
 		// Here we are running in a browser, probably for development.
-		const settingsJson = window.localStorage.getItem(SETTINGS_KEY);
-		const settingsFromLocalStorage = settingsJson ? JSON.parse(settingsJson) : null;
 		const result = {
 			...DEFAULT_SETTINGS,
-			...settingsFromLocalStorage,
+			...readLocalStorageValues(),
 		};
-		return result[key] as T;
+		return ((result as Record<string, unknown>)[key] as T | undefined) ?? null;
 	}
 }
 
@@ -62,11 +74,10 @@ export async function set<T>(key: string, value: T) {
 		await chrome.storage.local.set({ [key]: value });
 	} else {
 		// Here we are running in a browser, probably for development.
-		const settings = await loadSettings();
 		window.localStorage.setItem(
 			SETTINGS_KEY,
 			JSON.stringify({
-				...settings,
+				...readLocalStorageValues(),
 				[key]: value,
 			}),
 		);
