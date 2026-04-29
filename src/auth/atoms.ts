@@ -10,8 +10,11 @@ export const loadTokensAtom = atom(null, async (_, set) => {
 	set(tokensAtom, tokens);
 });
 
-export const loginAtom = atom(null, async () => {
-	await authService.login();
+export const loginAtom = atom(null, async (_, set) => {
+	const tokens = await authService.login();
+	if (tokens) {
+		set(tokensAtom, tokens);
+	}
 });
 
 export const logoutAtom = atom(null, async (_, set) => {

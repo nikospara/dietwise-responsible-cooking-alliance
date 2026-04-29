@@ -4,6 +4,11 @@
 	"default_locale": "en",
 	"version": "0.2.0",
 	"manifest_version": 3,
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "responsible-cooking-alliance@dietwise.eu"
+		}
+	},
 	"action": {
 		"default_title": "Click to open",
 		"default_icon": {
@@ -16,6 +21,7 @@
 	},
 	"permissions": [
 		"activeTab",
+		"identity",
 		"scripting",
 		"storage",
 		"tabs"

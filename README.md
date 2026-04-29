@@ -47,6 +47,7 @@ VITE_API_SERVER_HOST=https://dietwise.eu VITE_AUTH_SERVER_HOST=https://idm.dietw
 
 ### How to run the plugin in Firefox
 
+- Register the redirect URL returned by `browser.identity.getRedirectURL()` in the OAuth2 client configuration. The Firefox manifest pins the development add-on id to `responsible-cooking-alliance@dietwise.eu` so this URL remains stable across temporary installs.
 - Go to `about:addons` and make sure "Extensions" is selected from the tabs on the left
 - Click the "Tools for all add-ons" icon button (top-right, icon is a gear), select "Debug Add-ons"
 - In the new page, click "Load Temporary Add-on..." and select the *manifest.json* file from the `dist-firefox/` folder
