@@ -26,6 +26,7 @@
 		"titleOfIngredients": "Υλικά",
 		"emptySuggestionsFromServer": "Δεν υπάρχουν προτάσεις για αυτή τη συνταγή.",
 		"anonymousRecipeTemplateTitle": "Συνταγή #{{index, number}}",
+		"seasonalityWarning": "Μπορεί να είναι εκτός εποχής!",
 		"userStats": "Χρήστης:",
 		"totalStats": "Σύνολα:"
 	},

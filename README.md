@@ -47,7 +47,7 @@ VITE_API_SERVER_HOST=https://dietwise.eu VITE_AUTH_SERVER_HOST=https://idm.dietw
 
 ### How to run the plugin in Firefox
 
-- Go to `about:addons` and make sure "Extensioins" is selected from the tabs on the left
+- Go to `about:addons` and make sure "Extensions" is selected from the tabs on the left
 - Click the "Tools for all add-ons" icon button (top-right, icon is a gear), select "Debug Add-ons"
 - In the new page, click "Load Temporary Add-on..." and select the *manifest.json* file from the `dist-firefox/` folder
 	- The extension is now loaded and appears in the list; it also opens automatically

@@ -26,6 +26,7 @@
 		"titleOfIngredients": "Ingredients",
 		"emptySuggestionsFromServer": "There are no suggestions for this recipe.",
 		"anonymousRecipeTemplateTitle": "Recipe #{{index, number}}",
+		"seasonalityWarning": "May be out of season!",
 		"userStats": "User:",
 		"totalStats": "Totals:"
 	},
