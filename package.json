@@ -1,6 +1,6 @@
 {
   "name": "responsible-cooking-alliance",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "clean": "rm -rf dist-chrome; rm -rf dist-firefox",

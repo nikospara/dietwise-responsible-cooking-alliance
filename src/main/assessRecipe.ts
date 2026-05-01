@@ -27,7 +27,7 @@ export function assessRecipe(
 		recipeAssessmentParam.countryOverride = countryOverride;
 	}
 
-	const handler = streamJson(apiServerHost + '/recipe/assess/markdown', recipeAssessmentParam, {
+	const handler = streamJson(apiServerHost + '/api/v1/recipe/assess/markdown', recipeAssessmentParam, {
 		onMessage,
 		onError,
 		onComplete,

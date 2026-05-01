@@ -7,10 +7,7 @@ export interface PageMetadata {
 export async function readCurrentPageMetadata(): Promise<PageMetadata> {
 	if (typeof browser !== 'undefined') {
 		return readCurrentPageMetadataFirefox();
-	} else if (
-		typeof chrome !== 'undefined' &&
-		typeof chrome.tabs !== 'undefined'
-	) {
+	} else if (typeof chrome !== 'undefined' && typeof chrome.tabs !== 'undefined') {
 		return readCurrentPageMetadataChrome();
 	} else {
 		// Here we are running in a browser, probably for development.

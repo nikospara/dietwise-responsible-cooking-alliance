@@ -23,13 +23,13 @@ Take a look at the build scripts:
 
 The following environment variables parameterize the build:
 
-- `VITE_AUTH_SERVER_HOST`: The location of the OAuth2 server
-- `VITE_API_SERVER_HOST`: The location of the API server
+- `VITE_AUTH_SERVER_HOST`: The location of the OAuth2 server together with the `realms/dietwise` suffix
+- `VITE_API_SERVER_HOST`: The location of the API server - base URL, without the `api/vX` suffix
 
 Example usage:
 
 ```bash
-VITE_API_SERVER_HOST=https://dietwise.eu VITE_AUTH_SERVER_HOST=https://idm.dietwise.eu npm run build-all
+VITE_API_SERVER_HOST=https://dietwise.eu VITE_AUTH_SERVER_HOST=https://idm.dietwise.eu/realms/dietwise npm run build-all
 ```
 
 ### How to run the plugin in Chrome
@@ -47,7 +47,7 @@ VITE_API_SERVER_HOST=https://dietwise.eu VITE_AUTH_SERVER_HOST=https://idm.dietw
 
 ### How to run the plugin in Firefox
 
-- Register the redirect URL returned by `browser.identity.getRedirectURL()` in the OAuth2 client configuration. The Firefox manifest pins the development add-on id to `responsible-cooking-alliance@dietwise.eu` so this URL remains stable across temporary installs.
+- Register the redirect URL returned by `browser.identity.getRedirectURL()` in the OAuth2 client configuration. The Firefox manifest pins the development add-on id to `responsible-cooking-alliance@dietwise.eu` so this URL remains stable across temporary installs. Use `node -e "console.log(require('crypto').createHash('sha1').update('responsible-cooking-alliance@dietwise.eu').digest('hex'))"` to compute. See [ref in MDV](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/identity#getting_the_redirect_url).
 - Go to `about:addons` and make sure "Extensions" is selected from the tabs on the left
 - Click the "Tools for all add-ons" icon button (top-right, icon is a gear), select "Debug Add-ons"
 - In the new page, click "Load Temporary Add-on..." and select the *manifest.json* file from the `dist-firefox/` folder

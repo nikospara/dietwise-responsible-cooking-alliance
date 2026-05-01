@@ -1,7 +1,7 @@
 // auth/authService.ts
 import { createPKCE } from './pkce';
 import { get, set, remove } from '@/configuration/storage';
-import { AUTH_SERVER_HOST, type Tokens } from '@/configuration/model';
+import { API_SERVER_HOST, AUTH_SERVER_HOST, type Tokens } from '@/configuration/model';
 
 const CLIENT_ID = 'rca';
 
@@ -37,7 +37,7 @@ function getRedirectUri(): string {
 	}
 
 	if (isChromeExtension()) {
-		return 'http://localhost:8180/extension-callback.html'; // `chrome-extension://${chrome.runtime.id}/callback.html`
+		return `${API_SERVER_HOST}/extension-callback.html`;
 	}
 
 	return getWebRedirectUri();

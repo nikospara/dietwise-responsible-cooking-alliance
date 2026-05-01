@@ -15,4 +15,4 @@ export const DEFAULT_SETTINGS: Settings = Object.freeze({
 });
 
 export const AUTH_SERVER_HOST = import.meta.env.VITE_AUTH_SERVER_HOST || 'http://localhost:8280/realms/dietwise';
-export const API_SERVER_HOST = import.meta.env.VITE_API_SERVER_HOST || 'http://localhost:8180/api/v1';
+export const API_SERVER_HOST = import.meta.env.VITE_API_SERVER_HOST || 'http://localhost:8180';

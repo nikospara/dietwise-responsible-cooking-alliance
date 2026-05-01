@@ -15,7 +15,7 @@ export async function postSuggestionStatistics(
 ): Promise<void> {
 	let response: Response;
 	try {
-		response = await fetch(apiServerHost + '/statistics/' + statisticsAction, {
+		response = await fetch(apiServerHost + '/api/v1/statistics/' + statisticsAction, {
 			method: 'POST',
 			body: JSON.stringify(statisticsParam),
 			headers: {
