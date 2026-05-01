@@ -6,7 +6,10 @@
 	"manifest_version": 3,
 	"browser_specific_settings": {
 		"gecko": {
-			"id": "responsible-cooking-alliance@dietwise.eu"
+			"id": "responsible-cooking-alliance@dietwise.eu",
+			"data_collection_permissions": {
+				"required": ["authenticationInfo", "browsingActivity", "websiteContent"]
+			}
 		}
 	},
 	"action": {
