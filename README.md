@@ -45,6 +45,12 @@ VITE_API_SERVER_HOST=https://dietwise.eu VITE_AUTH_SERVER_HOST=https://idm.dietw
 	- Now if you go back to the "Extensions" page, and click "Details" on the extension, there will be links labeled as "Inspect views". Click on "index.html" and you have the usual browser console, but for the opened RCA plugin sidebar! You can do the same by right-clicking on the opened extension and selecting "Inspect".
 - Whenever you make a change in the application files, you have to go back and reload the extension!
 
+#### Package
+
+```bash
+(cd dist-chrome/; zip -r ../../responsible-cooking-alliance-chrome.zip *)
+```
+
 ### How to run the plugin in Firefox
 
 - Register the redirect URL returned by `browser.identity.getRedirectURL()` in the OAuth2 client configuration. The Firefox manifest pins the development add-on id to `responsible-cooking-alliance@dietwise.eu` so this URL remains stable across temporary installs. Use `node -e "console.log(require('crypto').createHash('sha1').update('responsible-cooking-alliance@dietwise.eu').digest('hex'))"` to compute. See [ref in MDV](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/identity#getting_the_redirect_url).
@@ -55,3 +61,9 @@ VITE_API_SERVER_HOST=https://dietwise.eu VITE_AUTH_SERVER_HOST=https://idm.dietw
 	- Clicking "Inspect" opens the browser's development tools
 - Navigate to a cooking site, open a recipe page, play
 - Whenever you make a change in the application files, you have to go back and reload the extension!
+
+#### Package
+
+```bash
+(cd dist-firefox/; zip -r ../../responsible-cooking-alliance-firefox.zip *)
+```
