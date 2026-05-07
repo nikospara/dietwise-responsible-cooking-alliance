@@ -6,7 +6,44 @@ import fs from 'node:fs';
 import path from 'path';
 import { configDefaults } from 'vitest/config';
 
-function browserStaticFilesPlugin(browser: string) {
+const DEFAULT_AUTH_SERVER_HOST = 'http://localhost:8280/realms/dietwise';
+const DEFAULT_API_SERVER_HOST = 'http://localhost:8180';
+
+interface ExtensionManifest {
+	host_permissions?: string[];
+	[key: string]: unknown;
+}
+
+function toHostPermissionPattern(host: string | undefined): string | null {
+	if (!host) {
+		return null;
+	}
+
+	const url = new URL(host);
+	if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+		return null;
+	}
+
+	return `${url.protocol}//${url.host}/*`;
+}
+
+function getBackendHostPermissions(env: Record<string, string>): string[] {
+	const permissions = [
+		toHostPermissionPattern(env.VITE_AUTH_SERVER_HOST || DEFAULT_AUTH_SERVER_HOST),
+		toHostPermissionPattern(env.VITE_API_SERVER_HOST || DEFAULT_API_SERVER_HOST),
+	].filter((permission): permission is string => permission !== null);
+
+	return [...new Set(permissions)];
+}
+
+function copyManifestWithBackendHostPermissions(source: string, destination: string, backendHostPermissions: string[]) {
+	const manifest = JSON.parse(fs.readFileSync(source, 'utf8')) as ExtensionManifest;
+	const manifestHostPermissions = manifest.host_permissions || [];
+	manifest.host_permissions = [...new Set([...manifestHostPermissions, ...backendHostPermissions])];
+	fs.writeFileSync(destination, `${JSON.stringify(manifest, null, '\t')}\n`);
+}
+
+function browserStaticFilesPlugin(browser: string, backendHostPermissions: string[]) {
 	return {
 		name: 'browser-static-files',
 		closeBundle() {
@@ -15,7 +52,12 @@ function browserStaticFilesPlugin(browser: string) {
 			for (const filename of ['manifest.json', 'callback.html', 'callback-content.js']) {
 				const source = path.join(browserPublicDir, filename);
 				if (!fs.existsSync(source)) continue;
-				fs.copyFileSync(source, path.join(outDir, filename));
+				const destination = path.join(outDir, filename);
+				if (filename === 'manifest.json') {
+					copyManifestWithBackendHostPermissions(source, destination, backendHostPermissions);
+				} else {
+					fs.copyFileSync(source, destination);
+				}
 			}
 		},
 	};
@@ -27,9 +69,10 @@ function browserStaticFilesPlugin(browser: string) {
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
 	const browser = (env.VITE_TARGET_BROWSER || 'Chrome').toLowerCase();
+	const backendHostPermissions = getBackendHostPermissions(env);
 
 	return {
-		plugins: [react(), svgr(), eslintPlugin(), browserStaticFilesPlugin(browser)],
+		plugins: [react(), svgr(), eslintPlugin(), browserStaticFilesPlugin(browser, backendHostPermissions)],
 		resolve: {
 			tsconfigPaths: true,
 			alias: {

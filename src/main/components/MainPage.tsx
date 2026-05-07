@@ -18,6 +18,7 @@ import { cleanHtmlMinimal } from '@/main/cleanHtmlForLLM';
 import { assessRecipe } from '@/main/assessRecipe';
 import type { CancellationFunction } from '@/main/assessRecipe';
 import { extractJsonLdRecipesFromString } from '@/main/extractJsonLdRecipes';
+import { ensureHostPermission } from '@/main/hostPermissions';
 import AssessRecipeComponent from './AssessRecipeComponent';
 import RecipesComponent from './RecipesComponent';
 import MainPageErrorsComponent from './MainPageErrorsComponent';
@@ -57,11 +58,15 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 		};
 	});
 
-	const assessRecipeCallback = useCallback(async () => {
+	const assessRecipeCallback = useCallback(async (currentTabUrl?: string) => {
 		try {
+			await ensureHostPermission(currentTabUrl);
 			const { tabId, url, title } = await readCurrentPageMetadata();
 			void title;
 			dispatch(createPrepareToAssessRecipeAction(url || ''));
+			if (url !== currentTabUrl) {
+				await ensureHostPermission(url);
+			}
 			const pageContent = await readPageContent(tabId);
 			const jsonLdRecipes = extractJsonLdRecipesFromString(pageContent);
 			const jsonLdContent = jsonLdRecipes.length > 0 ? JSON.stringify(jsonLdRecipes) : undefined;

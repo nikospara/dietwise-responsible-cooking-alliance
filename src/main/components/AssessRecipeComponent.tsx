@@ -11,7 +11,7 @@ export interface AssessRecipeComponentProps {
 	url: string | null | undefined;
 	language: string;
 	onLanguageChanged: (language: string) => void;
-	onAssessButtonClicked: () => void;
+	onAssessButtonClicked: (currentTabUrl?: string) => void;
 	onResetButtonClicked: () => void;
 	toConfigurationPage: () => void;
 }
@@ -22,6 +22,18 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (props: Asse
 
 	useEffect(() => {
 		if (typeof browser !== 'undefined' && typeof browser.tabs !== 'undefined') {
+			const updateActiveTabUrl = () => {
+				browser.tabs
+					.query({ active: true, lastFocusedWindow: true })
+					.then((activeTabs) => {
+						const activeTab = activeTabs[0];
+						activeTabId.current = activeTab?.id;
+						setAssessedTabUrl(activeTab?.url);
+					})
+					.catch((error) => console.error(error));
+			};
+			updateActiveTabUrl();
+
 			const activatedListener = (activeInfo: browser.tabs._OnActivatedActiveInfo) => {
 				activeTabId.current = activeInfo.tabId;
 				browser.tabs.get(activeInfo.tabId).then((tab) => setAssessedTabUrl(tab.url));
@@ -40,6 +52,15 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (props: Asse
 				browser.tabs.onUpdated.removeListener(updatedListener);
 			};
 		} else if (typeof chrome !== 'undefined' && typeof chrome.tabs !== 'undefined') {
+			const updateActiveTabUrl = () => {
+				chrome.tabs.query({ active: true, lastFocusedWindow: true }, (activeTabs) => {
+					const activeTab = activeTabs[0];
+					activeTabId.current = activeTab?.id;
+					setAssessedTabUrl(activeTab?.url);
+				});
+			};
+			updateActiveTabUrl();
+
 			const activatedListener = (activeInfo: chrome.tabs.OnActivatedInfo) => {
 				activeTabId.current = activeInfo.tabId;
 				chrome.tabs.get(activeInfo.tabId, (tab) => {
@@ -71,7 +92,7 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (props: Asse
 				<button
 					className="btn btn-xl btn-accent"
 					disabled={props.assessing}
-					onClick={props.onAssessButtonClicked}
+					onClick={() => props.onAssessButtonClicked(assessedTabUrl || undefined)}
 				>
 					<span className={props.assessing ? 'animate-pingpulse' : ''}>
 						<TbWorldUpload />

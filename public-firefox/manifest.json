@@ -29,8 +29,9 @@
 		"storage",
 		"tabs"
 	],
-	"host_permissions": [
-		"<all_urls>"
+	"optional_host_permissions": [
+		"http://*/*",
+		"https://*/*"
 	],
 	"sidebar_action": {
 		"default_title": "Responsible Cooking Alliance",

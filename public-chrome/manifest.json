@@ -32,8 +32,9 @@
 		"storage",
 		"tabs"
 	],
-	"host_permissions": [
-		"<all_urls>"
+	"optional_host_permissions": [
+		"http://*/*",
+		"https://*/*"
 	],
 	"side_panel": {
 		"default_path": "index.html"
