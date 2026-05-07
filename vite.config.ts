@@ -37,6 +37,9 @@ export default defineConfig(({ mode }) => {
 			},
 		},
 		build: {
+			minify: false,
+			sourcemap: true,
+			assetsInlineLimit: 0,
 			// Set to {} to enable a watched build workflow, null to disable (default).
 			watch: env.VITE_WATCH ? {} : null,
 			outDir: `dist-${browser}`,

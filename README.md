@@ -14,8 +14,7 @@ Take a look at the build scripts:
 
 - `clean`: As the name implies, cleans all derived artifacts.
 - `dev`: Runs the application as a "normal" web app, with hot code replacements and all. Open it in a browser using the address indicated in the command line. Most of the code takes care of running in a "normal" browser without access to the special plugin APIs, but functionality will be limited. Use this only for quick verification of the functionality.
-- `build-xxx`: (`xxx` = `chrome` | `firefox`) Build the plugins for the respective browser. Use this build command to build a production version of the plugin.
-- `build-xxx-with-sourcemaps`: Build the plugins, include source maps. Use this build command to build a debug version of the plugin.
+- `build-xxx`: (`xxx` = `chrome` | `firefox`) Build the plugins for the respective browser, include source maps.
 - `build-xxx-watch`: Builds the plugin directory but also watches for code changes. This is the most powerful option for development. See below for how to run the plugin in the respective browser.
 - `build-all`: Runs both `build-xxx` commands.
 - `test`: Run the tests in watch mode (Vitest).

@@ -68,6 +68,8 @@ const ConfigurationPage: React.FC<ConfigurationPageProps> = (props) => {
 					>
 						<option value="en">English</option>
 						<option value="el">Ελληνικά</option>
+						<option value="lt">Lietuvių</option>
+						<option value="nl">Nederlands</option>
 					</select>
 				</div>
 				<div className="border-base-300 flex items-center justify-between gap-4 border-t p-4">

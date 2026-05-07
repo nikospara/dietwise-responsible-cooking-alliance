@@ -1,0 +1,77 @@
+{
+	"login": {
+		"loginLabel": "Login"
+	},
+	"config": {
+		"title": "Configuration",
+		"back": "Back",
+		"language": "Language",
+		"country": "Country",
+		"noCountry": "No country",
+		"logout": "Logout"
+	},
+	"countries": {
+		"BE": "Belgium",
+		"GR": "Greece",
+		"LT": "Lithuania"
+	},
+	"languages": {
+		"en": "English",
+		"el": "Ελληνικά",
+		"lt": "Lietuvių",
+		"nl": "Nederlands"
+	},
+	"recipe": {
+		"language": "Recipe language",
+		"titleOfIngredients": "Ingredients",
+		"emptySuggestionsFromServer": "There are no suggestions for this recipe.",
+		"anonymousRecipeTemplateTitle": "Recipe #{{index, number}}",
+		"seasonalityWarning": "May be out of season!",
+		"userStats": "User:",
+		"totalStats": "Totals:"
+	},
+	"ingredient": {
+		"equivalence": "Equivalence:",
+		"techniqueNotes": "Notes:"
+	},
+	"error": {
+		"401": "You are not authenticated or the server has not accepted your authentication; maybe logging out and back will help.",
+		"networkOrSystem": "A network or system error occured; please try again later.",
+		"unknown": "Unknown error!"
+	},
+	"main": {
+		"AssessRecipeComponent": {
+			"language": "Language:",
+			"labelLong": "Click here to assess the recipe on this page",
+			"labelShort": "Assess recipe",
+			"labelReset": "Reset",
+			"labelConfiguration": "Configuration",
+			"assessing": "Assessing URL:",
+			"assessed": "Assessed URL:",
+			"notTheAssessedPage": "The displayed information is not about this page!"
+		},
+		"RatingComponent": {
+			"rating": "Rating:"
+		},
+		"SuggestionsComponent": {
+			"title": "Suggestions - Advice",
+			"accept": "Accept",
+			"reject": "Reject"
+		}
+	},
+	"HelpComponent": {
+		"title": "Responsible Cooking Alliance",
+		"welcome1": "Welcome to the Responsible Cooking Alliance plugin, a tool that assists you to create healthier and more sustainable recipes.",
+		"welcome2": "Navigate to a web page containing a recipe in text (not sound, image or video!) and follow the instructions below.",
+		"titleInstructions": "Instructions",
+		"paragraph1": "Press the button above to assess the recipe in the current page.",
+		"paragraph2": "The assessment takes place in two steps: (1) extract the recipe from the page and (2) suggest alternative, healthier and/or more sustainable ingredients. The application displays the list of ingredients in the top half of the page and the suggestions in the bottom half.",
+		"paragraph3": "When browsing suggestions, you have three options:",
+		"explainUndecidedButton": "Leave the suggestion undecided",
+		"explainApproveButton": "Accept the suggestion - press",
+		"explainRejectButton": "Reject the suggestion - press",
+		"paragraph4": "Press an activated button (\"Accept\" or \"Reject\") again to switch a suggestion to undecided.",
+		"paragraph5": "Another way to switch a suggestion to undecided is to click the \"minus\" button of a replaced ingredient in the recipe in the top half of the page.",
+		"loginParagraph1": "Press the login button to login or register. A new tab will open in your browser (not in the area of the plugin), where you can complete this process."
+	}
+}

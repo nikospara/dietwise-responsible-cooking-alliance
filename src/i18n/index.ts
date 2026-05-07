@@ -4,6 +4,8 @@ import { initReactI18next } from 'react-i18next';
 // language imports, let's keep them sorted alphabetically; same in the resources object
 import el from './el.json';
 import en from './en.json';
+import lt from './lt.json';
+import nl from './nl.json';
 
 const resources = {
 	el: {
@@ -11,6 +13,12 @@ const resources = {
 	},
 	en: {
 		translation: en,
+	},
+	lt: {
+		translation: lt,
+	},
+	nl: {
+		translation: nl,
 	},
 };
 
