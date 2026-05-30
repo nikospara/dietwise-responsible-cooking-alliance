@@ -1,19 +1,19 @@
 {
 	"login": {
-		"loginLabel": "Login"
+		"loginLabel": "Prisijungti"
 	},
 	"config": {
-		"title": "Configuration",
-		"back": "Back",
-		"language": "Language",
-		"country": "Country",
-		"noCountry": "No country",
-		"logout": "Logout"
+		"title": "Nustatymai",
+		"back": "Atgal",
+		"language": "Kalba",
+		"country": "Šalis",
+		"noCountry": "Nesirinkti šalies",
+		"logout": "Atsijungti"
 	},
 	"countries": {
-		"BE": "Belgium",
-		"GR": "Greece",
-		"LT": "Lithuania"
+		"BE": "Belgija",
+		"GR": "Graikija",
+		"LT": "Lietuva"
 	},
 	"languages": {
 		"en": "English",
@@ -22,56 +22,56 @@
 		"nl": "Nederlands"
 	},
 	"recipe": {
-		"language": "Recipe language",
-		"titleOfIngredients": "Ingredients",
-		"emptySuggestionsFromServer": "There are no suggestions for this recipe.",
-		"anonymousRecipeTemplateTitle": "Recipe #{{index, number}}",
-		"seasonalityWarning": "May be out of season!",
-		"userStats": "User:",
-		"totalStats": "Totals:"
+		"language": "Recepto kalba",
+		"titleOfIngredients": "Ingridientai",
+		"emptySuggestionsFromServer": "Šiam receptui pasiūlymų nėra",
+		"anonymousRecipeTemplateTitle": "Receptas  #{{index, number}}",
+		"seasonalityWarning": "Gali būti ne sezoninis produktas",
+		"userStats": "Vartotojas",
+		"totalStats": "Statistika"
 	},
 	"ingredient": {
-		"equivalence": "Equivalence:",
-		"techniqueNotes": "Notes:"
+		"equivalence": "Ekvivalentiškumas",
+		"techniqueNotes": "Pastabos"
 	},
 	"error": {
-		"401": "You are not authenticated or the server has not accepted your authentication; maybe logging out and back will help.",
-		"networkOrSystem": "A network or system error occured; please try again later.",
-		"unknown": "Unknown error!"
+		"401": "Jūs neautentifikuotas arba autentifikuojant įvyko serverio klaida; bandykite prisijungti iš naujo.",
+		"networkOrSystem": "Ryšio arba sistemos klaida; bandykite vėliau.",
+		"unknown": "Nežinoma klaida!"
 	},
 	"main": {
 		"AssessRecipeComponent": {
-			"language": "Language:",
-			"labelLong": "Click here to assess the recipe on this page",
-			"labelShort": "Assess recipe",
-			"labelReset": "Reset",
-			"labelConfiguration": "Configuration",
-			"assessing": "Assessing URL:",
-			"assessed": "Assessed URL:",
-			"notTheAssessedPage": "The displayed information is not about this page!"
+			"language": "Kalba",
+			"labelLong": "Spauskite čia recepto peržiūrai svetainėje",
+			"labelShort": "Peržiūrėti receptą",
+			"labelReset": "Perkrauti",
+			"labelConfiguration": "Nustatymai",
+			"assessing": "Vertinamas URL:",
+			"assessed": "Įvertintas URL:",
+			"notTheAssessedPage": "Informacija pateikta ne apie šią svetainę"
 		},
 		"RatingComponent": {
-			"rating": "Rating:"
+			"rating": "Reitingas"
 		},
 		"SuggestionsComponent": {
-			"title": "Suggestions - Advice",
-			"accept": "Accept",
-			"reject": "Reject"
+			"title": "Pasiūlymas - Patarimas",
+			"accept": "Priimti",
+			"reject": "Atmesti"
 		}
 	},
 	"HelpComponent": {
-		"title": "Responsible Cooking Alliance",
-		"welcome1": "Welcome to the Responsible Cooking Alliance plugin, a tool that assists you to create healthier and more sustainable recipes.",
-		"welcome2": "Navigate to a web page containing a recipe in text (not sound, image or video!) and follow the instructions below.",
-		"titleInstructions": "Instructions",
-		"paragraph1": "Press the button above to assess the recipe in the current page.",
-		"paragraph2": "The assessment takes place in two steps: (1) extract the recipe from the page and (2) suggest alternative, healthier and/or more sustainable ingredients. The application displays the list of ingredients in the top half of the page and the suggestions in the bottom half.",
-		"paragraph3": "When browsing suggestions, you have three options:",
-		"explainUndecidedButton": "Leave the suggestion undecided",
-		"explainApproveButton": "Accept the suggestion - press",
-		"explainRejectButton": "Reject the suggestion - press",
-		"paragraph4": "Press an activated button (\"Accept\" or \"Reject\") again to switch a suggestion to undecided.",
-		"paragraph5": "Another way to switch a suggestion to undecided is to click the \"minus\" button of a replaced ingredient in the recipe in the top half of the page.",
-		"loginParagraph1": "Press the login button to login or register. A new tab will open in your browser (not in the area of the plugin), where you can complete this process."
+		"title": "Atsakingo gaminimo bendruomenė",
+		"welcome1": "Sveiki atvykę į Atsakingo gaminimo bendruomenės įskiepį. Tai įrankis, padėsiantis jums kurti sveikesnius ir tvaresnius receptus.",
+		"welcome2": "Keliaukite į tinklapį, kuris pateikia receptus tekstu (ne garsu, vaizdu ar video) ir sekite instrukcijas žemiau.",
+		"titleInstructions": "Instrukcijos",
+		"paragraph1": "Paspauskite mygtuką aukščiau, kad pasiektumėte receptą šiame puslapyje.",
+		"paragraph2": "Vertinimas vyksta dviejuose žingsniuose: (1) įkeliant receptą iš puslapio ir (2) pasiūlant sveikesnių ir/ar tvaresnių ingridientų alternatyvą. Programa ingridientų sąrašą atvaizduoja viršutinėje puslapio dalyje, o pasiūlymus - apatinėje dalyje. ",
+		"paragraph3": "Naršant pasiūlymus, turite tris pasirinkimus:",
+		"explainUndecidedButton": "Palikti pasiūlymą be sprendimo",
+		"explainApproveButton": "Priimti pasiūlymą - spausti",
+		"explainRejectButton": "Atmesti pasiūlymą - spausti",
+		"paragraph4": "Spauskite mygtuką (\"Priimti\" ar \"Atmesti\") dar kartą, jei norite palikti pasiūlymą be sprendimo",
+		"paragraph5": "Kitas būdas pakeisti pasiūlymo būseną į \"be sprendimo\" yra spaudžiant \"minuso\" ikonėlę prie pakeistų ingridientų recepte viršutinėje puslapio dalyje.",
+		"loginParagraph1": "Spauskite mygtuką \"Prisijungti\", tam kad prisijungtumėte arba užsiregistruotumėte. Naujas puslapis atsidarys jūsų naršyklėje (už įskiepio ribų). Šiame puslapyje galėsite užbaigti registraciją arba prisijungimą."
 	}
 }
