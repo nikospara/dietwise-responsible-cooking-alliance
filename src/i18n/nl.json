@@ -1,77 +1,77 @@
 {
 	"login": {
-		"loginLabel": "Login"
+		"loginLabel": "Inloggen"
 	},
 	"config": {
-		"title": "Configuration",
-		"back": "Back",
-		"language": "Language",
-		"country": "Country",
-		"noCountry": "No country",
-		"logout": "Logout"
+		"title": "Configuratie",
+		"back": "Terug",
+		"language": "Taal",
+		"country": "Land",
+		"noCountry": "Geen land",
+		"logout": "Uitloggen"
 	},
 	"countries": {
-		"BE": "Belgium",
-		"GR": "Greece",
-		"LT": "Lithuania"
+		"BE": "België",
+		"GR": "Griekenland",
+		"LT": "Litouwen"
 	},
 	"languages": {
-		"en": "English",
-		"el": "Ελληνικά",
-		"lt": "Lietuvių",
+		"en": "Engels",
+		"el": "Grieks",
+		"lt": "Litouws",
 		"nl": "Nederlands"
 	},
 	"recipe": {
-		"language": "Recipe language",
-		"titleOfIngredients": "Ingredients",
-		"emptySuggestionsFromServer": "There are no suggestions for this recipe.",
-		"anonymousRecipeTemplateTitle": "Recipe #{{index, number}}",
-		"seasonalityWarning": "May be out of season!",
-		"userStats": "User:",
-		"totalStats": "Totals:"
+		"language": "Recepttaal",
+		"titleOfIngredients": "Ingrediënten",
+		"emptySuggestionsFromServer": "Er zijn geen suggesties voor dit recept.",
+		"anonymousRecipeTemplateTitle": "Recept #{{index, number}}",
+		"seasonalityWarning": "Mogelijk niet in het seizoen!",
+		"userStats": "Gebruiker:",
+		"totalStats": "Totalen:"
 	},
 	"ingredient": {
-		"equivalence": "Equivalence:",
-		"techniqueNotes": "Notes:"
+		"equivalence": "Equivalent:",
+		"techniqueNotes": "Opmerkingen:"
 	},
 	"error": {
-		"401": "You are not authenticated or the server has not accepted your authentication; maybe logging out and back will help.",
-		"networkOrSystem": "A network or system error occured; please try again later.",
-		"unknown": "Unknown error!"
+		"401": "U bent niet geauthenticeerd of de server heeft uw authenticatie niet geaccepteerd; misschien helpt het om uit te loggen en opnieuw in te loggen.",
+		"networkOrSystem": "Er is een netwerk- of systeemfout opgetreden; probeer het later opnieuw.",
+		"unknown": "Onbekende fout!"
 	},
 	"main": {
 		"AssessRecipeComponent": {
-			"language": "Language:",
-			"labelLong": "Click here to assess the recipe on this page",
-			"labelShort": "Assess recipe",
-			"labelReset": "Reset",
-			"labelConfiguration": "Configuration",
-			"assessing": "Assessing URL:",
-			"assessed": "Assessed URL:",
-			"notTheAssessedPage": "The displayed information is not about this page!"
+			"language": "Taal:",
+			"labelLong": "Klik hier om het recept op deze pagina te beoordelen",
+			"labelShort": "Recept beoordelen",
+			"labelReset": "Opnieuw instellen",
+			"labelConfiguration": "Configuratie",
+			"assessing": "URL wordt beoordeeld:",
+			"assessed": "Beoordeelde URL:",
+			"notTheAssessedPage": "De weergegeven informatie gaat niet over deze pagina!"
 		},
 		"RatingComponent": {
-			"rating": "Rating:"
+			"rating": "Beoordeling:"
 		},
 		"SuggestionsComponent": {
-			"title": "Suggestions - Advice",
-			"accept": "Accept",
-			"reject": "Reject"
+			"title": "Suggesties - Advies",
+			"accept": "Accepteren",
+			"reject": "Afwijzen"
 		}
 	},
 	"HelpComponent": {
 		"title": "Responsible Cooking Alliance",
-		"welcome1": "Welcome to the Responsible Cooking Alliance plugin, a tool that assists you to create healthier and more sustainable recipes.",
-		"welcome2": "Navigate to a web page containing a recipe in text (not sound, image or video!) and follow the instructions below.",
-		"titleInstructions": "Instructions",
-		"paragraph1": "Press the button above to assess the recipe in the current page.",
-		"paragraph2": "The assessment takes place in two steps: (1) extract the recipe from the page and (2) suggest alternative, healthier and/or more sustainable ingredients. The application displays the list of ingredients in the top half of the page and the suggestions in the bottom half.",
-		"paragraph3": "When browsing suggestions, you have three options:",
-		"explainUndecidedButton": "Leave the suggestion undecided",
-		"explainApproveButton": "Accept the suggestion - press",
-		"explainRejectButton": "Reject the suggestion - press",
-		"paragraph4": "Press an activated button (\"Accept\" or \"Reject\") again to switch a suggestion to undecided.",
-		"paragraph5": "Another way to switch a suggestion to undecided is to click the \"minus\" button of a replaced ingredient in the recipe in the top half of the page.",
-		"loginParagraph1": "Press the login button to login or register. A new tab will open in your browser (not in the area of the plugin), where you can complete this process."
+		"welcome1": "Welkom bij de Responsible Cooking Alliance-plugin, een hulpmiddel dat u helpt om gezondere en duurzamere recepten te maken.",
+		"welcome2": "Navigeer naar een webpagina met een recept in tekst (geen geluid, afbeelding of video!) en volg de onderstaande instructies.",
+		"titleInstructions": "Instructies",
+		"paragraph1": "Druk op de knop hierboven om het recept op de huidige pagina te beoordelen.",
+		"paragraph2": "De beoordeling vindt plaats in twee stappen: (1) het recept van de pagina extraheren en (2) alternatieve, gezondere en/of duurzamere ingrediënten voorstellen. De applicatie toont de lijst met ingrediënten in de bovenste helft van de pagina en de suggesties in de onderste helft.",
+		"paragraph3": "Bij het bekijken van suggesties heeft u drie opties:",
+		"explainUndecidedButton": "De suggestie onbeslist laten",
+		"explainApproveButton": "De suggestie accepteren - druk op",
+		"explainRejectButton": "De suggestie afwijzen - druk op",
+		"paragraph4": "Druk nogmaals op een geactiveerde knop (\"Accepteren\" of \"Afwijzen\") om een suggestie naar onbeslist te schakelen.",
+		"paragraph5": "Een andere manier om een suggestie naar onbeslist te schakelen is door op de \"min\"-knop te klikken van een vervangen ingrediënt in het recept in de bovenste helft van de pagina.",
+		"loginParagraph1": "Druk op de inlogknop om in te loggen of te registreren. Er wordt een nieuw tabblad geopend in uw browser (niet in het gebied van de plugin), waar u dit proces kunt voltooien."
 	}
 }

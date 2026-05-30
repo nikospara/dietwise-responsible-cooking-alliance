@@ -17,9 +17,9 @@
 	},
 	"languages": {
 		"en": "English",
-		"el": "Ελληνικά",
-		"lt": "Lietuvių",
-		"nl": "Nederlands"
+		"el": "Greek",
+		"lt": "Lithuanian",
+		"nl": "Dutch"
 	},
 	"recipe": {
 		"language": "Recipe language",
