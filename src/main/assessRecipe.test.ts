@@ -24,7 +24,7 @@ describe('assessRecipe', () => {
 		const onComplete = vi.fn();
 
 		assessRecipe(
-			'http://example.com/api/v1',
+			'http://example.com',
 			'https://recipe.example/item',
 			'# Recipe',
 			null,
@@ -57,7 +57,7 @@ describe('assessRecipe', () => {
 	});
 
 	it('omits Authorization when no token is available', () => {
-		assessRecipe('http://example.com/api/v1', 'https://recipe.example/item', '# Recipe', null, 'en', null, null);
+		assessRecipe('http://example.com', 'https://recipe.example/item', '# Recipe', null, 'en', null, null);
 
 		expect(streamJson).toHaveBeenCalledWith(
 			'http://example.com/api/v1/recipe/assess/markdown',
@@ -69,7 +69,7 @@ describe('assessRecipe', () => {
 	});
 
 	it('omits countryOverride when no country is configured', () => {
-		assessRecipe('http://example.com/api/v1', 'https://recipe.example/item', '# Recipe', null, 'en', null, null);
+		assessRecipe('http://example.com', 'https://recipe.example/item', '# Recipe', null, 'en', null, null);
 
 		const payload = vi.mocked(streamJson).mock.calls[0][1];
 		expect(payload).not.toHaveProperty('countryOverride');

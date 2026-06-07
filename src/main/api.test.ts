@@ -27,7 +27,7 @@ describe('statistics api', () => {
 		await expect(
 			postSuggestionStatistics(apiServerHost, accessToken, 'increaseTimesAccepted', { suggestionId: 's-1' }),
 		).resolves.toBeUndefined();
-		expect(fetchMock).toHaveBeenCalledWith(apiServerHost + '/statistics/increaseTimesAccepted', {
+		expect(fetchMock).toHaveBeenCalledWith(apiServerHost + '/api/v1/statistics/increaseTimesAccepted', {
 			method: 'POST',
 			body: JSON.stringify({ suggestionId: 's-1' }),
 			headers: {
