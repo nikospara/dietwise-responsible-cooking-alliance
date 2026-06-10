@@ -128,15 +128,9 @@ const AssessRecipeComponent: React.FC<AssessRecipeComponentProps> = (props: Asse
 						aria-label={t('recipe.language')}
 					>
 						<option value="en">{t('languages.en')}</option>
-						<option value="el" disabled={true}>
-							{t('languages.el')}
-						</option>
-						<option value="lt" disabled={true}>
-							{t('languages.lt')}
-						</option>
-						<option value="nl" disabled={true}>
-							{t('languages.nl')}
-						</option>
+						<option value="el">{t('languages.el')}</option>
+						<option value="lt">{t('languages.lt')}</option>
+						<option value="nl">{t('languages.nl')}</option>
 					</select>
 				</label>
 				<button className="btn btn-outline" onClick={props.toConfigurationPage}>

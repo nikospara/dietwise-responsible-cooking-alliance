@@ -58,50 +58,53 @@ const MainPage: React.FC<MainPageProps> = (props: MainPageProps) => {
 		};
 	});
 
-	const assessRecipeCallback = useCallback(async (currentTabUrl?: string) => {
-		try {
-			await ensureHostPermission(currentTabUrl);
-			const { tabId, url, title } = await readCurrentPageMetadata();
-			void title;
-			dispatch(createPrepareToAssessRecipeAction(url || ''));
-			if (url !== currentTabUrl) {
-				await ensureHostPermission(url);
+	const assessRecipeCallback = useCallback(
+		async (currentTabUrl?: string) => {
+			try {
+				await ensureHostPermission(currentTabUrl);
+				const { tabId, url, title } = await readCurrentPageMetadata();
+				void title;
+				dispatch(createPrepareToAssessRecipeAction(url || ''));
+				if (url !== currentTabUrl) {
+					await ensureHostPermission(url);
+				}
+				const pageContent = await readPageContent(tabId);
+				const jsonLdRecipes = extractJsonLdRecipesFromString(pageContent);
+				const jsonLdContent = jsonLdRecipes.length > 0 ? JSON.stringify(jsonLdRecipes) : undefined;
+				console.log('Size, before cleaning:', pageContent.length);
+				const pageCleaningResult = cleanHtmlMinimal(pageContent);
+				let cleanPageContent = pageCleaningResult.html;
+				console.log('Size after 1st pass:', cleanPageContent.length);
+				cleanPageContent = new TurndownService().turndown(cleanPageContent);
+				console.log('Size after 3rd pass (Markdown):', cleanPageContent.length);
+				console.log(cleanPageContent);
+				const accessToken = await ensureValidToken();
+				cancelRef.current = assessRecipe(
+					apiServerHost,
+					url || '',
+					cleanPageContent,
+					jsonLdContent,
+					mainState.lang,
+					country,
+					accessToken,
+					(message) => {
+						dispatch(createMessageReceivedAction(message));
+					},
+					(error) => {
+						cancelRef.current = null;
+						dispatch(createRecipeAssessmentFailedAction(error));
+					},
+					() => {
+						cancelRef.current = null;
+						dispatch(createRecipeAssessmentCompletedAction());
+					},
+				);
+			} catch (error) {
+				dispatch(createRecipeAssessmentFailedAction(error));
 			}
-			const pageContent = await readPageContent(tabId);
-			const jsonLdRecipes = extractJsonLdRecipesFromString(pageContent);
-			const jsonLdContent = jsonLdRecipes.length > 0 ? JSON.stringify(jsonLdRecipes) : undefined;
-			console.log('Size, before cleaning:', pageContent.length);
-			const pageCleaningResult = cleanHtmlMinimal(pageContent);
-			let cleanPageContent = pageCleaningResult.html;
-			console.log('Size after 1st pass:', cleanPageContent.length);
-			cleanPageContent = new TurndownService().turndown(cleanPageContent);
-			console.log('Size after 3rd pass (Markdown):', cleanPageContent.length);
-			console.log(cleanPageContent);
-			const accessToken = await ensureValidToken();
-			cancelRef.current = assessRecipe(
-				apiServerHost,
-				url || '',
-				cleanPageContent,
-				jsonLdContent,
-				mainState.lang,
-				country,
-				accessToken,
-				(message) => {
-					dispatch(createMessageReceivedAction(message));
-				},
-				(error) => {
-					cancelRef.current = null;
-					dispatch(createRecipeAssessmentFailedAction(error));
-				},
-				() => {
-					cancelRef.current = null;
-					dispatch(createRecipeAssessmentCompletedAction());
-				},
-			);
-		} catch (error) {
-			dispatch(createRecipeAssessmentFailedAction(error));
-		}
-	}, [apiServerHost, country, dispatch, ensureValidToken, mainState.lang]);
+		},
+		[apiServerHost, country, dispatch, ensureValidToken, mainState.lang],
+	);
 
 	const resetCallback = useCallback(() => {
 		dispatch(createResetMainPageAction());
