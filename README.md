@@ -28,7 +28,7 @@ The following environment variables parameterize the build:
 Example usage:
 
 ```bash
-VITE_API_SERVER_HOST=https://dietwise.eu VITE_AUTH_SERVER_HOST=https://idm.dietwise.eu/realms/dietwise npm run build-all
+VITE_API_SERVER_HOST=https://dietwise.ispatial.survey.ntua.gr/api/v1 VITE_AUTH_SERVER_HOST=https://gaia.ispatial.survey.ntua.gr/prod/idm/realms/dietwise npm run build-all
 ```
 
 ### How to run the plugin in Chrome
@@ -66,3 +66,7 @@ VITE_API_SERVER_HOST=https://dietwise.eu VITE_AUTH_SERVER_HOST=https://idm.dietw
 ```bash
 (cd dist-firefox/; zip -r ../../responsible-cooking-alliance-firefox.zip *)
 ```
+
+### Versioning
+
+It's in `package.json` as usual, but also in `public-chrome/manifest.json`, `public-firefox/manifest.json`.
