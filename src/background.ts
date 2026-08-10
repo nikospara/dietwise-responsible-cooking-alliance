@@ -1,6 +1,6 @@
 import { authService } from '@/auth/authService';
 
-if (typeof browser !== 'undefined') {
+if (typeof browser !== 'undefined' && typeof browser.sidebarAction !== 'undefined') {
 	browser.action.onClicked.addListener(() => {
 		browser.sidebarAction.open();
 	});

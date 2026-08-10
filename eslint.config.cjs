@@ -106,6 +106,10 @@ module.exports = defineConfig([
 	},
 	globalIgnores([
 		'**/node_modules',
+		'**/dist',
+		'**/dist-chrome',
+		'**/dist-firefox',
+		'**/coverage',
 		'scripts/*',
 		'config/*',
 		'**/pnpm-lock.yaml',

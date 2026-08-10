@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, parseAst } from 'vite';
 import eslintPlugin from '@nabla/vite-plugin-eslint';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
@@ -11,7 +11,48 @@ const DEFAULT_API_SERVER_HOST = 'http://localhost:8180';
 
 interface ExtensionManifest {
 	host_permissions?: string[];
+	background?: {
+		scripts?: string[];
+		service_worker?: string;
+		type?: string;
+	};
 	[key: string]: unknown;
+}
+
+const MODULE_SYNTAX_NODES = [
+	'ImportDeclaration',
+	'ExportNamedDeclaration',
+	'ExportDefaultDeclaration',
+	'ExportAllDeclaration',
+];
+
+function usesModuleSyntax(file: string): boolean {
+	const ast = parseAst(fs.readFileSync(file, 'utf8'));
+	return ast.body.some((node) => MODULE_SYNTAX_NODES.includes(node.type));
+}
+
+/**
+ * A background script declared without `"type": "module"` is loaded as a classic script, and a
+ * classic script containing import/export fails to parse, silently taking the whole background
+ * script down with it.
+ */
+function assertBackgroundScriptsMatchManifestType(outDir: string) {
+	const manifestPath = path.join(outDir, 'manifest.json');
+	const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8')) as ExtensionManifest;
+	const background = manifest.background;
+	if (!background || background.type === 'module') {
+		return;
+	}
+
+	const declaredScripts = background.scripts || (background.service_worker ? [background.service_worker] : []);
+	const moduleScripts = declaredScripts.filter((script) => usesModuleSyntax(path.join(outDir, script)));
+
+	if (moduleScripts.length > 0) {
+		throw new Error(
+			`${manifestPath} declares background script(s) ${moduleScripts.join(', ')} without "type": "module", ` +
+				'but the bundle uses import/export. The browser cannot parse it and the background script never runs.',
+		);
+	}
 }
 
 function toHostPermissionPattern(host: string | undefined): string | null {
@@ -59,6 +100,7 @@ function browserStaticFilesPlugin(browser: string, backendHostPermissions: strin
 					fs.copyFileSync(source, destination);
 				}
 			}
+			assertBackgroundScriptsMatchManifestType(outDir);
 		},
 	};
 }
