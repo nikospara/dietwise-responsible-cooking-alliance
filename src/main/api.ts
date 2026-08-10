@@ -2,10 +2,7 @@ import { t } from 'i18next';
 import type { StatisticsParam } from './model';
 
 export type StatisticsAction =
-	| 'increaseTimesAccepted'
-	| 'decreaseTimesAccepted'
-	| 'increaseTimesRejected'
-	| 'decreaseTimesRejected';
+	'increaseTimesAccepted' | 'decreaseTimesAccepted' | 'increaseTimesRejected' | 'decreaseTimesRejected';
 
 export async function postSuggestionStatistics(
 	apiServerHost: string,

@@ -65,6 +65,9 @@ VITE_API_SERVER_HOST=https://dietwise.ispatial.survey.ntua.gr/api/v1 VITE_AUTH_S
 
 ```bash
 (cd dist-firefox/; zip -r ../../responsible-cooking-alliance-firefox.zip *)
+(cd dist-chrome/; zip -r ../../responsible-cooking-alliance-chrome.zip *)
+# Sources:
+git archive --format=zip --output ../responsible-cooking-alliance-source.zip master
 ```
 
 ### Versioning

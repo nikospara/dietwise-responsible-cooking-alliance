@@ -88,8 +88,8 @@ function browserStaticFilesPlugin(browser: string, backendHostPermissions: strin
 	return {
 		name: 'browser-static-files',
 		closeBundle() {
-			const browserPublicDir = path.resolve(__dirname, `public-${browser}`);
-			const outDir = path.resolve(__dirname, `dist-${browser}`);
+			const browserPublicDir = path.resolve(import.meta.dirname, `public-${browser}`);
+			const outDir = path.resolve(import.meta.dirname, `dist-${browser}`);
 			for (const filename of ['manifest.json', 'callback.html', 'callback-content.js']) {
 				const source = path.join(browserPublicDir, filename);
 				if (!fs.existsSync(source)) continue;
@@ -130,8 +130,8 @@ export default defineConfig(({ mode }) => {
 			outDir: `dist-${browser}`,
 			rollupOptions: {
 				input: {
-					index: path.resolve(__dirname, 'index.html'),
-					background: path.resolve(__dirname, 'src/background.ts'),
+					index: path.resolve(import.meta.dirname, 'index.html'),
+					background: path.resolve(import.meta.dirname, 'src/background.ts'),
 				},
 				output: {
 					entryFileNames: (chunkInfo) => {
