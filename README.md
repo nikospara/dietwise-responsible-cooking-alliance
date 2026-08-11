@@ -23,12 +23,12 @@ Take a look at the build scripts:
 The following environment variables parameterize the build:
 
 - `VITE_AUTH_SERVER_HOST`: The location of the OAuth2 server together with the `realms/dietwise` suffix
-- `VITE_API_SERVER_HOST`: The location of the API server - base URL, without the `api/vX` suffix
+- `VITE_API_SERVER_HOST`: The location of the API server - base URL, without the `/api/vX` suffix
 
 Example usage:
 
 ```bash
-VITE_API_SERVER_HOST=https://dietwise.ispatial.survey.ntua.gr/api/v1 VITE_AUTH_SERVER_HOST=https://gaia.ispatial.survey.ntua.gr/prod/idm/realms/dietwise npm run build-all
+VITE_API_SERVER_HOST=https://dietwise.ispatial.survey.ntua.gr VITE_AUTH_SERVER_HOST=https://gaia.ispatial.survey.ntua.gr/prod/idm/realms/dietwise npm run build-all
 ```
 
 ### How to run the plugin in Chrome
